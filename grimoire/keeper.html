@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Talk to the Grimoire Keeper — live demo</title>
+<style>
+/* Grimoire brand tokens (semantic, per grimoire-web-template skill) */
+:root{
+  --bg:#002b36; --panel:#073642; --panel2:#0d4250;
+  --yellow:#b58900; --yellow-hi:#e6c04a;
+  --cyan:#2aa198; --green:#859900; --red:#dc322f;
+  --text:#93a1a1; --foreground:#fdf6e3; --dim:#586e75; --strong:#839496;
+  --border:rgba(253,246,227,.08); --surface:rgba(253,246,227,.035);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:15px/1.55 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  background:var(--bg);color:var(--text);min-height:520px;padding:16px}
+
+/* ── bubble launcher (untuk embed ke landing) ── */
+.launcher{position:fixed;bottom:22px;right:22px;width:56px;height:56px;border-radius:50%;
+  background:var(--yellow);color:var(--bg);border:none;cursor:pointer;font-size:24px;
+  box-shadow:0 4px 18px rgba(0,0,0,.4);transition:transform .15s;z-index:99}
+.launcher:hover{transform:scale(1.07);background:var(--yellow-hi)}
+
+/* ── chat panel ── */
+.panel{max-width:520px;margin:0 auto;position:relative;width:100%}
+@media(max-width:560px){.panel{margin:0;padding:0}}
+.head{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--border);
+  border-radius:14px 14px 0 0;padding:14px 18px;display:flex;align-items:center;gap:12px}
+.head .sig{width:40px;height:40px;border-radius:50%;background:var(--yellow);
+  display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--bg);flex:0 0 auto}
+.head .t{color:var(--foreground);font-weight:600;font-size:15px}
+.head .s{color:var(--strong);font-size:12px}
+.head .live{margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--green);font-size:11px;letter-spacing:1px}
+.head .live::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.4}}
+
+.terms{background:var(--panel);border:1px solid var(--border);border-top:none;
+  height:420px;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+.terms::-webkit-scrollbar{width:6px}.terms::-webkit-scrollbar-thumb{background:var(--dim);border-radius:3px}
+
+.msg{max-width:86%;padding:10px 14px;border-radius:12px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
+.msg.keeper{background:var(--surface);border:1px solid var(--border);color:var(--foreground);align-self:flex-start;border-top-left-radius:4px}
+.msg.visitor{background:linear-gradient(135deg,var(--panel2),var(--panel));color:var(--foreground);align-self:flex-end;border-top-right-radius:4px;border:1px solid var(--border)}
+.msg.typing{color:var(--strong);font-style:italic;font-size:13px}
+.msg .rune-tag{color:var(--yellow-hi);font-weight:600;margin-right:4px}
+
+.comp{background:var(--panel);border:1px solid var(--border);border-radius:0 0 14px 14px;padding:10px;display:flex;gap:8px}
+.comp input{flex:1;background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:9px;
+  padding:11px 14px;color:var(--foreground);font:inherit;outline:none;transition:border .15s}
+.comp input:focus{border-color:var(--cyan)}
+.comp input::placeholder{color:var(--dim)}
+.comp button{background:var(--yellow);border:none;border-radius:9px;padding:11px 18px;
+  color:var(--bg);font-weight:700;cursor:pointer;font:inherit;transition:.15s}
+.comp button:hover{background:var(--yellow-hi)}
+.comp button:disabled{opacity:.45;cursor:not-allowed}
+
+.quick{display:flex;flex-wrap:wrap;gap:6px;padding:0 16px 12px;background:var(--panel);
+  border:1px solid var(--border);border-top:none;border-radius:0 0 0 0}
+.quick button{background:transparent;border:1px solid var(--border);color:var(--strong);
+  border-radius:999px;padding:5px 12px;font-size:12px;cursor:pointer;transition:.15s;font-family:inherit}
+.quick button:hover{border-color:var(--cyan);color:var(--cyan)}
+
+.footnote{text-align:center;color:var(--dim);font-size:11px;margin-top:10px;letter-spacing:.4px}
+.footnote b{color:var(--strong)}
+.pending{color:var(--yellow-hi);background:rgba(181,137,0,.08);border:1px dashed var(--yellow);
+  border-radius:10px;padding:10px;font-size:12px;text-align:center;margin-top:12px}
+</style>
+</head>
+<body>
+
+</br>
+<button class="launcher" id="launcher" title="Talk to the Grimoire Keeper">ᛟ</button>
+
+<div class="panel" id="panel">
+  <div class="head">
+    <div class="sig">ᛟ</div>
+    <div>
+      <div class="t">The Grimoire Keeper</div>
+      <div class="s">live instance · same brain customers get</div>
+    </div>
+    <div class="live">LIVE</div>
+  </div>
+
+  <div class="terms" id="terms"></div>
+
+  <div class="quick" id="quick">
+    <button data-q="What actually is Grimoire?">What is it?</button>
+    <button data-q="What can the agent actually do for me?">What can it do?</button>
+    <button data-q="How much does it cost?">Pricing?</button>
+    <button data-q="Is my data private?">Privacy?</button>
+  </div>
+
+  <form class="comp" id="comp">
+    <input id="msg-input" placeholder="Ask the Keeper anything…" autocomplete="off">
+    <button type="submit" id="send">Cast ᛝ</button>
+  </form>
+
+  <div class="pending" id="pending">⚠️ Demo mode — backend endpoint not yet wired. Live config: <span class="mono">/v1/chat/completions</span> (tapi backend gateway belum terpasang via tunnel — untuk demo, jawaban menggunakan knowledge base lokal yang sama dengan Keeper).</div>
+
+  <div class="footnote">ᛟ You're chatting with a <b>live Grimoire instance</b> — the same harness customers install. <a href="#" onclick="parent?.postMessage({type:'open-pricing'},'*')">Pricing ↗</a> · <a href="#" onclick="parent?.postMessage({type:'open-founder'},'*')">Talk to the founder ↗</a></div>
+</div>
+
+<script>
+/* ═════════════════════════════════════════════════════════════════
+   CONFIG — endpoint yang bisa diarahkan ke cloudflared tunnel/VPS:
+   window.GRIMOIRE_API = "https://YOUR-TUNNEL.trycloudflare.com/v1/chat/completions"
+   Kalau null → demo mode: jawaban dari KB lokal (offline-fallback).
+   ═════════════════════════════════════════════════════════════════ */
+window.GRIMOIRE_API = null; // ← paste tunnel URL here once tunnel is up
+
+const terms = document.getElementById('terms');
+const input = document.getElementById('msg-input');
+const form  = document.getElementById('comp');
+const send  = document.getElementById('send');
+
+/* ── local knowledge base (offline demo answers — same facts as SOUL) ── */
+const KB = [
+  {k:/what (is|exactly is)|really|grimoire\?|whats grimoire/i,
+   a:"ᛟ Grimoire is a private AI agent that lives on YOUR server and works through Telegram — daily briefs, price monitors, scheduled ops, persistent memory. Not a chat window: an operative that works while you sleep."},
+  {k:/what can.*do|capabilities|actually do|features/i,
+   a:"ᛞ Concrete examples: morning brief (news+email+calendar merged), price monitors that message you, inbox triage, weekly reviews, research digests with citations, document→tasks extraction. Anything wireable via its skills system."},
+  {k:/price|cost|how much|pricing|expensive/i,
+   a:"ᛝ Solo $19/mo (your own API keys) · Assist $25 founding/$49 list (managed keys + $10 credit) · Partner $149/mo (5 machines, NBD support). Founding: 10 seats, 50% off for life."},
+  {k:/privacy|private|data|safe|security/i,
+   a:"ᛉ Your agent runs on your own server — memory and sessions stay there. We reach it only when you ask. Everything exports to open formats; we treat lock-in as a bug."},
+  {k:/founding|seat|limited|spots/i,
+   a:"ᚨ 10 founding seats at 50% off for life — so onboarding hands stay on. Direct line to the founder (June). Feedback counts double."},
+  {k:/who (are|made|built)|you (real|alive|an ai)?|merlin/i,
+   a:"ᛟ June Arthov built the open harness (MIT, github.com/epinoiahorizon/Merlin-Agent). I'm one of its live agents — you're literally talking to the product it sells."},
+  {k:/video|see|demo|screenshot|show/i,
+   a:"🎬 A fleet demo video is being cut — meanwhile the fleet story is real: six machines aligned to one commit in one night, by the agents themselves."},
+  {k:/buy|order|sign|join|checkout/i,
+   a:"🛡️ Checkout links are coming momentarily (Stripe). I can have the founder contact you — or watch the pricing section above for the live links."},
+];
+function demoAnswer(q){
+  for (const {k,a} of KB) if (k.test(q)) return a;
+  return "ᛝ Good question — that's founder territory. I've noted it; the team answers personally when checkout opens. Meanwhile: pricing is in the section above, and everything else I know, I know because it shipped.";
+}
+
+function push(kind, text){ const d=document.createElement('div'); d.className='msg '+kind;
+  d.textContent=text; terms.appendChild(d); terms.scrollTop=terms.scrollHeight; return d; }
+
+async function apiAnswer(q){
+  if(!window.GRIMOIRE_API) return demoAnswer(q);
+  const r = await fetch(window.GRIMOIRE_API, {method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({model:'grimoir-keeper', stream:false,
+      messages:[{role:'system',content:'You are the Grimoire Keeper. Short, warm, precise. Facts only from your knowledge; never invent numbers. Offer one next step, never stack offers.'},{role:'user',content:q}]})});
+  if(!r.ok) throw new Error(r.status);
+  const j = await r.json();
+  return j.choices?.[0]?.message?.content || demoAnswer(q);
+}
+
+async function submit(q){
+  if(!q || send.disabled) return;
+  push('visitor', q); input.value='';
+  send.disabled=true;
+  const t = push('keeper typing','ᛝ conjuring…');
+  try{
+    const ans = await apiAnswer(q);
+    t.remove(); push('keeper', ans);
+  }catch(e){
+    t.remove(); push('keeper', demoAnswer(q) + '  (live-link hiccup — served from local grimoire)');
+  }
+  send.disabled=false; input.focus();
+}
+
+form.addEventListener('submit', e=>{e.preventDefault(); submit(input.value.trim())});
+document.getElementById('quick').addEventListener('click', e=>{
+  if(e.target.dataset.q) submit(e.target.dataset.q);
+});
+
+push('keeper','ᛟ The Grimoire opens. I am the Keeper — a live instance of the agent you can install. What would you like to know?');
+input.focus();
+</script>
+</body>
+</html>
