@@ -250,9 +250,12 @@ export default {
     }
 
     try {
-      // Anonymous tier: cap tokens tighter (cost shield on the free tier)
+      // Anonymous tier: same token budget as full tier — the reasoning model
+      // plans in 'reasoning' first; 400 starved content to empty on
+      // plan-heavy questions (false-positive fix, 2026-10-05). The free
+      // QUOTA (5/day) is the cost shield, not a small token budget.
       const anon = q.left <= FREE_QUESTIONS;   // tier-0 visitor (no auth yet)
-      const tokenCap = anon ? Math.min(MAX_TOKENS, 400) : MAX_TOKENS;
+      const tokenCap = MAX_TOKENS;
 
       const resp = await fetchWithTimeout(UPSTREAM, {
         method: "POST",
@@ -290,6 +293,40 @@ export default {
         const cut = content.search(/(?:^|\n)\s*[ᚨᚷᛟᛞᛝ]?\s*(Ah|Well met|Welcome|ᛟ|ᛞ|ᛝ|ᚨ|Sure|Of course|Here)/i);
         if (cut > 0) content = content.slice(cut).trim();
         else content = "ᛝ Merlin leans in — ask once more, plainer, and the answer comes.";
+      }
+      // ── empty-content rescue: if the model spent everything on planning
+      // ('reasoning' holds its plan, 'content' is blank), do NOT show the
+      // plan. Retry once demanding a direct in-character answer; only show
+      // the reasoning fallback if it reads as an actual reply.
+      if (!content || !String(content).trim()) {
+        const reasoningText = String(choice?.message?.reasoning || "").trim();
+        const readsAsReply = /[ᚨᚷᛟᛞᛝ]/.test(reasoningText.slice(0, 2)) ||
+          /\b(you'?re|you are|yours|friend|traveler|visitor|here'?s|here is|let'?s)\b/i.test(reasoningText) &&
+          !/\b(I should|maybe|I'?m being|the user is asking|I'?'?ll|I will)\b/i.test(reasoningText);
+        if (readsAsReply && reasoningText.length > 40) {
+          content = `ᛝ ${reasoningText.slice(0, 600)}`;
+        } else {
+          try {
+            const retry = await fetchWithTimeout(UPSTREAM, {
+              method: "POST",
+              headers: { "Content-Type": "application/json", "Authorization": `Bearer ${env.OLLAMA_API_KEY}` },
+              body: JSON.stringify({
+                model: env.MODEL || "glm-5.3-flash",
+                stream: false,
+                max_tokens: tokenCap,
+                messages: [{ role: "system", content: SYSTEM + "\n\nCRITICAL: skip ALL planning and meta-thought. Write ONLY final in-character reply as Merlin, first word = the answer's greeting rune. No analysis." }, ...turns],
+              }),
+            }, UPSTREAM_TIMEOUT_MS);
+            if (retry.ok) {
+              const rj = await retry.json();
+              const rc = rj?.choices?.[0]?.message?.content;
+              if (rc && String(rc).trim()) content = String(rc).trim();
+            }
+          } catch {}
+          if (!content || !String(content).trim()) {
+            content = "ᛝ The mists thicken — ask that once more, and I shall answer plainly.";
+          }
+        }
       }
       if (typeof content === "string") {
         choice.message.content = truncateReply(content, RESPONSE_CAP);
