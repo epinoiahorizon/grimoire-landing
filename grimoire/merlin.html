@@ -190,8 +190,33 @@ function updateQuotaBadge(){
   if(n === null || n === undefined){ b.textContent = ''; return; }
   b.textContent = n > 0 ? ('ᛞ ' + n + ' free question' + (n===1?'':'s') + ' left today') : '';
   if(n === 0){
-    b.innerHTML = 'ᛝ free quota spent · <a href="https://t.me/grimoire_support" target="_blank" style="color:var(--cyan)">pair via Telegram ↗</a>';
+    b.innerHTML = 'ᛝ free quota spent · <a href="https://t.me/grimoire_support" target="_blank" style="color:var(--cyan)">Telegram ↗</a> or <a href="#" onclick="showWaitlist()" style="color:var(--yellow-hi)">join waitlist ↗</a>';
   }
+}
+
+function showWaitlist(){
+  // inline waitlist form — replaces the quick buttons area
+  const q = document.getElementById('quick');
+  q.innerHTML = '<form id="wl-form" style="display:flex;gap:6px;width:100%"><input id="wl-email" type="email" placeholder="you@domain.com — hold my founding price" style="flex:1;background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:9px;padding:9px 12px;color:var(--foreground);font:inherit;font-size:13px;outline:none"><button type="submit" style="background:var(--yellow);border:none;border-radius:9px;padding:9px 14px;color:var(--bg);font-weight:700;font:inherit;font-size:13px;cursor:pointer">Hold ᛟ</button></form>';
+  document.getElementById('wl-form').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const email = document.getElementById('wl-email').value.trim();
+    const btn = e.target.querySelector('button'); btn.disabled = true; btn.textContent = '…';
+    try{
+      const r = await fetch((window.GRIMOIRE_API||'').replace('/v1/chat/completions','/v1/waitlist'), {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({email, source:'chat-widget-quota'})
+      });
+      const j = await r.json();
+      if(j.ok){
+        q.innerHTML = '<div style="color:var(--green);font-size:13px;padding:6px">ᚨ Founding price held. June will reach you personally when checkout opens.</div>';
+      } else {
+        q.innerHTML = '<div style="color:var(--yellow-hi);font-size:12px;padding:6px">'+(j.error||'try again')+'</div>';
+      }
+    }catch(err){
+      q.innerHTML = '<div style="color:var(--yellow-hi);font-size:12px;padding:6px">network hiccup — try again</div>';
+    }
+  });
 }
 
 form.addEventListener('submit', e=>{e.preventDefault(); submit(input.value.trim())});
