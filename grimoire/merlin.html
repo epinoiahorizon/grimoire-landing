@@ -97,7 +97,7 @@ body{font:15px/1.55 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif
     <button type="submit" id="send">Cast ᛝ</button>
   </form>
 
-  <div class="pending" id="pending">⚠️ Demo mode — backend not yet wired. Live path: <span class="mono">/v1/chat/completions</span> (the gateway proxy isn't up via tunnel yet — for now, answers come from the same local knowledge base Merlin itself uses).</div>
+  <div class="pending" id="pending" style="display:none">⚠️ Demo mode — backend not yet wired.</div>
 
   <div class="footnote">ᛟ You're chatting with a <b>live Grimoire instance</b> — the same harness customers install. <a href="#" onclick="parent?.postMessage({type:'open-pricing'},'*')">Pricing ↗</a> · <a href="#" onclick="parent?.postMessage({type:'open-founder'},'*')">Talk to the founder ↗</a></div>
 </div>
