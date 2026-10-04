@@ -139,13 +139,52 @@ export default {
     const origin = request.headers.get("Origin") || "";
     const cors = corsHeaders(origin);
 
+    const path = new URL(request.url).pathname;
+
+    if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
+
     if (origin && !ALLOWED_ORIGINS.has(origin)) {
       return new Response(JSON.stringify({ error: { message: "origin not allowed" } }),
         { status: 403, headers: cors });
     }
-    if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
+
+    // ── v5 waitlist: email capture (IBM-gated-content pattern; no passwords) ──
+    if (path === "/v1/waitlist" && request.method === "POST") {
+      const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+      if (await rate(`wl:${ip}`, 3600000, 5, env)) {
+        return new Response(JSON.stringify({ ok: false, error: "too many attempts; try later" }),
+          { status: 429, headers: cors });
+      }
+      let body;
+      try { body = await request.json(); } catch {
+        return new Response(JSON.stringify({ ok: false, error: "bad json" }), { status: 400, headers: cors });
+      }
+      const email = String(body.email || "").trim().toLowerCase().slice(0, 120);
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+        return new Response(JSON.stringify({ ok: false, error: "enter a valid email" }), { status: 400, headers: cors });
+      }
+      if (!env || !env.RATE_LIMITS) {
+        // KV not bound: don't lose the lead — echo it so the founder still collects it
+        return new Response(JSON.stringify({ ok: true, email, note: "KV not bound — store this lead manually" }), { headers: cors });
+      }
+      const key = `wl:${email}`;
+      const existing = await env.RATE_LIMITS.get(key);
+      if (existing) {
+        return new Response(JSON.stringify({ ok: true, duplicate: true }), { headers: cors });
+      }
+      await env.RATE_LIMITS.put(key, JSON.stringify({
+        ts: new Date().toISOString(),
+        source: body.source || "landing-widget",
+        ip,
+      }), { expirationTtl: 31536000 });  // 1 year retention
+      return new Response(JSON.stringify({ ok: true }), { headers: cors });
+    }
+
     if (request.method !== "POST") {
       return new Response(JSON.stringify({ error: { message: "POST only" } }), { status: 405, headers: cors });
+    }
+    if (path !== "/v1/chat/completions") {
+      return new Response(JSON.stringify({ error: { message: "unknown path" } }), { status: 404, headers: cors });
     }
 
     // fail-fast honest error when the secret isn't wired yet
