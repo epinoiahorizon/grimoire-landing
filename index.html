@@ -497,7 +497,17 @@
       border-color: var(--border-sigil);
       background: rgba(42, 161, 152, 0.12);
       transform: translateX(4px);
+      box-shadow: 0 0 18px rgba(42, 161, 152, 0.15), inset 0 0 12px rgba(42, 161, 152, 0.05);
     }
+
+    .incantation-chip:hover .chip-rune {
+      color: var(--rune-glow);
+      text-shadow: 0 0 12px rgba(42, 161, 152, 0.6);
+      transform: scale(1.15) rotate(6deg);
+    }
+
+    .incantation-chip .chip-rune { transition: all 0.3s ease; }
+    .incantation-chip:active { transform: translateX(4px) scale(0.98); }
 
     .chip-rune {
       font-size: 1.1rem;
@@ -819,42 +829,92 @@ body.light-mode .merlin-bubble{box-shadow:0 4px 18px rgba(101,123,131,.4)}
 
           <div>
             <span style="font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.8rem;">
-              Directorial Incantations
+              Ask the Magician
             </span>
 
             <div class="incantation-list">
-              <div class="incantation-chip" data-prompt="Deconstruct the crystal prism into procedural facet coordinates">
+              <div class="incantation-chip" data-prompt="Read me my horoscope — make it eerily specific, Merlin">
                 <span class="chip-rune font-rune">ᛟ</span>
                 <div>
-                  <span class="chip-title font-angel">Spatial Genesis</span>
-                  <span class="chip-sub">Deconstruct internal quartz facets</span>
+                  <span class="chip-title font-angel">Stars &amp; Signs</span>
+                  <span class="chip-sub">Your horoscope, conjured on the spot</span>
                 </div>
               </div>
 
-              <div class="incantation-chip" data-prompt="Choreograph a kinetic metamorphosis for the character armature">
+              <div class="incantation-chip" data-prompt="Teach me something incredible in 60 seconds — pick the subject yourself">
                 <span class="chip-rune font-rune">ᛞ</span>
                 <div>
-                  <span class="chip-title font-angel">Kinematic Motion</span>
-                  <span class="chip-sub">Organic skeletal deformation curve</span>
+                  <span class="chip-title font-angel">60-Second Wisdom</span>
+                  <span class="chip-sub">One astonishing lesson, chosen by Merlin</span>
                 </div>
               </div>
 
-              <div class="incantation-chip" data-prompt="Diffuse warm ochre and cyan caustics across the volumetric lenses">
+              <div class="incantation-chip" data-prompt="Explain quantum computing like I'm 12 — make it wonder, not homework">
                 <span class="chip-rune font-rune">ᚨ</span>
                 <div>
-                  <span class="chip-title font-angel">Prismatic Dispersion</span>
-                  <span class="chip-sub">Solarized photometric IOR pass</span>
+                  <span class="chip-title font-angel">Explain Like I'm 12</span>
+                  <span class="chip-sub">Big ideas, small words, real magic</span>
                 </div>
               </div>
 
-              <div class="incantation-chip" data-prompt="Synthesize camera trajectory, volumetric depth, and lighting harmony">
+              <div class="incantation-chip" data-prompt="Draft a witty tweet about mornings, coffee, and the illusion of productivity">
                 <span class="chip-rune font-rune">ᛝ</span>
                 <div>
-                  <span class="chip-title font-angel">Harmonic Symphony</span>
-                  <span class="chip-sub">Autonomous multi-agent previsualisation</span>
+                  <span class="chip-title font-angel">Wordsmith's Spell</span>
+                  <span class="chip-sub">Witty copy, drafted live</span>
+                </div>
+              </div>
+
+              <div class="incantation-chip" data-prompt="What can I cook from eggs, rice, garlic and one sad tomato? Give me a recipe with soul">
+                <span class="chip-rune font-rune">ᛟ</span>
+                <div>
+                  <span class="chip-title font-angel">Kitchen Alchemy</span>
+                  <span class="chip-sub">A recipe from what you have</span>
                 </div>
               </div>
             </div>
+
+            <details style="margin-top: 1.1rem; border-top: 1px solid var(--border-subtle); padding-top: 0.9rem;">
+              <summary style="font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; user-select: none;">
+                ᛞ Directorial Incantations <span style="font-size: 0.55rem; color: var(--dim);">(previz studio)</span>
+              </summary>
+              <div class="incantation-list" style="margin-top: 0.8rem;">
+                <div class="incantation-chip" data-prompt="Deconstruct the crystal prism into procedural facet coordinates">
+                  <span class="chip-rune font-rune">ᛟ</span>
+                  <div>
+                    <span class="chip-title font-angel">Spatial Genesis</span>
+                    <span class="chip-sub">Deconstruct internal quartz facets</span>
+                  </div>
+                </div>
+
+                <div class="incantation-chip" data-prompt="Choreograph a kinetic metamorphosis for the character armature">
+                  <span class="chip-rune font-rune">ᛞ</span>
+                  <div>
+                    <span class="chip-title font-angel">Kinematic Motion</span>
+                    <span class="chip-sub">Organic skeletal deformation curve</span>
+                  </div>
+                </div>
+
+                <div class="incantation-chip" data-prompt="Diffuse warm ochre and cyan caustics across the volumetric lenses">
+                  <span class="chip-rune font-rune">ᚨ</span>
+                  <div>
+                    <span class="chip-title font-angel">Prismatic Dispersion</span>
+                    <span class="chip-sub">Solarized photometric IOR pass</span>
+                  </div>
+                </div>
+
+                <div class="incantation-chip" data-prompt="Synthesize camera trajectory, volumetric depth, and lighting harmony">
+                  <span class="chip-rune font-rune">ᛝ</span>
+                  <div>
+                    <span class="chip-title font-angel">Harmonic Symphony</span>
+                    <span class="chip-sub">Autonomous multi-agent previsualisation</span>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <div id="sanctum-quota" style="margin-top: 1rem; font-size: 0.72rem; color: var(--text-muted); text-align: center;"></div>
+            <a href="https://epinoiahorizon.com/main-site/" target="_blank" rel="noopener" style="display:block;margin-top:0.6rem;text-align:center;font-size:0.75rem;color:var(--rune-glow);text-decoration:underline;text-underline-offset:3px;">Unlock the full brain →</a>
           </div>
         </aside>
 
@@ -876,12 +936,12 @@ body.light-mode .merlin-bubble{box-shadow:0 4px 18px rgba(101,123,131,.4)}
 
           <div class="chat-scroll-area" id="chatScrollArea">
             <div class="chat-bubble bubble-merlin font-editorial">
-              Greetings, Director. I am Merlin, the autonomous creative familiar of Epinoia Horizon. Whether you wish to crystallize optical geometries, rig kinetic choreography, or scatter solarized caustics, speak your intent into the grimoire.
+              ᛟ Welcome, traveler. I am Merlin — and I answer anything: horoscopes, science, code, recipes, history, advice, riddles. Ask without hesitation; the grimoire listens.
             </div>
           </div>
 
           <form class="dialogue-input-bar" id="chatForm">
-            <input type="text" id="userInputField" class="chat-input-text" placeholder="Speak your directorial intent..." autocomplete="off">
+            <input type="text" id="userInputField" class="chat-input-text" placeholder="Ask Merlin anything — stars to code..." autocomplete="off">
             <button type="submit" class="chat-send-btn" title="Cast Intent">
               <i class="fa-solid fa-arrow-up"></i>
             </button>
@@ -1242,20 +1302,22 @@ body.light-mode .merlin-bubble{box-shadow:0 4px 18px rgba(101,123,131,.4)}
       replyAsMerlin(val);
     });
 
-    // Preset Incantation Chips
+    // Preset Incantation Chips (click = send prompt to LIVE brain + push history)
     document.querySelectorAll('.incantation-chip').forEach(chip => {
       chip.addEventListener('click', function() {
         const prompt = this.dataset.prompt;
         addMessage('user', prompt);
+        (window.__hist = window.__hist || []).push({role:'user', content:prompt.slice(0,2000)});
         playChime(500);
         replyAsMerlin(prompt);
       });
     });
 
     btnClearChat.addEventListener('click', () => {
+      window.__hist = [];
       chatScrollArea.innerHTML = `
         <div class="chat-bubble bubble-merlin font-editorial">
-          The tome is renewed. Speak your next directorial intent to Merlin.
+          ᛟ The tome is renewed. Ask me anything — the mists are fresh.
         </div>
       `;
       playChime(420);
