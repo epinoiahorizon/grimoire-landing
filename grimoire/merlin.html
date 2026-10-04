@@ -108,7 +108,7 @@ body{font:15px/1.55 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif
    window.GRIMOIRE_API = "https://YOUR-TUNNEL.trycloudflare.com/v1/chat/completions"
    If null → demo mode: answers from the local KB (offline fallback).
    ═════════════════════════════════════════════════════════════════ */
-window.GRIMOIRE_API = null; // ← paste tunnel URL here once tunnel is up
+window.GRIMOIRE_API = "https://merlin-keeper.epinoiahorizon.workers.dev/v1/chat/completions";
 
 const terms = document.getElementById('terms');
 const input = document.getElementById('msg-input');
