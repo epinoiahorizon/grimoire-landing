@@ -1,358 +1,1234 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Grimoire — your 24/7 private AI agent</title>
-<meta name="description" content="GRIMOIRE ASSIST: a private AI agent on your own VPS. Telegram concierge, scheduled ops, desktop TUI — managed keys, one setup. Founding pricing, 50% off for life.">
-<meta property="og:title" content="Grimoire — your 24/7 private AI agent">
-<meta property="og:description" content="Private agent on your own VPS. Telegram concierge · scheduled ops · desktop TUI. Founding: 50% off, for life.">
-<meta property="og:type" content="website">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-/* ═══════════════════════════════════════════════════════════════════════
-   STRIPE PAYMENT LINKS — REPLACE THESE THREE VALUES, THEN SHIP:
-   ═══════════════════════════════════════════════════════════════════════
-   Grimoire solarized identity on Linear-grade chrome:
-   weight-510 workhorse typography, stepped negative tracking,
-   luminance-stacked surfaces, whisper borders, one chromatic accent.  */
-:root{
-  /* Grimoire solarized palette (brand identity) */
-  --bg:#002b36; --panel:#073642; --panel2:#0d4250;
-  --yellow:#b58900; --yellow-hi:#e6c04a;
-  --cyan:#2aa198; --blue:#268bd2;
-  --text:#93a1a1; --white:#fdf6e3; --dim:#586e75; --strong:#839496;
-  --red:#dc322f; --green:#859900;
-  /* Linear-style translucent chrome (moonlight wireframes) */
-  --border-subtle:rgba(253,246,227,.06);
-  --border-standard:rgba(253,246,227,.10);
-  --surface-1:rgba(253,246,227,.025);
-  --surface-2:rgba(253,246,227,.045);
-  --surface-3:rgba(253,246,227,.07);
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-  background:var(--bg); color:var(--text);
-  font:16px/1.6 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
-  font-feature-settings:"cv01","ss03";
-  -webkit-font-smoothing:antialiased;
-}
-a{color:var(--cyan);text-decoration:none;transition:.15s}
-a:hover{color:var(--blue)}
-.wrap{max-width:1160px;margin:0 auto;padding:0 28px}
-.mono,.mono *{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Monaco,'Liberation Mono','Courier New',monospace}
-section{padding:96px 0}
-section h2{color:var(--white);font-size:32px;font-weight:500;text-align:center;
-  letter-spacing:-.7px;line-height:1.13;margin-bottom:10px}
-h2 .rune{color:var(--yellow-hi);margin-right:4px;font-weight:500}
-.section-sub{text-align:center;max-width:560px;margin:0 auto 56px;
-  font-size:17px;font-weight:300;line-height:1.6;color:var(--strong);letter-spacing:-.17px}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EPINOIA HORIZON — Grimoire Portal &amp; Merlin Sanctum</title>
+  
+  <!-- Fonts: Angel Wish style serif (Cinzel Decorative) & Arcane Serif (Cormorant Garamond) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Three.js (r128) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-/* ── nav ─────────────────────────────────────────────── */
-nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);
-  backdrop-filter:blur(12px);border-bottom:1px solid var(--border-subtle)}
-nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
-.brand{display:flex;align-items:baseline;gap:10px;color:var(--white);
-  font-weight:500;letter-spacing:2px;font-size:15px}
-.brand .glyph{color:var(--cyan);font-size:17px}
-.brand .by{color:var(--dim);font-weight:300;font-size:12.5px;letter-spacing:.3px}
-nav .cta{font-size:14px;font-weight:500;padding:10px 20px;border-radius:8px;
-  background:var(--yellow);color:var(--bg);box-shadow:0 1.2px 0 rgba(0,0,0,.08)}
-nav .cta:hover{background:var(--yellow-hi);color:var(--bg)}
+  <style>
+    :root {
+      --solar-base03: #002b36;
+      --solar-base02: #073642;
+      --solar-base01: #586e75;
+      --solar-base00: #657b83;
+      --solar-base0:  #839496;
+      --solar-base1:  #93a1a1;
+      --solar-base2:  #eee8d5;
+      --solar-base3:  #fdf6e3;
+      --solar-yellow: #b58900;
+      --solar-orange: #cb4b16;
+      --solar-magenta:#d33682;
+      --solar-violet: #6c71c4;
+      --solar-blue:   #268bd2;
+      --solar-cyan:   #2aa198;
 
-/* ── hero ────────────────────────────────────────────── */
-header{padding:112px 0 80px;text-align:center;position:relative;overflow:hidden}
-.runes-bg{position:absolute;inset:0;opacity:.035;pointer-events:none;font-size:210px;
-  line-height:.85;letter-spacing:60px;white-space:nowrap;overflow:hidden;color:var(--cyan)}
-header .wrap{position:relative}
-.badge{display:inline-flex;align-items:center;gap:8px;padding:0 12px 0 6px;height:30px;
-  border-radius:9999px;border:1px solid var(--border-standard);
-  background:var(--surface-1);color:#d0d6e0;
-  font-size:12px;font-weight:500;letter-spacing:.3px}
-.badge .glyph{color:var(--yellow-hi);padding-left:6px}
-.badge b{color:var(--white);font-weight:500}
-h1{color:var(--white);font-size:48px;font-weight:500;line-height:1.0;letter-spacing:-1.056px;
-  margin:36px auto 22px;max-width:16ch}
-h1 .accent{color:var(--yellow-hi)}
-.sub{max-width:600px;margin:0 auto;font-size:18px;font-weight:300;line-height:1.6;
-  color:var(--strong);letter-spacing:-.17px}
-.logo-row{margin:52px 0 0;display:flex;justify-content:center;
-  font-family:'JetBrains Mono',ui-monospace,monospace;
-  font-size:min(11px,2.2vw);line-height:1.15;color:var(--cyan);white-space:pre;font-weight:400;
-  opacity:.9}
-.hero-divider{margin-top:80px;height:1px;
-  background:linear-gradient(90deg,transparent,var(--border-standard) 20%,var(--border-standard) 80%,transparent)}
+      /* Dark Luxe Grimoire Mapping */
+      --bg-void: #001e26;
+      --bg-surface: rgba(7, 54, 66, 0.6);
+      --bg-pane: rgba(0, 43, 54, 0.72);
+      --border-sigil: rgba(42, 161, 152, 0.35);
+      --border-subtle: rgba(147, 161, 161, 0.16);
+      --text-gold: #b58900;
+      --text-main: #eee8d5;
+      --text-muted: #93a1a1;
+      --text-faint: #586e75;
+      --rune-glow: #2aa198;
+      --tome-shadow: 0 25px 60px -15px rgba(0, 10, 15, 0.9), inset 0 1px 2px rgba(255, 255, 255, 0.12);
+    }
 
-/* ── pricing ─────────────────────────────────────────── */
-.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch;margin-top:64px}
-@media(max-width:920px){.tiers{grid-template-columns:1fr;max-width:520px;margin-inline:auto}}
-.tier{border:1px solid var(--border-subtle);border-radius:12px;padding:40px 30px 30px;
-  background:var(--surface-1);
-  display:flex;flex-direction:column;position:relative;
-  transition:background .2s, transform .2s}
-.tier:hover{background:var(--surface-2);transform:translateY(-2px)}
-.tier.hero{border-color:rgba(230,192,74,.45);background:var(--surface-2);
-  box-shadow:rgba(0,0,0,.2) 0 0 0 1px, 0 0 90px rgba(181,137,0,.10)}
-.tier.hero:hover{background:var(--surface-3)}
-.tag{position:absolute;top:0;left:50%;transform:translate(-50%,-50%);
-  display:inline-flex;align-items:center;height:28px;padding:0 14px;border-radius:9999px;
-  white-space:nowrap;background:var(--yellow-hi);color:var(--bg);
-  font-size:11px;font-weight:600;letter-spacing:.6px;
-  box-shadow:0 2px 14px rgba(0,0,0,.4)}
-.tier h3{color:var(--white);font-size:20px;font-weight:600;display:flex;
-  align-items:center;gap:9px;letter-spacing:-.24px}
-.tier h3 .glyph{color:var(--cyan);font-weight:400}
-.hero h3 .glyph{color:var(--yellow-hi)}
-.price{margin:24px 0 8px;font-size:44px;font-weight:500;color:var(--white);
-  line-height:1.0;letter-spacing:-1.056px}
-.price .unit{font-size:15px;font-weight:400;color:var(--dim);letter-spacing:0}
-.was{font-size:13.5px;font-weight:400;color:var(--dim);letter-spacing:-.13px}
-.was s{color:var(--red)}
-.hero .was{color:var(--yellow-hi)}
-.tier ul{list-style:none;margin:24px 0 28px;display:grid;gap:11px;
-  font-size:14.5px;font-weight:300;line-height:1.55;letter-spacing:-.165px}
-.tier li::before{content:"ᛞ ";color:var(--cyan);font-weight:400}
-.hero li::before{content:"ᛞ ";color:var(--yellow-hi)}
-.hero b{color:var(--white);font-weight:500}
-.buy{margin-top:auto;display:block;text-align:center;padding:12px 18px;border-radius:8px;
-  font-weight:500;font-size:14.5px;
-  background:rgba(253,246,227,.03);border:1px solid var(--border-standard);color:#e2e4e7;
-  cursor:pointer;transition:.15s}
-.buy:hover{background:var(--surface-3);color:var(--white)}
-.hero .buy{background:var(--yellow);border-color:transparent;color:var(--bg);font-weight:600}
-.hero .buy:hover{background:var(--yellow-hi);color:var(--bg)}
-.annual-note{text-align:center;color:var(--dim);font-size:13.5px;font-weight:400;margin-top:28px}
-.compare{margin:52px auto 0;width:100%;max-width:900px;font-size:14.5px;border-collapse:collapse}
-.compare td,.compare th{padding:13px 16px;border-bottom:1px solid var(--border-subtle);
-  text-align:left;font-weight:300;letter-spacing:-.13px}
-.compare th{color:var(--white);font-weight:500;font-size:15px;letter-spacing:-.15px}
-.compare tr:first-child th{border-bottom:2px solid var(--border-standard)}
-.compare .yes{color:var(--green);font-weight:500}
-.compare .no{color:var(--dim)}
-.compare td:first-child{color:var(--strong)}
-@media(max-width:700px){.compare{font-size:13px}.compare td,.compare th{padding:10px 8px}}
+    body.light-mode {
+      --bg-void: #f8f3e5;
+      --bg-surface: rgba(238, 232, 213, 0.75);
+      --bg-pane: rgba(253, 246, 227, 0.88);
+      --border-sigil: rgba(38, 139, 210, 0.4);
+      --border-subtle: rgba(88, 110, 117, 0.22);
+      --text-gold: #b58900;
+      --text-main: #073642;
+      --text-muted: #586e75;
+      --text-faint: #93a1a1;
+      --rune-glow: #268bd2;
+      --tome-shadow: 0 20px 50px -10px rgba(101, 123, 131, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.9);
+    }
 
-/* ── how / steps ─────────────────────────────────────── */
-.alt{background:var(--panel);border-block:1px solid var(--border-subtle)}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1000px;margin:0 auto}
-@media(max-width:840px){.steps{grid-template-columns:1fr;max-width:520px}}
-.step{border:1px solid var(--border-subtle);border-radius:12px;padding:30px;
-  background:rgba(0,0,0,.14)}
-.step .n{color:var(--yellow-hi);font-size:11px;letter-spacing:2.2px;font-weight:500}
-.step h3{color:var(--white);margin:12px 0 8px;font-size:20px;font-weight:600;letter-spacing:-.24px}
-.step p{font-size:14.5px;font-weight:300;color:var(--text);letter-spacing:-.165px}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
 
-/* ── trust ───────────────────────────────────────────── */
-.trust{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:960px;margin:0 auto}
-@media(max-width:780px){.trust{grid-template-columns:1fr}}
-.trust div{border:1px solid var(--border-subtle);border-radius:12px;
-  padding:22px 24px;font-size:14.5px;line-height:1.65;
-  background:var(--surface-1);font-weight:300;letter-spacing:-.13px;
-  transition:background .2s}
-.trust div:hover{background:var(--surface-2)}
-.trust b{color:var(--white);font-weight:500}
+    body {
+      background-color: var(--bg-void);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background-color 0.6s ease, color 0.6s ease;
+      position: relative;
+    }
 
-/* ── faq ─────────────────────────────────────────────── */
-.faq{max-width:800px;margin:0 auto;display:grid;gap:12px}
-details{border:1px solid var(--border-subtle);border-radius:12px;padding:18px 22px;
-  background:var(--surface-1);transition:background .15s}
-details:hover{background:var(--surface-2)}
-summary{color:var(--white);cursor:pointer;font-weight:500;font-size:16px;letter-spacing:-.15px}
-summary::marker{color:var(--cyan)}
-details p{margin-top:12px;font-size:14.5px;font-weight:300;color:var(--text);letter-spacing:-.1px}
+    /* Background Arcane Halo */
+    .arcane-aurora {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background: 
+        radial-gradient(circle at 18% 22%, rgba(42, 161, 152, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 82% 78%, rgba(181, 137, 0, 0.08) 0%, transparent 55%),
+        radial-gradient(circle at 50% 10%, rgba(108, 113, 196, 0.09) 0%, transparent 60%);
+    }
 
-/* ── final cta ───────────────────────────────────────── */
-.final{border:1px solid rgba(230,192,74,.4);border-radius:22px;padding:68px 40px;text-align:center;
-  background:var(--surface-2);max-width:780px;margin:0 auto;
-  box-shadow:rgba(0,0,0,.2) 0 0 0 1px, 0 0 110px rgba(181,137,0,.12)}
-.final .kicker{color:var(--yellow-hi);letter-spacing:2.5px;font-size:13px;font-weight:500}
-.final .price{font-size:64px;margin:26px 0 8px;letter-spacing:-1.584px}
-.final .price .unit{font-size:18px}
-.final .was{font-size:16px}
-.final .seats{color:var(--strong);margin:12px 0 28px;font-weight:300;letter-spacing:-.1px}
-.final .seats b{color:var(--white);font-weight:500}
-.final .buy{display:inline-block;min-width:340px;background:var(--yellow);color:var(--bg);
-  font-weight:600;padding:14px 22px}
-.final .buy:hover{background:var(--yellow-hi)}
-.final .alt-cta{margin-top:20px;font-size:13px;color:var(--dim);
-  font-family:'JetBrains Mono',ui-monospace,monospace}
-.final .alt-cta a{text-decoration:underline;font-weight:400}
+    /* Esoteric Hairline Grid */
+    .esoteric-grid {
+      position: fixed;
+      inset: 0;
+      background-size: 64px 64px;
+      background-image: 
+        linear-gradient(to right, rgba(147, 161, 161, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(147, 161, 161, 0.035) 1px, transparent 1px);
+      pointer-events: none;
+      z-index: 0;
+    }
 
-/* ── footer ──────────────────────────────────────────── */
-footer{border-top:1px solid var(--border-subtle);padding:72px 0 64px;text-align:center;
-  font-size:13px;color:var(--dim);line-height:1.9;font-weight:300}
-footer .logo-row{font-size:8px;margin:0 0 18px;opacity:.4;display:flex;justify-content:center}
-footer b{color:var(--strong);font-weight:500}
-footer a{text-decoration:none;font-weight:400}
-footer a:hover{text-decoration:underline}
+    .font-angel {
+      font-family: 'Cinzel Decorative', serif;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
 
-/* ── motion ──────────────────────────────────────────── */
-@media(prefers-reduced-motion:no-preference){
-  .tier,.step,.trust div{animation:rise .5s cubic-bezier(.2,.8,.2,1) both}
-  @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-}
+    .font-editorial {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+    }
+
+    .font-rune {
+      font-family: 'Cinzel Decorative', serif;
+      font-weight: 700;
+    }
+
+    .iridescent-text {
+      background: linear-gradient(135deg, #ffffff 0%, var(--solar-base2) 30%, var(--rune-glow) 70%, var(--text-gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 14px rgba(42, 161, 152, 0.28));
+    }
+
+    body.light-mode .iridescent-text {
+      background: linear-gradient(135deg, #002b36 0%, #073642 40%, #2aa198 75%, #b58900 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: none;
+    }
+
+    header.grimoire-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1.2rem 3.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(0, 30, 38, 0.7);
+    }
+
+    body.light-mode header.grimoire-nav {
+      background: rgba(248, 243, 229, 0.85);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      cursor: pointer;
+    }
+
+    .nav-rune-sigil {
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--border-sigil);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--rune-glow);
+      background: var(--bg-surface);
+      box-shadow: 0 0 15px rgba(42, 161, 152, 0.15);
+      transition: all 0.4s ease;
+    }
+
+    .nav-left:hover .nav-rune-sigil {
+      transform: rotate(45deg);
+      border-color: var(--text-gold);
+      color: var(--text-gold);
+    }
+
+    .nav-title-group h1 {
+      font-size: 1.15rem;
+      letter-spacing: 0.22em;
+    }
+
+    .nav-title-group span {
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: block;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      padding: 0.4rem 0.2rem;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-tab-btn.active, .nav-tab-btn:hover {
+      color: var(--text-main);
+    }
+
+    .nav-tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 1.5px;
+      background: var(--rune-glow);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .btn-circle {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-circle:hover {
+      color: var(--rune-glow);
+      border-color: var(--border-sigil);
+      transform: scale(1.05);
+    }
+
+    .view-page {
+      display: none;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      min-height: 100vh;
+      padding-top: 5.5rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .view-page.active-page {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .portal-container {
+      max-width: 1080px;
+      margin: 2rem auto 4rem;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .acrylic-tome-plaque {
+      width: 100%;
+      background: var(--bg-pane);
+      backdrop-filter: blur(28px) saturate(160%);
+      -webkit-backdrop-filter: blur(28px) saturate(160%);
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      box-shadow: var(--tome-shadow);
+      padding: 3rem 2.5rem 3.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Arcane Corner Runes on Plaque */
+    .plaque-corner-rune {
+      position: absolute;
+      font-size: 1.1rem;
+      color: var(--text-faint);
+      opacity: 0.6;
+      transition: all 0.4s ease;
+    }
+    .corner-tl { top: 1.4rem; left: 1.8rem; }
+    .corner-tr { top: 1.4rem; right: 1.8rem; }
+    .corner-bl { bottom: 1.4rem; left: 1.8rem; }
+    .corner-br { bottom: 1.4rem; right: 1.8rem; }
+
+    .acrylic-tome-plaque:hover .plaque-corner-rune {
+      color: var(--text-gold);
+      opacity: 1;
+      text-shadow: 0 0 12px var(--text-gold);
+    }
+
+    .badge-sigil-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.4rem 1.2rem;
+      border-radius: 30px;
+      background: rgba(42, 161, 152, 0.1);
+      border: 1px solid var(--border-sigil);
+      font-size: 0.72rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--rune-glow);
+      margin-bottom: 1.2rem;
+    }
+
+    .canvas-3d-frame {
+      width: 100%;
+      height: 380px;
+      margin: 0.5rem auto 1.5rem;
+      cursor: grab;
+      position: relative;
+    }
+
+    .canvas-3d-frame:active {
+      cursor: grabbing;
+    }
+
+    .rune-chapter-row {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      margin: 1.8rem 0;
+      flex-wrap: wrap;
+    }
+
+    .rune-pill-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 0.5rem 1.1rem;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .rune-pill-badge:hover, .rune-pill-badge.active {
+      border-color: var(--rune-glow);
+      color: var(--rune-glow);
+      box-shadow: 0 0 14px rgba(42, 161, 152, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .rune-sym {
+      font-size: 1rem;
+      color: var(--text-gold);
+    }
+
+    .portal-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: linear-gradient(135deg, var(--solar-cyan) 0%, var(--solar-blue) 100%);
+      color: #002b36;
+      border: none;
+      padding: 1rem 2.6rem;
+      border-radius: 40px;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 12px 32px -8px rgba(42, 161, 152, 0.5);
+      transition: all 0.4s ease;
+      margin-top: 1rem;
+    }
+
+    .portal-cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 42px -6px rgba(42, 161, 152, 0.75);
+    }
+
+    .sanctum-tome-wrapper {
+      max-width: 1200px;
+      margin: 1.5rem auto 3rem;
+      padding: 0 1.5rem;
+    }
+
+    .grimoire-split-book {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      background: var(--bg-pane);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      box-shadow: var(--tome-shadow);
+      min-height: 640px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Spellbook Spine Separator */
+    .grimoire-split-book::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 340px;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, var(--border-sigil), transparent);
+    }
+
+    /* Left Folio: Grimoire Index & Incantations */
+    .folio-index {
+      padding: 2.2rem 1.8rem;
+      background: rgba(0, 30, 38, 0.35);
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    .folio-avatar-box {
+      text-align: center;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .avatar-halo-ring {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 1.5px dashed var(--rune-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 0.8rem;
+      font-size: 1.8rem;
+      color: var(--text-gold);
+      animation: spinHalo 24s linear infinite;
+    }
+
+    @keyframes spinHalo {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .incantation-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .incantation-chip {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .incantation-chip:hover {
+      border-color: var(--border-sigil);
+      background: rgba(42, 161, 152, 0.12);
+      transform: translateX(4px);
+    }
+
+    .chip-rune {
+      font-size: 1.1rem;
+      color: var(--text-gold);
+    }
+
+    .chip-title {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-main);
+      display: block;
+    }
+
+    .chip-sub {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    /* Right Folio: Dynamic Chat Dialogue */
+    .folio-dialogue {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 640px;
+    }
+
+    .dialogue-header {
+      padding: 1.4rem 2rem;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-scroll-area {
+      flex: 1;
+      padding: 2rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      scroll-behavior: smooth;
+    }
+
+    .chat-bubble {
+      max-width: 82%;
+      padding: 1.1rem 1.4rem;
+      border-radius: 18px;
+      font-size: 0.95rem;
+      line-height: 1.65;
+      position: relative;
+    }
+
+    .bubble-merlin {
+      align-self: flex-start;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-bottom-left-radius: 4px;
+      color: var(--text-main);
+    }
+
+    .bubble-merlin::before {
+      content: 'ᚨ MERLIN';
+      display: block;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      color: var(--text-gold);
+      margin-bottom: 0.4rem;
+    }
+
+    .bubble-user {
+      align-self: flex-end;
+      background: rgba(42, 161, 152, 0.18);
+      border: 1px solid var(--border-sigil);
+      border-bottom-right-radius: 4px;
+      color: var(--text-main);
+      text-align: right;
+    }
+
+    .bubble-user::before {
+      content: 'DIRECTOR';
+      display: block;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      color: var(--rune-glow);
+      margin-bottom: 0.4rem;
+    }
+
+    /* Chat Input Form */
+    .dialogue-input-bar {
+      padding: 1.2rem 2rem;
+      border-top: 1px solid var(--border-subtle);
+      background: rgba(0, 30, 38, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .chat-input-text {
+      flex: 1;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 30px;
+      padding: 0.85rem 1.4rem;
+      color: var(--text-main);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .chat-input-text:focus {
+      border-color: var(--rune-glow);
+    }
+
+    .chat-send-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--solar-cyan);
+      color: #002b36;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .chat-send-btn:hover {
+      transform: scale(1.08);
+      background: #3accc0;
+    }
+
+    /* Cursor Shimmer */
+    .cursor-spark {
+      position: fixed;
+      pointer-events: none;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(42, 161, 152, 0.9) 0%, rgba(181, 137, 0, 0.4) 60%, transparent 100%);
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      opacity: 0.8;
+      transition: transform 0.15s ease-out, opacity 0.4s ease-out;
+    }
+
+    @media (max-width: 900px) {
+      .grimoire-split-book {
+        grid-template-columns: 1fr;
+      }
+      .grimoire-split-book::after {
+        display: none;
+      }
+      .folio-index {
+        border-bottom: 1px solid var(--border-subtle);
+      }
+      .folio-dialogue {
+        height: 520px;
+      }
+      header.grimoire-nav {
+        padding: 1rem 1.5rem;
+      }
+      .nav-tabs {
+        gap: 1.2rem;
+      }
+      .acrylic-tome-plaque {
+        padding: 2.2rem 1.5rem;
+      }
+    }
+  
+    .chat-bubble.typing { color: var(--text-faint); font-style: italic; font-size: 0.85rem; }
+
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="wrap">
-    <div class="brand"><span class="glyph">ᛟ</span> GRIMOIRE <span class="by">by Epinoia Horizon</span></div>
-    <a class="cta" href="#pricing">Get access</a>
-  </div>
-</nav>
+  <!-- Ambient Backdrop -->
+  <div class="arcane-aurora"></div>
+  <div class="esoteric-grid"></div>
 
-<header>
-  <div class="runes-bg mono" aria-hidden="true">ᛟ ᛞ ᚨ ᛝ ᛉ ᛟ ᛞ ᚨ ᛝ ᛉ ᛟ ᛞ ᚨ ᛝ ᛉ ᛟ ᛞ ᚨ ᛝ ᛉ ᛟ ᛞ</div>
-  <div class="wrap">
-    <span class="badge"><span class="glyph">ᚨ</span> Founding access&nbsp;—&nbsp;<b>10 seats</b>&nbsp;·&nbsp;50% off for life</span>
-    <h1>Your private AI agent, <span class="accent">on your own server</span>, working 24/7.</h1>
-    <p class="sub">GRIMOIRE ASSIST is a managed Merlin agent: Telegram concierge, scheduled jobs,
-    persistent memory and the arcane desktop TUI — provisioned for you, keys included.
-    Not a chat window. An operative.</p>
-    <div class="logo-row">
-███╗   ███╗███████╗██████╗ ██╗     ██╗███╗   ██╗
-████╗ ████║██╔════╝██╔══██╗██║     ██║████╗  ██║
-██╔████╔██║█████╗  ██████╔╝██║     ██║██╔██╗ ██║
-██║╚██╔╝██║██╔══╝  ██╔══██╗██║     ██║██║╚██╗██║
-██║ ╚═╝ ██║███████╗██║  ██║███████╗██║██║ ╚████║
-╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═══╝</div>
-    <div class="hero-divider"></div>
-  </div>
-</header>
-
-<!-- ══════════ PRICING ══════════ -->
-<section id="pricing" class="wrap">
-  <h2><span class="rune">ᛞ</span> Pick your seat</h2>
-  <p class="section-sub">Founding members lock their price for life. Cancel anytime with one click; export everything.</p>
-
-  <div class="tiers">
-
-    <div class="tier">
-      <h3><span class="glyph">ᛋ</span> Solo</h3>
-      <div class="price">$19<span class="unit">/mo</span></div>
-      <div class="was">Annual: $190 (2 months free)</div>
-      <ul>
-        <li>Your own VPS + Merlin gateway, 24/7</li>
-        <li>Telegram channel, paired to you</li>
-        <li>3 scheduled jobs (digests, monitors, reviews)</li>
-        <li>Persistent memory</li>
-        <li>Bring your own API keys (we configure them for you)</li>
-      </ul>
-      <a class="buy" href="PASTE_STRIPE_LINK_SOLO" data-stripe="PASTE_STRIPE_LINK_SOLO">Join Founding — Solo</a>
+  <header class="grimoire-nav">
+    <div class="nav-left" id="navLogo">
+      <div class="nav-rune-sigil font-rune">ᛟ</div>
+      <div class="nav-title-group">
+        <h1 class="font-angel iridescent-text">EPINOIA HORIZON</h1>
+        <span>Grimoire of Previsualisation</span>
+      </div>
     </div>
 
-    <div class="tier hero">
-      <span class="tag">ᛟ MOST CHOSEN · FOUNDING 50% OFF</span>
-      <h3><span class="glyph">ᛞ</span> Assist</h3>
-      <div class="price">$25<span class="unit">/mo</span></div>
-      <div class="was"><s>$49</s> for founding members — for life</div>
-      <ul>
-        <li>Everything in Solo</li>
-        <li><b>Managed keys</b> — no API keys to carry; $10/mo credit included</li>
-        <li>5 scheduled jobs + daily morning brief</li>
-        <li>Fleet: desktop + 1 machine kept in sync (auto-updates, same TUI everywhere)</li>
-        <li>Weekly ops check by a human — the founder himself</li>
-      </ul>
-      <a class="buy" href="PASTE_STRIPE_LINK_ASSIST" data-stripe="PASTE_STRIPE_LINK_ASSIST">Join Founding — Assist</a>
+    <ul class="nav-tabs">
+      <li><button class="nav-tab-btn active" id="tabPortal">ᛟ Portal</button></li>
+      <li><button class="nav-tab-btn" id="tabChat">ᚨ Merlin Sanctum</button></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="btn-circle" id="btnAudioToggle" title="Toggle Crystal Chimes">
+        <i class="fa-solid fa-volume-xmark" id="audioIcon"></i>
+      </button>
+      <button class="btn-circle" id="btnThemeToggle" title="Switch Solarized Light / Dark">
+        <i class="fa-solid fa-sun" id="themeIcon"></i>
+      </button>
     </div>
+  </header>
 
-    <div class="tier">
-      <h3><span class="glyph">ᚨ</span> Partner</h3>
-      <div class="price">$149<span class="unit">/mo</span></div>
-      <div class="was">Annual: $1,490 (2 months free)</div>
-      <ul>
-        <li>Everything in Assist (10× token credit)</li>
-        <li>Fleet of up to 5 machines + 3 agents</li>
-        <li>Telegram + Discord + web dashboard</li>
-        <li>2 human seats · next-business-day support</li>
-        <li>Unlimited scheduled jobs</li>
-      </ul>
-      <a class="buy" href="PASTE_STRIPE_LINK_PARTNER" data-stripe="PASTE_STRIPE_LINK_PARTNER">Join Founding — Partner</a>
+  <main class="view-page active-page" id="viewPortal">
+    <div class="portal-container">
+      
+      <div class="acrylic-tome-plaque">
+        <!-- Elder Futhark Corner Sigils -->
+        <span class="plaque-corner-rune corner-tl font-rune">ᛟ</span>
+        <span class="plaque-corner-rune corner-tr font-rune">ᛞ</span>
+        <span class="plaque-corner-rune corner-bl font-rune">ᚨ</span>
+        <span class="plaque-corner-rune corner-br font-rune">ᛝ</span>
+
+        <div class="badge-sigil-tag font-angel">
+          <i class="fa-solid fa-gem" style="font-size: 0.75rem;"></i>
+          Optical Quartz Prism Artifact
+        </div>
+
+        <!-- 3D Three.js Container -->
+        <div class="canvas-3d-frame" id="threePortalFrame"></div>
+
+        <h2 class="font-angel iridescent-text" style="font-size: clamp(2rem, 4.5vw, 3.8rem); margin-bottom: 0.6rem;">
+          EPINOIA HORIZON
+        </h2>
+        
+        <p class="font-editorial" style="font-size: clamp(1.2rem, 2vw, 1.6rem); letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.8rem;">
+          A Previsualisation and Prototyping Group
+        </p>
+
+        <!-- Elder Futhark Chapter Pills -->
+        <div class="rune-chapter-row">
+          <div class="rune-pill-badge active" data-model="pyramid">
+            <span class="rune-sym font-rune">ᛟ</span>
+            <span>Othala &bull; Heritage</span>
+          </div>
+          <div class="rune-pill-badge" data-model="polyhedron">
+            <span class="rune-sym font-rune">ᛞ</span>
+            <span>Dagaz &bull; Metamorph</span>
+          </div>
+          <div class="rune-pill-badge" data-model="torus">
+            <span class="rune-sym font-rune">ᚨ</span>
+            <span>Ansuz &bull; Intelligence</span>
+          </div>
+          <div class="rune-pill-badge" data-model="wire">
+            <span class="rune-sym font-rune">ᛝ</span>
+            <span>Ingwaz &bull; Manifest</span>
+          </div>
+        </div>
+
+        <button class="portal-cta-btn" id="btnEnterMerlin">
+          <span>Enter Merlin Sanctum</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+      </div>
+
     </div>
+  </main>
 
-  </div>
-  <p class="annual-note mono">Pay for 10 months, get 12 — choose “annual” at checkout.</p>
+  <main class="view-page" id="viewChat">
+    <div class="sanctum-tome-wrapper">
+      
+      <div class="grimoire-split-book">
+        
+        <!-- Left Folio: Grimoire Index & Directorial Incantations -->
+        <aside class="folio-index">
+          <div class="folio-avatar-box">
+            <div class="avatar-halo-ring font-rune">ᚨ</div>
+            <h3 class="font-angel iridescent-text" style="font-size: 1.1rem; letter-spacing: 0.16em;">Merlin Agent</h3>
+            <span style="font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-gold);">
+              Previs Familiar v6.4
+            </span>
+          </div>
 
-  <table class="compare">
-    <tr><th></th><th>Free tiers (ChatGPT etc.)</th><th>Grimoire Solo</th><th>Grimoire Assist</th></tr>
-    <tr><td>Works when you're offline</td><td class="no">—</td><td class="yes">✓ 24/7</td><td class="yes">✓ 24/7</td></tr>
-    <tr><td>Proactive (messages you first)</td><td class="no">—</td><td class="yes">✓ cron</td><td class="yes">✓ cron + daily brief</td></tr>
-    <tr><td>Your data stays on your server</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-    <tr><td>Model API keys</td><td class="mono">n/a</td><td>BYOK</td><td class="yes">✓ managed + credit</td></tr>
-    <tr><td>Desktop TUI (arcane theme)</td><td class="no">—</td><td class="no">—</td><td class="yes">✓ kept in sync</td></tr>
-  </table>
-</section>
+          <div>
+            <span style="font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.8rem;">
+              Directorial Incantations
+            </span>
 
-<!-- ══════════ HOW ══════════ -->
-<section class="alt">
-  <div class="wrap">
-    <h2><span class="rune">ᛝ</span> Live in one afternoon</h2>
-    <p class="section-sub">We ship you a running agent — not a zip file.</p>
-    <div class="steps">
-      <div class="step"><div class="n">STEP 01</div><h3>Order your seat</h3><p>Secure checkout via Stripe. You'll get a short form: your Telegram handle and the machines you want bridged.</p></div>
-      <div class="step"><div class="n">STEP 02</div><h3>We provision</h3><p>Within 24h your VPS is live: gateway running, keys configured (or your BYOK wired), cron jobs drafted with you.</p></div>
-      <div class="step"><div class="n">STEP 03</div><h3>Pair &amp; command</h3><p>One pairing code links your Telegram. From then on: briefs arrive, tasks run, memory accumulates. <span class="mono">/help</span> is your grimoire. <a href="/TELEGRAM-BOT-SETUP.md" style="text-decoration:underline">Full bot setup guide →</a></p></div>
+            <div class="incantation-list">
+              <div class="incantation-chip" data-prompt="Deconstruct the crystal prism into procedural facet coordinates">
+                <span class="chip-rune font-rune">ᛟ</span>
+                <div>
+                  <span class="chip-title font-angel">Spatial Genesis</span>
+                  <span class="chip-sub">Deconstruct internal quartz facets</span>
+                </div>
+              </div>
+
+              <div class="incantation-chip" data-prompt="Choreograph a kinetic metamorphosis for the character armature">
+                <span class="chip-rune font-rune">ᛞ</span>
+                <div>
+                  <span class="chip-title font-angel">Kinematic Motion</span>
+                  <span class="chip-sub">Organic skeletal deformation curve</span>
+                </div>
+              </div>
+
+              <div class="incantation-chip" data-prompt="Diffuse warm ochre and cyan caustics across the volumetric lenses">
+                <span class="chip-rune font-rune">ᚨ</span>
+                <div>
+                  <span class="chip-title font-angel">Prismatic Dispersion</span>
+                  <span class="chip-sub">Solarized photometric IOR pass</span>
+                </div>
+              </div>
+
+              <div class="incantation-chip" data-prompt="Synthesize camera trajectory, volumetric depth, and lighting harmony">
+                <span class="chip-rune font-rune">ᛝ</span>
+                <div>
+                  <span class="chip-title font-angel">Harmonic Symphony</span>
+                  <span class="chip-sub">Autonomous multi-agent previsualisation</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Right Folio: Dynamic Chat Dialogue Area -->
+        <section class="folio-dialogue">
+          <div class="dialogue-header">
+            <div>
+              <span class="font-angel" style="font-size: 0.85rem; letter-spacing: 0.18em; color: var(--text-main);">
+                Communion with Merlin
+              </span>
+              <span style="display: block; font-size: 0.7rem; color: var(--rune-glow); letter-spacing: 0.15em;">
+                &bull; Resonance Synchronized
+              </span>
+            </div>
+            <button class="btn-circle" id="btnClearChat" title="Reset Dialogue">
+              <i class="fa-solid fa-rotate-right"></i>
+            </button>
+          </div>
+
+          <div class="chat-scroll-area" id="chatScrollArea">
+            <div class="chat-bubble bubble-merlin font-editorial">
+              Greetings, Director. I am Merlin, the autonomous creative familiar of Epinoia Horizon. Whether you wish to crystallize optical geometries, rig kinetic choreography, or scatter solarized caustics, speak your intent into the grimoire.
+            </div>
+          </div>
+
+          <form class="dialogue-input-bar" id="chatForm">
+            <input type="text" id="userInputField" class="chat-input-text" placeholder="Speak your directorial intent..." autocomplete="off">
+            <button type="submit" class="chat-send-btn" title="Cast Intent">
+              <i class="fa-solid fa-arrow-up"></i>
+            </button>
+          </form>
+        </section>
+
+      </div>
+
     </div>
-  </div>
-</section>
+  </main>
 
-<!-- ══════════ TRUST ══════════ -->
-<section class="wrap">
-  <h2><span class="rune">ᛉ</span> Plain talk</h2>
-  <p class="section-sub">The things others hide in fine print.</p>
-  <div class="trust">
-    <div><b>BYOK vs managed, honestly.</b> Solo = you own the API keys and pay providers directly. Assist/Partner = we carry the keys, meter fairly, and include credit — visible in your usage statement.</div>
-    <div><b>Model costs never “unlimited”.</b> Fair-use floors protect both of us; heavy automation is quoted before it bills. No surprise invoices.</div>
-    <div><b>One-click cancel.</b> Stripe subscription, cancel from your receipt page. Your server keeps running till the period ends — no hostages.</div>
-    <div><b>Data export &amp; succession.</b> Your memory, sessions and configs export to YAML/JSON anytime. Leave, and your agent can move with you.</div>
-  </div>
-</section>
+  <script>
+    const tabPortal = document.getElementById('tabPortal');
+    const tabChat = document.getElementById('tabChat');
+    const viewPortal = document.getElementById('viewPortal');
+    const viewChat = document.getElementById('viewChat');
+    const btnEnterMerlin = document.getElementById('btnEnterMerlin');
+    const navLogo = document.getElementById('navLogo');
 
-<!-- ══════════ FAQ ══════════ -->
-<section class="alt">
-  <div class="wrap">
-    <h2><span class="rune">ᛝ</span> Asked before</h2>
-    <div class="faq">
-      <details><summary>What can the agent actually do?</summary><p>Daily briefs (email, news, calendar), price/listing monitors with alerts, inbox triage, weekly reviews, research digests with citations, document-to-actions extraction, running scripts on your fleet, and anything you wire via its skills system. It messages you on Telegram when something matters.</p></details>
-      <details><summary>Is my data private?</summary><p>Your agent runs on your own VPS (or a dedicated container we operate for you). Memory and sessions live there. We can only reach it when you ask for help — and every session is in your logs.</p></details>
-      <details><summary>What's “managed keys” vs “BYOK”?</summary><p>Solo: you bring API keys from OpenAI/Anthropic/DeepSeek etc. and pay them directly — retail rates, no markup. Assist/Partner: we carry the keys, route across providers for reliability, and include a monthly credit with fair-use metering.</p></details>
-      <details><summary>What if you disappear?</summary><p>Worst case, you keep the server. The agent software is open source (MIT); your configs and memory export in open formats. A new operator can pick it up. We see lock-in as a bug.</p></details>
-      <details><summary>Why only 10 founding seats?</summary><p>So that onboarding hands stay on. Founding members get 50% off for life, a direct line to the founder, and their feedback shapes the roadmap.</p></details>
-      <details><summary>Which platforms?</summary><p>Telegram day one. Discord and the web dashboard are on the Partner tier. Desktop TUI for Windows and macOS on Assist and up.</p></details>
-    </div>
-  </div>
-</section>
+    function switchPage(targetPage) {
+      if (targetPage === 'portal') {
+        tabPortal.classList.add('active');
+        tabChat.classList.remove('active');
+        viewPortal.classList.add('active-page');
+        viewChat.classList.remove('active-page');
+      } else {
+        tabChat.classList.add('active');
+        tabPortal.classList.remove('active');
+        viewChat.classList.add('active-page');
+        viewPortal.classList.remove('active-page');
+      }
+      playChime(560);
+    }
 
-<!-- ══════════ FINAL CTA ══════════ -->
-<section class="wrap" style="padding-bottom:112px">
-  <div class="final">
-    <div class="kicker">ᚨ THE GRIMOIRE OPENS 8 TIMES</div>
-    <div class="price">$25<span class="unit">/mo</span></div>
-    <div class="was"><s>$49</s> · for life, if you claim a founding seat</div>
-    <p class="seats">Founding seats left: <b>7</b> of 10</p>
-    <a class="buy" href="PASTE_STRIPE_LINK_ASSIST" data-stripe="PASTE_STRIPE_LINK_ASSIST">Claim a founding seat — Assist</a>
-    <p class="alt-cta">or start smaller: <a href="PASTE_STRIPE_LINK_SOLO">Solo $19</a></p>
-  </div>
-</section>
+    tabPortal.addEventListener('click', () => switchPage('portal'));
+    tabChat.addEventListener('click', () => switchPage('chat'));
+    btnEnterMerlin.addEventListener('click', () => switchPage('chat'));
+    navLogo.addEventListener('click', () => switchPage('portal'));
 
-<footer>
-  <div class="wrap">
-    <div class="logo-row">
-███╗   ███╗███████╗██████╗ ██╗     ██╗███╗   ██╗
-████╗ ████║██╔════╝██╔══██╗██║     ██║████╗  ██║
-██╔████╔██║█████╗  ██████╔╝██║     ██║██╔██╗ ██║
-██║╚██╔╝██║██╔══╝  ██╔══██╗██║     ██║██║╚██╗██║
-██║ ╚═╝ ██║███████╗██║  ██║███████╗██║██║ ╚████║
-╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═══╝</div>
-    <p>ᛟ Grimoire — a product by <b>Epinoia Horizon</b>, 2026.</p>
-    <p>Built on the open <a href="https://github.com/epinoiahorizon/Merlin-Agent" rel="noopener">Merlin harness</a> (MIT — © Epinoia Horizon, prior art © Nous Research).</p>
-    <p>Terms · Privacy · Fair-use — provided at checkout and on request. ✧</p>
-  </div>
-</footer>
+    const btnThemeToggle = document.getElementById('btnThemeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    let isLight = false;
 
+    btnThemeToggle.addEventListener('click', () => {
+      isLight = !isLight;
+      document.body.classList.toggle('light-mode', isLight);
+      themeIcon.className = isLight ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+      playChime(isLight ? 620 : 440);
+    });
+
+    let audioCtx = null;
+    let sfxOn = false;
+    const btnAudioToggle = document.getElementById('btnAudioToggle');
+    const audioIcon = document.getElementById('audioIcon');
+
+    function playChime(freq = 520) {
+      if (!sfxOn) return;
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.5, audioCtx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.15);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.16);
+      } catch (e) {}
+    }
+
+    btnAudioToggle.addEventListener('click', () => {
+      sfxOn = !sfxOn;
+      audioIcon.className = sfxOn ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark';
+      if (sfxOn) playChime(580);
+    });
+
+    const threeContainer = document.getElementById('threePortalFrame');
+    let scene, camera, renderer, crystalMesh, circuitCore, particles;
+    let rotationRate = 0.004;
+
+    function initThree() {
+      const w = threeContainer.clientWidth || 600;
+      const h = threeContainer.clientHeight || 380;
+
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 1000);
+      camera.position.set(0, 0, 8);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(w, h);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      threeContainer.appendChild(renderer.domElement);
+
+      // Studio Lighting
+      const ambLight = new THREE.AmbientLight(0x073642, 2.2);
+      scene.add(ambLight);
+
+      const keyLight = new THREE.DirectionalLight(0x2aa198, 3.4);
+      keyLight.position.set(4, 7, 5);
+      scene.add(keyLight);
+
+      const fillLight = new THREE.PointLight(0x6c71c4, 2.8, 18);
+      fillLight.position.set(-5, -3, 3);
+      scene.add(fillLight);
+
+      const goldLight = new THREE.PointLight(0xb58900, 2.2, 16);
+      goldLight.position.set(0, 4, -4);
+      scene.add(goldLight);
+
+      buildModel('pyramid');
+
+      // Stardust Sparkles
+      const count = 140;
+      const geo = new THREE.BufferGeometry();
+      const pos = new Float32Array(count * 3);
+      for (let i = 0; i < count * 3; i += 3) {
+        pos[i] = (Math.random() - 0.5) * 11;
+        pos[i+1] = (Math.random() - 0.5) * 7;
+        pos[i+2] = (Math.random() - 0.5) * 9;
+      }
+      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      const mat = new THREE.PointsMaterial({
+        color: 0x2aa198,
+        size: 0.045,
+        transparent: true,
+        opacity: 0.7,
+        blending: THREE.AdditiveBlending
+      });
+      particles = new THREE.Points(geo, mat);
+      scene.add(particles);
+
+      setupPointerInteraction();
+      animateThree();
+    }
+
+    function createProceduralTraces() {
+      const cv = document.createElement('canvas');
+      cv.width = 1024;
+      cv.height = 1024;
+      const ctx = cv.getContext('2d');
+      ctx.fillStyle = '#002b36';
+      ctx.fillRect(0, 0, 1024, 1024);
+      ctx.strokeStyle = '#2aa198';
+      ctx.lineWidth = 3;
+      ctx.shadowColor = '#2aa198';
+      ctx.shadowBlur = 8;
+
+      for (let i = 0; i < 40; i++) {
+        let x = Math.random() * 1024;
+        let y = Math.random() * 1024;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        let len = 60 + Math.random() * 140;
+        let d = Math.floor(Math.random() * 4);
+        if (d === 0) x += len;
+        else if (d === 1) y += len;
+        else if (d === 2) x -= len;
+        else y -= len;
+        ctx.lineTo(x, y);
+        x += (Math.random() > 0.5 ? 40 : -40);
+        y += (Math.random() > 0.5 ? 40 : -40);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+
+        ctx.fillStyle = '#b58900';
+        ctx.beginPath();
+        ctx.arc(x, y, 4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      return new THREE.CanvasTexture(cv);
+    }
+
+    function buildModel(type) {
+      if (crystalMesh) scene.remove(crystalMesh);
+      if (circuitCore) scene.remove(circuitCore);
+
+      let geo, coreGeo;
+      if (type === 'pyramid') {
+        geo = new THREE.ConeGeometry(2.3, 3.2, 4);
+        coreGeo = new THREE.ConeGeometry(1.5, 2.2, 4);
+      } else if (type === 'polyhedron') {
+        geo = new THREE.IcosahedronGeometry(2.1, 1);
+        coreGeo = new THREE.IcosahedronGeometry(1.3, 0);
+      } else if (type === 'torus') {
+        geo = new THREE.TorusGeometry(1.8, 0.65, 16, 40);
+        coreGeo = new THREE.TorusGeometry(1.8, 0.15, 8, 40);
+      } else if (type === 'wire') {
+        geo = new THREE.OctahedronGeometry(2.2, 0);
+        coreGeo = new THREE.OctahedronGeometry(1.4, 0);
+      }
+
+      const traceTex = createProceduralTraces();
+      const glassMat = new THREE.MeshPhysicalMaterial({
+        color: 0x93a1a1,
+        metalness: 0.15,
+        roughness: 0.08,
+        transmission: 0.88,
+        ior: 1.62,
+        transparent: true,
+        opacity: 0.92,
+        map: traceTex,
+        wireframe: (type === 'wire')
+      });
+
+      crystalMesh = new THREE.Mesh(geo, glassMat);
+      crystalMesh.position.y = -0.15;
+      scene.add(crystalMesh);
+
+      const coreMat = new THREE.MeshBasicMaterial({
+        color: 0x2aa198,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.75
+      });
+      circuitCore = new THREE.Mesh(coreGeo, coreMat);
+      circuitCore.position.y = -0.15;
+      scene.add(circuitCore);
+    }
+
+    function setupPointerInteraction() {
+      let isDragging = false;
+      let prevX = 0, prevY = 0;
+
+      threeContainer.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        prevX = e.clientX;
+        prevY = e.clientY;
+      });
+      window.addEventListener('mouseup', () => { isDragging = false; });
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging || !crystalMesh) return;
+        const dx = e.clientX - prevX;
+        const dy = e.clientY - prevY;
+        crystalMesh.rotation.y += dx * 0.009;
+        crystalMesh.rotation.x += dy * 0.009;
+        if (circuitCore) {
+          circuitCore.rotation.y += dx * 0.009;
+          circuitCore.rotation.x += dy * 0.009;
+        }
+        prevX = e.clientX;
+        prevY = e.clientY;
+      });
+
+      // Chapter Pills Click
+      document.querySelectorAll('.rune-chapter-row .rune-pill-badge').forEach(pill => {
+        pill.addEventListener('click', function() {
+          document.querySelectorAll('.rune-chapter-row .rune-pill-badge').forEach(p => p.classList.remove('active'));
+          this.classList.add('active');
+          buildModel(this.dataset.model);
+          playChime(640);
+        });
+      });
+    }
+
+    let clock = new THREE.Clock();
+    function animateThree() {
+      requestAnimationFrame(animateThree);
+      const elapsed = clock.getElapsedTime();
+
+      if (crystalMesh) {
+        crystalMesh.rotation.y += rotationRate;
+        crystalMesh.rotation.x = Math.sin(elapsed * 0.4) * 0.08;
+      }
+      if (circuitCore) {
+        circuitCore.rotation.y -= rotationRate * 1.5;
+        circuitCore.rotation.z = Math.cos(elapsed * 0.5) * 0.12;
+      }
+      if (particles) {
+        particles.rotation.y += 0.001;
+      }
+
+      if (renderer && scene && camera) {
+        renderer.render(scene, camera);
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      if (threeContainer && renderer && camera) {
+        const w = threeContainer.clientWidth;
+        const h = threeContainer.clientHeight;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+      }
+    });
+
+    const chatForm = document.getElementById('chatForm');
+    const userInputField = document.getElementById('userInputField');
+    const chatScrollArea = document.getElementById('chatScrollArea');
+    const btnClearChat = document.getElementById('btnClearChat');
+
+    const merlinResponses = {
+      spatial: "Under the sigil ᛟ Othala: I have deconstructed the monolithic crystal into 64 facet nodes. Internal circuit traces are mapped along the non-Euclidean optical axes. The geometry stands ready for previsualisation.",
+      kinematic: "Under the sigil ᛞ Dagaz: Metamorphic curves attuned. Skeletal deformation weights calculated with smooth organic transitions across 60 fps keyframes.",
+      photometric: "Under the sigil ᚨ Ansuz: Solarized cyan and warm ochre light packets injected. Caustic dispersion index set to 1.62 with frosted edge reflections.",
+      symphony: "Under the sigil ᛝ Ingwaz: The multi-agent swarm converges. Camera orbit arcs, volumetric crystal depth, and lighting passes harmonized in holistic synchrony."
+    };
+
+    function addMessage(sender, text) {
+      const bubble = document.createElement('div');
+      bubble.className = `chat-bubble bubble-${sender} font-editorial`;
+      bubble.textContent = text;
+      chatScrollArea.appendChild(bubble);
+      chatScrollArea.scrollTop = chatScrollArea.scrollHeight;
+    }
+
+    async function replyAsMerlin(promptText) {
+      // typing bubble
+      const typing = addMessage('merlin', 'ᛝ Merlin conjuring…');
+      typing.classList.add('typing');
+      try {
+        const ctrl = new AbortController();
+        const kill = setTimeout(() => ctrl.abort(), 20000);
+        const resp = await fetch(MERLIN_API, {
+          method: 'POST',
+          signal: ctrl.signal,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'merlin', stream: false,
+            messages: [{ role: 'user', content: promptText }]
+          })
+        });
+        clearTimeout(kill);
+        if (!resp.ok) throw new Error(resp.status);
+        const j = await resp.json();
+        typing.remove();
+        addMessage('merlin', (j.choices?.[0]?.message?.content || 'ᛝ The tome is silent — ask once more.') );
+        playChime(680);
+      } catch (e) {
+        typing.remove();
+        addMessage('merlin', 'ᛝ The mists interrupted — one more try.');
+        playChime(300);
+      }
+    }
+
+    
+    chatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const val = userInputField.value.trim();
+      if (!val) return;
+      addMessage('user', val);
+      userInputField.value = '';
+      playChime(480);
+      replyAsMerlin(val);
+    });
+
+    // Preset Incantation Chips
+    document.querySelectorAll('.incantation-chip').forEach(chip => {
+      chip.addEventListener('click', function() {
+        const prompt = this.dataset.prompt;
+        addMessage('user', prompt);
+        playChime(500);
+        replyAsMerlin(prompt);
+      });
+    });
+
+    btnClearChat.addEventListener('click', () => {
+      chatScrollArea.innerHTML = `
+        <div class="chat-bubble bubble-merlin font-editorial">
+          The tome is renewed. Speak your next directorial intent to Merlin.
+        </div>
+      `;
+      playChime(420);
+    });
+
+    let lastSparkle = 0;
+    window.addEventListener('mousemove', (e) => {
+      const now = Date.now();
+      if (now - lastSparkle > 80) {
+        const s = document.createElement('div');
+        s.className = 'cursor-spark';
+        const sz = Math.random() * 7 + 4;
+        s.style.width = sz + 'px';
+        s.style.height = sz + 'px';
+        s.style.left = e.clientX + 'px';
+        s.style.top = e.clientY + 'px';
+        document.body.appendChild(s);
+        setTimeout(() => {
+          s.style.opacity = '0';
+          s.style.transform = 'translate(-50%, -50%) scale(2)';
+        }, 30);
+        setTimeout(() => s.remove(), 400);
+        lastSparkle = now;
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initThree();
+    });
+  </script>
 </body>
 </html>
