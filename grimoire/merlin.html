@@ -80,7 +80,7 @@ body{font:15px/1.55 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif
       <div class="t">Merlin</div>
       <div class="s">the live agent · same brain customers get</div>
     </div>
-    <div class="live">LIVE</div>
+    <div class="live">LIVE</div><div id="quota-badge" style="margin-left:10px;font-size:11px;color:var(--strong)"></div>
   </div>
 
   <div class="terms" id="terms"></div>
@@ -151,9 +151,19 @@ async function apiAnswer(q){
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({model:'merlin', stream:false,
         messages:[{role:'user',content:q}]})});
+    if(r.status === 429) {
+      let j = {}; try { j = await r.json(); } catch(e){}
+      if(j.error && j.error.code === 'free_quota_spent'){
+        window.__freeLeft = 0; updateQuotaBadge();
+        throw {quota: true, msg: j.error.message};
+      }
+      throw new Error(r.status);
+    }
     if(!r.ok) throw new Error(r.status);
     const j = await r.json();
-    return j.choices?.[0]?.message?.content || demoAnswer(q);
+    const m = j.choices?.[0]?.message || {};
+    if(typeof m._free_left === 'number'){ window.__freeLeft = m._free_left; updateQuotaBadge(); }
+    return m.content || demoAnswer(q);
   } finally { clearTimeout(kill); }
 }
 
@@ -166,9 +176,22 @@ async function submit(q){
     const ans = await apiAnswer(q);
     t.remove(); push('keeper', ans);
   }catch(e){
-    t.remove(); push('keeper', demoAnswer(q) + '  (live-link hiccup — served from local grimoire)');
+    t.remove();
+    if(e && e.quota){ push('keeper', 'ᛝ ' + e.msg); }
+    else { push('keeper', demoAnswer(q) + '  (live-link hiccup — served from local grimoire)'); }
   }
   send.disabled=false; input.focus();
+}
+
+function updateQuotaBadge(){
+  const b = document.getElementById('quota-badge');
+  if(!b) return;
+  const n = window.__freeLeft;
+  if(n === null || n === undefined){ b.textContent = ''; return; }
+  b.textContent = n > 0 ? ('ᛞ ' + n + ' free question' + (n===1?'':'s') + ' left today') : '';
+  if(n === 0){
+    b.innerHTML = 'ᛝ free quota spent · <a href="https://t.me/grimoire_support" target="_blank" style="color:var(--cyan)">pair via Telegram ↗</a>';
+  }
 }
 
 form.addEventListener('submit', e=>{e.preventDefault(); submit(input.value.trim())});
