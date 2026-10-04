@@ -148,6 +148,15 @@
       background: rgba(0, 30, 38, 0.7);
     }
 
+    /* nav-tabs: TRUE screen-center (absolute) — space-between offset it right
+       because .nav-left (logo block) is wider than .nav-right (2 icons) */
+    .nav-tabs {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
     body.light-mode header.grimoire-nav {
       background: rgba(248, 243, 229, 0.85);
     }
