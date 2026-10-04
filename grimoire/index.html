@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grimoire — your 24/7 private AI agent</title>
+<meta name="description" content="GRIMOIRE ASSIST: a private AI agent on your own VPS. Telegram concierge, scheduled ops, desktop TUI — managed keys, one setup. Founding pricing, 50% off for life.">
+<meta property="og:title" content="Grimoire — your 24/7 private AI agent">
+<meta property="og:description" content="Private agent on your own VPS. Telegram concierge · scheduled ops · desktop TUI. Founding: 50% off, for life.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════════════
+   STRIPE PAYMENT LINKS — REPLACE THESE THREE VALUES, THEN SHIP:
+   ═══════════════════════════════════════════════════════════════════════
+   Grimoire solarized identity on Linear-grade chrome:
+   weight-510 workhorse typography, stepped negative tracking,
+   luminance-stacked surfaces, whisper borders, one chromatic accent.  */
+:root{
+  /* Grimoire solarized palette (brand identity) */
+  --bg:#002b36; --panel:#073642; --panel2:#0d4250;
+  --yellow:#b58900; --yellow-hi:#e6c04a;
+  --cyan:#2aa198; --blue:#268bd2;
+  --text:#93a1a1; --white:#fdf6e3; --dim:#586e75; --strong:#839496;
+  --red:#dc322f; --green:#859900;
+  /* Linear-style translucent chrome (moonlight wireframes) */
+  --border-subtle:rgba(253,246,227,.06);
+  --border-standard:rgba(253,246,227,.10);
+  --surface-1:rgba(253,246,227,.025);
+  --surface-2:rgba(253,246,227,.045);
+  --surface-3:rgba(253,246,227,.07);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--text);
+  font:16px/1.6 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  font-feature-settings:"cv01","ss03";
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--cyan);text-decoration:none;transition:.15s}
+a:hover{color:var(--blue)}
+.wrap{max-width:1160px;margin:0 auto;padding:0 28px}
+.mono,.mono *{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Monaco,'Liberation Mono','Courier New',monospace}
+section{padding:96px 0}
+section h2{color:var(--white);font-size:32px;font-weight:500;text-align:center;
+  letter-spacing:-.7px;line-height:1.13;margin-bottom:10px}
+h2 .rune{color:var(--yellow-hi);margin-right:4px;font-weight:500}
+.section-sub{text-align:center;max-width:560px;margin:0 auto 56px;
+  font-size:17px;font-weight:300;line-height:1.6;color:var(--strong);letter-spacing:-.17px}
+
+/* ── nav ─────────────────────────────────────────────── */
+nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--border-subtle)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:baseline;gap:10px;color:var(--white);
+  font-weight:500;letter-spacing:2px;font-size:15px}
+.brand .glyph{color:var(--cyan);font-size:17px}
+.brand .by{color:var(--dim);font-weight:300;font-size:12.5px;letter-spacing:.3px}
+nav .cta{font-size:14px;font-weight:500;padding:10px 20px;border-radius:8px;
+  background:var(--yellow);color:var(--bg);box-shadow:0 1.2px 0 rgba(0,0,0,.08)}
+nav .cta:hover{background:var(--yellow-hi);color:var(--bg)}
+
+/* ── hero ────────────────────────────────────────────── */
+header{padding:112px 0 80px;text-align:center;position:relative;overflow:hidden}
+.runes-bg{position:absolute;inset:0;opacity:.035;pointer-events:none;font-size:210px;
+  line-height:.85;letter-spacing:60px;white-space:nowrap;overflow:hidden;color:var(--cyan)}
+header .wrap{position:relative}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:0 12px 0 6px;height:30px;
+  border-radius:9999px;border:1px solid var(--border-standard);
+  background:var(--surface-1);color:#d0d6e0;
+  font-size:12px;font-weight:500;letter-spacing:.3px}
+.badge .glyph{color:var(--yellow-hi);padding-left:6px}
+.badge b{color:var(--white);font-weight:500}
+h1{color:var(--white);font-size:48px;font-weight:500;line-height:1.0;letter-spacing:-1.056px;
+  margin:36px auto 22px;max-width:16ch}
+h1 .accent{color:var(--yellow-hi)}
+.sub{max-width:600px;margin:0 auto;font-size:18px;font-weight:300;line-height:1.6;
+  color:var(--strong);letter-spacing:-.17px}
+.logo-row{margin:52px 0 0;display:flex;justify-content:center;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:min(11px,2.2vw);line-height:1.15;color:var(--cyan);white-space:pre;font-weight:400;
+  opacity:.9}
+.hero-divider{margin-top:80px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--border-standard) 20%,var(--border-standard) 80%,transparent)}
+
+/* ── pricing ─────────────────────────────────────────── */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch;margin-top:64px}
+@media(max-width:920px){.tiers{grid-template-columns:1fr;max-width:520px;margin-inline:auto}}
+.tier{border:1px solid var(--border-subtle);border-radius:12px;padding:40px 30px 30px;
+  background:var(--surface-1);
+  display:flex;flex-direction:column;position:relative;
+  transition:background .2s, transform .2s}
+.tier:hover{background:var(--surface-2);transform:translateY(-2px)}
+.tier.hero{border-color:rgba(230,192,74,.45);background:var(--surface-2);
+  box-shadow:rgba(0,0,0,.2) 0 0 0 1px, 0 0 90px rgba(181,137,0,.10)}
+.tier.hero:hover{background:var(--surface-3)}
+.tag{position:absolute;top:0;left:50%;transform:translate(-50%,-50%);
+  display:inline-flex;align-items:center;height:28px;padding:0 14px;border-radius:9999px;
+  white-space:nowrap;background:var(--yellow-hi);color:var(--bg);
+  font-size:11px;font-weight:600;letter-spacing:.6px;
+  box-shadow:0 2px 14px rgba(0,0,0,.4)}
+.tier h3{color:var(--white);font-size:20px;font-weight:600;display:flex;
+  align-items:center;gap:9px;letter-spacing:-.24px}
+.tier h3 .glyph{color:var(--cyan);font-weight:400}
+.hero h3 .glyph{color:var(--yellow-hi)}
+.price{margin:24px 0 8px;font-size:44px;font-weight:500;color:var(--white);
+  line-height:1.0;letter-spacing:-1.056px}
+.price .unit{font-size:15px;font-weight:400;color:var(--dim);letter-spacing:0}
+.was{font-size:13.5px;font-weight:400;color:var(--dim);letter-spacing:-.13px}
+.was s{color:var(--red)}
+.hero .was{color:var(--yellow-hi)}
+.tier ul{list-style:none;margin:24px 0 28px;display:grid;gap:11px;
+  font-size:14.5px;font-weight:300;line-height:1.55;letter-spacing:-.165px}
+.tier li::before{content:"ᛞ ";color:var(--cyan);font-weight:400}
+.hero li::before{content:"ᛞ ";color:var(--yellow-hi)}
+.hero b{color:var(--white);font-weight:500}
+.buy{margin-top:auto;display:block;text-align:center;padding:12px 18px;border-radius:8px;
+  font-weight:500;font-size:14.5px;
+  background:rgba(253,246,227,.03);border:1px solid var(--border-standard);color:#e2e4e7;
+  cursor:pointer;transition:.15s}
+.buy:hover{background:var(--surface-3);color:var(--white)}
+.hero .buy{background:var(--yellow);border-color:transparent;color:var(--bg);font-weight:600}
+.hero .buy:hover{background:var(--yellow-hi);color:var(--bg)}
+.annual-note{text-align:center;color:var(--dim);font-size:13.5px;font-weight:400;margin-top:28px}
+.compare{margin:52px auto 0;width:100%;max-width:900px;font-size:14.5px;border-collapse:collapse}
+.compare td,.compare th{padding:13px 16px;border-bottom:1px solid var(--border-subtle);
+  text-align:left;font-weight:300;letter-spacing:-.13px}
+.compare th{color:var(--white);font-weight:500;font-size:15px;letter-spacing:-.15px}
+.compare tr:first-child th{border-bottom:2px solid var(--border-standard)}
+.compare .yes{color:var(--green);font-weight:500}
+.compare .no{color:var(--dim)}
+.compare td:first-child{color:var(--strong)}
+@media(max-width:700px){.compare{font-size:13px}.compare td,.compare th{padding:10px 8px}}
+
+/* ── how / steps ─────────────────────────────────────── */
+.alt{background:var(--panel);border-block:1px solid var(--border-subtle)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1000px;margin:0 auto}
+@media(max-width:840px){.steps{grid-template-columns:1fr;max-width:520px}}
+.step{border:1px solid var(--border-subtle);border-radius:12px;padding:30px;
+  background:rgba(0,0,0,.14)}
+.step .n{color:var(--yellow-hi);font-size:11px;letter-spacing:2.2px;font-weight:500}
+.step h3{color:var(--white);margin:12px 0 8px;font-size:20px;font-weight:600;letter-spacing:-.24px}
+.step p{font-size:14.5px;font-weight:300;color:var(--text);letter-spacing:-.165px}
+
+/* ── trust ───────────────────────────────────────────── */
+.trust{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:960px;margin:0 auto}
+@media(max-width:780px){.trust{grid-template-columns:1fr}}
+.trust div{border:1px solid var(--border-subtle);border-radius:12px;
+  padding:22px 24px;font-size:14.5px;line-height:1.65;
+  background:var(--surface-1);font-weight:300;letter-spacing:-.13px;
+  transition:background .2s}
+.trust div:hover{background:var(--surface-2)}
+.trust b{color:var(--white);font-weight:500}
+
+/* ── faq ─────────────────────────────────────────────── */
+.faq{max-width:800px;margin:0 auto;display:grid;gap:12px}
+details{border:1px solid var(--border-subtle);border-radius:12px;padding:18px 22px;
+  background:var(--surface-1);transition:background .15s}
+details:hover{background:var(--surface-2)}
+summary{color:var(--white);cursor:pointer;font-weight:500;font-size:16px;letter-spacing:-.15px}
+summary::marker{color:var(--cyan)}
+details p{margin-top:12px;font-size:14.5px;font-weight:300;color:var(--text);letter-spacing:-.1px}
+
+/* ── final cta ───────────────────────────────────────── */
+.final{border:1px solid rgba(230,192,74,.4);border-radius:22px;padding:68px 40px;text-align:center;
+  background:var(--surface-2);max-width:780px;margin:0 auto;
+  box-shadow:rgba(0,0,0,.2) 0 0 0 1px, 0 0 110px rgba(181,137,0,.12)}
+.final .kicker{color:var(--yellow-hi);letter-spacing:2.5px;font-size:13px;font-weight:500}
+.final .price{font-size:64px;margin:26px 0 8px;letter-spacing:-1.584px}
+.final .price .unit{font-size:18px}
+.final .was{font-size:16px}
+.final .seats{color:var(--strong);margin:12px 0 28px;font-weight:300;letter-spacing:-.1px}
+.final .seats b{color:var(--white);font-weight:500}
+.final .buy{display:inline-block;min-width:340px;background:var(--yellow);color:var(--bg);
+  font-weight:600;padding:14px 22px}
+.final .buy:hover{background:var(--yellow-hi)}
+.final .alt-cta{margin-top:20px;font-size:13px;color:var(--dim);
+  font-family:'JetBrains Mono',ui-monospace,monospace}
+.final .alt-cta a{text-decoration:underline;font-weight:400}
+
+/* ── footer ──────────────────────────────────────────── */
+footer{border-top:1px solid var(--border-subtle);padding:72px 0 64px;text-align:center;
+  font-size:13px;color:var(--dim);line-height:1.9;font-weight:300}
+footer .logo-row{font-size:8px;margin:0 0 18px;opacity:.4;display:flex;justify-content:center}
+footer b{color:var(--strong);font-weight:500}
+footer a{text-decoration:none;font-weight:400}
+footer a:hover{text-decoration:underline}
+
+/* ── motion ──────────────────────────────────────────── */
+@media(prefers-reduced-motion:no-preference){
+  .tier,.step,.trust div{animation:rise .5s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand"><span class="glyph">ᛟ</span> GRIMOIRE <span class="by">by Epinoia Horizon</span></div>
+    <a class="cta" href="#pricing">Get access</a>
+  </div>
+</nav>
+
+<header>
+  <div class="runes-bg mono" aria-hidden="true">ᛟ ᛞ ᚨ ᛝ ᛉ ᛟ ᛞ ᚨ ᛝ ᛉ ᛟ ᛞ ᚨ ᛝ ᛉ ᛟ ᛞ ᚨ ᛝ ᛉ ᛟ ᛞ</div>
+  <div class="wrap">
+    <span class="badge"><span class="glyph">ᚨ</span> Founding access&nbsp;—&nbsp;<b>10 seats</b>&nbsp;·&nbsp;50% off for life</span>
+    <h1>Your private AI agent, <span class="accent">on your own server</span>, working 24/7.</h1>
+    <p class="sub">GRIMOIRE ASSIST is a managed Merlin agent: Telegram concierge, scheduled jobs,
+    persistent memory and the arcane desktop TUI — provisioned for you, keys included.
+    Not a chat window. An operative.</p>
+    <div class="logo-row">
+███╗   ███╗███████╗██████╗ ██╗     ██╗███╗   ██╗
+████╗ ████║██╔════╝██╔══██╗██║     ██║████╗  ██║
+██╔████╔██║█████╗  ██████╔╝██║     ██║██╔██╗ ██║
+██║╚██╔╝██║██╔══╝  ██╔══██╗██║     ██║██║╚██╗██║
+██║ ╚═╝ ██║███████╗██║  ██║███████╗██║██║ ╚████║
+╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═══╝</div>
+    <div class="hero-divider"></div>
+  </div>
+</header>
+
+<!-- ══════════ PRICING ══════════ -->
+<section id="pricing" class="wrap">
+  <h2><span class="rune">ᛞ</span> Pick your seat</h2>
+  <p class="section-sub">Founding members lock their price for life. Cancel anytime with one click; export everything.</p>
+
+  <div class="tiers">
+
+    <div class="tier">
+      <h3><span class="glyph">ᛋ</span> Solo</h3>
+      <div class="price">$19<span class="unit">/mo</span></div>
+      <div class="was">Annual: $190 (2 months free)</div>
+      <ul>
+        <li>Your own VPS + Merlin gateway, 24/7</li>
+        <li>Telegram channel, paired to you</li>
+        <li>3 scheduled jobs (digests, monitors, reviews)</li>
+        <li>Persistent memory</li>
+        <li>Bring your own API keys (we configure them for you)</li>
+      </ul>
+      <a class="buy" href="PASTE_STRIPE_LINK_SOLO" data-stripe="PASTE_STRIPE_LINK_SOLO">Join Founding — Solo</a>
+    </div>
+
+    <div class="tier hero">
+      <span class="tag">ᛟ MOST CHOSEN · FOUNDING 50% OFF</span>
+      <h3><span class="glyph">ᛞ</span> Assist</h3>
+      <div class="price">$25<span class="unit">/mo</span></div>
+      <div class="was"><s>$49</s> for founding members — for life</div>
+      <ul>
+        <li>Everything in Solo</li>
+        <li><b>Managed keys</b> — no API keys to carry; $10/mo credit included</li>
+        <li>5 scheduled jobs + daily morning brief</li>
+        <li>Fleet: desktop + 1 machine kept in sync (auto-updates, same TUI everywhere)</li>
+        <li>Weekly ops check by a human — the founder himself</li>
+      </ul>
+      <a class="buy" href="PASTE_STRIPE_LINK_ASSIST" data-stripe="PASTE_STRIPE_LINK_ASSIST">Join Founding — Assist</a>
+    </div>
+
+    <div class="tier">
+      <h3><span class="glyph">ᚨ</span> Partner</h3>
+      <div class="price">$149<span class="unit">/mo</span></div>
+      <div class="was">Annual: $1,490 (2 months free)</div>
+      <ul>
+        <li>Everything in Assist (10× token credit)</li>
+        <li>Fleet of up to 5 machines + 3 agents</li>
+        <li>Telegram + Discord + web dashboard</li>
+        <li>2 human seats · next-business-day support</li>
+        <li>Unlimited scheduled jobs</li>
+      </ul>
+      <a class="buy" href="PASTE_STRIPE_LINK_PARTNER" data-stripe="PASTE_STRIPE_LINK_PARTNER">Join Founding — Partner</a>
+    </div>
+
+  </div>
+  <p class="annual-note mono">Pay for 10 months, get 12 — choose “annual” at checkout.</p>
+
+  <table class="compare">
+    <tr><th></th><th>Free tiers (ChatGPT etc.)</th><th>Grimoire Solo</th><th>Grimoire Assist</th></tr>
+    <tr><td>Works when you're offline</td><td class="no">—</td><td class="yes">✓ 24/7</td><td class="yes">✓ 24/7</td></tr>
+    <tr><td>Proactive (messages you first)</td><td class="no">—</td><td class="yes">✓ cron</td><td class="yes">✓ cron + daily brief</td></tr>
+    <tr><td>Your data stays on your server</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+    <tr><td>Model API keys</td><td class="mono">n/a</td><td>BYOK</td><td class="yes">✓ managed + credit</td></tr>
+    <tr><td>Desktop TUI (arcane theme)</td><td class="no">—</td><td class="no">—</td><td class="yes">✓ kept in sync</td></tr>
+  </table>
+</section>
+
+<!-- ══════════ HOW ══════════ -->
+<section class="alt">
+  <div class="wrap">
+    <h2><span class="rune">ᛝ</span> Live in one afternoon</h2>
+    <p class="section-sub">We ship you a running agent — not a zip file.</p>
+    <div class="steps">
+      <div class="step"><div class="n">STEP 01</div><h3>Order your seat</h3><p>Secure checkout via Stripe. You'll get a short form: your Telegram handle and the machines you want bridged.</p></div>
+      <div class="step"><div class="n">STEP 02</div><h3>We provision</h3><p>Within 24h your VPS is live: gateway running, keys configured (or your BYOK wired), cron jobs drafted with you.</p></div>
+      <div class="step"><div class="n">STEP 03</div><h3>Pair &amp; command</h3><p>One pairing code links your Telegram. From then on: briefs arrive, tasks run, memory accumulates. <span class="mono">/help</span> is your grimoire. <a href="/TELEGRAM-BOT-SETUP.md" style="text-decoration:underline">Full bot setup guide →</a></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ TRUST ══════════ -->
+<section class="wrap">
+  <h2><span class="rune">ᛉ</span> Plain talk</h2>
+  <p class="section-sub">The things others hide in fine print.</p>
+  <div class="trust">
+    <div><b>BYOK vs managed, honestly.</b> Solo = you own the API keys and pay providers directly. Assist/Partner = we carry the keys, meter fairly, and include credit — visible in your usage statement.</div>
+    <div><b>Model costs never “unlimited”.</b> Fair-use floors protect both of us; heavy automation is quoted before it bills. No surprise invoices.</div>
+    <div><b>One-click cancel.</b> Stripe subscription, cancel from your receipt page. Your server keeps running till the period ends — no hostages.</div>
+    <div><b>Data export &amp; succession.</b> Your memory, sessions and configs export to YAML/JSON anytime. Leave, and your agent can move with you.</div>
+  </div>
+</section>
+
+<!-- ══════════ FAQ ══════════ -->
+<section class="alt">
+  <div class="wrap">
+    <h2><span class="rune">ᛝ</span> Asked before</h2>
+    <div class="faq">
+      <details><summary>What can the agent actually do?</summary><p>Daily briefs (email, news, calendar), price/listing monitors with alerts, inbox triage, weekly reviews, research digests with citations, document-to-actions extraction, running scripts on your fleet, and anything you wire via its skills system. It messages you on Telegram when something matters.</p></details>
+      <details><summary>Is my data private?</summary><p>Your agent runs on your own VPS (or a dedicated container we operate for you). Memory and sessions live there. We can only reach it when you ask for help — and every session is in your logs.</p></details>
+      <details><summary>What's “managed keys” vs “BYOK”?</summary><p>Solo: you bring API keys from OpenAI/Anthropic/DeepSeek etc. and pay them directly — retail rates, no markup. Assist/Partner: we carry the keys, route across providers for reliability, and include a monthly credit with fair-use metering.</p></details>
+      <details><summary>What if you disappear?</summary><p>Worst case, you keep the server. The agent software is open source (MIT); your configs and memory export in open formats. A new operator can pick it up. We see lock-in as a bug.</p></details>
+      <details><summary>Why only 10 founding seats?</summary><p>So that onboarding hands stay on. Founding members get 50% off for life, a direct line to the founder, and their feedback shapes the roadmap.</p></details>
+      <details><summary>Which platforms?</summary><p>Telegram day one. Discord and the web dashboard are on the Partner tier. Desktop TUI for Windows and macOS on Assist and up.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FINAL CTA ══════════ -->
+<section class="wrap" style="padding-bottom:112px">
+  <div class="final">
+    <div class="kicker">ᚨ THE GRIMOIRE OPENS 8 TIMES</div>
+    <div class="price">$25<span class="unit">/mo</span></div>
+    <div class="was"><s>$49</s> · for life, if you claim a founding seat</div>
+    <p class="seats">Founding seats left: <b>7</b> of 10</p>
+    <a class="buy" href="PASTE_STRIPE_LINK_ASSIST" data-stripe="PASTE_STRIPE_LINK_ASSIST">Claim a founding seat — Assist</a>
+    <p class="alt-cta">or start smaller: <a href="PASTE_STRIPE_LINK_SOLO">Solo $19</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="logo-row">
+███╗   ███╗███████╗██████╗ ██╗     ██╗███╗   ██╗
+████╗ ████║██╔════╝██╔══██╗██║     ██║████╗  ██║
+██╔████╔██║█████╗  ██████╔╝██║     ██║██╔██╗ ██║
+██║╚██╔╝██║██╔══╝  ██╔══██╗██║     ██║██║╚██╗██║
+██║ ╚═╝ ██║███████╗██║  ██║███████╗██║██║ ╚████║
+╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═══╝</div>
+    <p>ᛟ Grimoire — a product by <b>Epinoia Horizon</b>, 2026.</p>
+    <p>Built on the open <a href="https://github.com/epinoiahorizon/Merlin-Agent" rel="noopener">Merlin harness</a> (MIT — © Epinoia Horizon, prior art © Nous Research).</p>
+    <p>Terms · Privacy · Fair-use — provided at checkout and on request. ✧</p>
+  </div>
+</footer>
+
+</body>
+</html>
