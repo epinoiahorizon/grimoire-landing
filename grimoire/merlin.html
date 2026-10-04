@@ -105,6 +105,7 @@ html.embedded body{padding:0}
 </div>
 
 <script>
+window.__hist = window.__hist || [];
   if(new URLSearchParams(location.search).get('embed') === '1'){
     document.documentElement.classList.add('embedded');
   }
@@ -155,7 +156,7 @@ async function apiAnswer(q){
     const r = await fetch(window.GRIMOIRE_API, {method:'POST', signal:ctrl.signal,
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({model:'merlin', stream:false,
-        messages:[{role:'user',content:q}]})});
+        messages:[...window.__hist.slice(-11), {role:'user', content:q}]})});
     if(r.status === 429) {
       let j = {}; try { j = await r.json(); } catch(e){}
       if(j.error && j.error.code === 'free_quota_spent'){
@@ -168,6 +169,7 @@ async function apiAnswer(q){
     const j = await r.json();
     const m = j.choices?.[0]?.message || {};
     if(typeof m._free_left === 'number'){ window.__freeLeft = m._free_left; updateQuotaBadge(); }
+    if(m.content){ window.__hist.push({role:'assistant', content:m.content.slice(0,2000)}); }
     return m.content || demoAnswer(q);
   } finally { clearTimeout(kill); }
 }
@@ -175,6 +177,7 @@ async function apiAnswer(q){
 async function submit(q){
   if(!q || send.disabled) return;
   push('visitor', q); input.value='';
+  window.__hist.push({role:'user', content:q.slice(0,2000)});
   send.disabled=true;
   const t = push('keeper typing','ᛝ conjuring…');
   try{

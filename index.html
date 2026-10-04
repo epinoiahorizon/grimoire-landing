@@ -1212,7 +1212,7 @@ body.light-mode .merlin-bubble{box-shadow:0 4px 18px rgba(101,123,131,.4)}
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             model: 'merlin', stream: false,
-            messages: [{ role: 'user', content: promptText }]
+            messages: [...(window.__hist || []).slice(-11), { role: 'user', content: promptText }]
           })
         });
         clearTimeout(kill);
@@ -1220,7 +1220,9 @@ body.light-mode .merlin-bubble{box-shadow:0 4px 18px rgba(101,123,131,.4)}
         const j = await resp.json();
         typing.remove();
         addMessage('merlin', (j.choices?.[0]?.message?.content || 'ᛝ The tome is silent — ask once more.') );
-        playChime(680);
+              const __a = (j.choices?.[0]?.message?.content || '').slice(0,2000);
+      if(__a) (window.__hist = window.__hist || []).push({role:'assistant', content:__a});
+      playChime(680);
       } catch (e) {
         typing.remove();
         addMessage('merlin', 'ᛝ The mists interrupted — one more try.');
@@ -1234,6 +1236,7 @@ body.light-mode .merlin-bubble{box-shadow:0 4px 18px rgba(101,123,131,.4)}
       const val = userInputField.value.trim();
       if (!val) return;
       addMessage('user', val);
+      (window.__hist = window.__hist || []).push({role:'user', content:val.slice(0,2000)});
       userInputField.value = '';
       playChime(480);
       replyAsMerlin(val);
