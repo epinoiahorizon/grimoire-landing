@@ -144,12 +144,17 @@ function push(kind, text){ const d=document.createElement('div'); d.className='m
 
 async function apiAnswer(q){
   if(!window.GRIMOIRE_API) return demoAnswer(q);
-  const r = await fetch(window.GRIMOIRE_API, {method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({model:'grimoir-keeper', stream:false,
-      messages:[{role:'system',content:'You are Merlin. Short, warm, precise. Facts only from your knowledge; never invent numbers. Offer one next step, never stack offers.'},{role:'user',content:q}]})});
-  if(!r.ok) throw new Error(r.status);
-  const j = await r.json();
-  return j.choices?.[0]?.message?.content || demoAnswer(q);
+  const ctrl = new AbortController();
+  const kill = setTimeout(()=>ctrl.abort(), 15000);
+  try {
+    const r = await fetch(window.GRIMOIRE_API, {method:'POST', signal:ctrl.signal,
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({model:'merlin', stream:false,
+        messages:[{role:'user',content:q}]})});
+    if(!r.ok) throw new Error(r.status);
+    const j = await r.json();
+    return j.choices?.[0]?.message?.content || demoAnswer(q);
+  } finally { clearTimeout(kill); }
 }
 
 async function submit(q){
@@ -168,7 +173,7 @@ async function submit(q){
 
 form.addEventListener('submit', e=>{e.preventDefault(); submit(input.value.trim())});
 document.getElementById('quick').addEventListener('click', e=>{
-  if(e.target.dataset.q) submit(e.target.dataset.q);
+  if(e.target.dataset.q && !send.disabled) submit(e.target.dataset.q);
 });
 
 push('keeper','ᛟ The Grimoire opens. I am Merlin — a live instance of the agent you can install. What would you like to know?');
