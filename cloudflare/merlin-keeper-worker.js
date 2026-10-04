@@ -62,6 +62,27 @@ const MAX_TURNS = 8;                // context turns sent upstream
 const UPSTREAM_TIMEOUT_MS = 20000;  // reasoning models need longer; was 8000
 const RESPONSE_CAP = 4000;          // reply size cap (word-boundary truncate)
 
+// ── Free-credit system (v4, 2026-10-04) ─────────────────────────────────
+// Public demo widget = an open token faucet unless metered. Industry pattern
+// (OpenAI Playground/Poe/Perplexity): small free quota per visitor, refill
+// daily, paid tier = generous. Tier 0 below is anonymous; Tier 1 (Telegram
+// verified, larger quota) and Tier 2 (founding members) ride the same
+// counter with bigger budgets later.
+const FREE_QUESTIONS = 5;           // per visitor per 24h — first taste
+const FREE_TOKENS = 400;            // anonymous replies stay cheap (short demos)
+const QUOTA_WINDOW_MS = 86400000;   // 24h refill
+
+
+async function quota(key, env) {
+  const used = dayKey => `q:${key}:${dayKey}`;
+  const day = new Date().toISOString().slice(0, 10);
+  if (env && env.RATE_LIMITS) {
+    const val = parseInt((await env.RATE_LIMITS.get(used(day))) || "0", 10);
+    return { used: val, left: Math.max(0, FREE_QUESTIONS - val), day, key: used(day) };
+  }
+  return { used: 0, left: FREE_QUESTIONS, day, key: used(day) };  // memory fallback: trust rate() for abuse
+}
+
 
 function corsHeaders(origin) {
   return {
@@ -135,6 +156,19 @@ export default {
     }
 
     const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+
+    // ── free-credit gate: checked BEFORE anything costs tokens ──
+    const q = await quota(`ip:${ip}`, env);
+    if (q.left <= 0) {
+      return new Response(JSON.stringify({
+        error: {
+          message: `ᛝ Your free questions for today are spent (${FREE_QUESTIONS}/day refill at midnight UTC). Pair with the Telegram bot for more — founding seats get the full brain.`,
+          code: "free_quota_spent",
+          used: q.used, left: 0,
+        },
+      }), { status: 429, headers: cors });
+    }
+
     if (await rate(`ip:${ip}`, 120000, 10, env)) {
       return new Response(JSON.stringify({ error: { message: "ᛝ Merlin rests a moment — try again shortly." } }),
         { status: 429, headers: cors });
@@ -157,6 +191,10 @@ export default {
     }
 
     try {
+      // Anonymous tier: cap tokens tighter (cost shield on the free tier)
+      const anon = q.left <= FREE_QUESTIONS;   // tier-0 visitor (no auth yet)
+      const tokenCap = anon ? Math.min(MAX_TOKENS, 400) : MAX_TOKENS;
+
       const resp = await fetchWithTimeout(UPSTREAM, {
         method: "POST",
         headers: {
@@ -166,7 +204,7 @@ export default {
         body: JSON.stringify({
           model: env.MODEL || "glm-5.3-flash",
           stream: false,
-          max_tokens: MAX_TOKENS,
+          max_tokens: tokenCap,
           messages: [{ role: "system", content: SYSTEM }, ...turns],
         }),
       }, UPSTREAM_TIMEOUT_MS);
@@ -190,6 +228,13 @@ export default {
       } else if (!content) {
         choice.message.content = "ᛝ The tome is silent on that one — ask once more, or rephrase?";
       }
+      // burn one credit AFTER a successful answer (failed calls don't charge)
+      if (env && env.RATE_LIMITS) {
+        try { await env.RATE_LIMITS.put(q.key, String(q.used + 1), { expirationTtl: 86400 }); } catch {}
+      }
+      // tell the widget the user's remaining balance (client renders "N free questions left")
+      choice.message._free_left = anon ? Math.max(0, q.left - 1) : null;
+      choice.message._anon = anon;
       return new Response(JSON.stringify(data), { status: 200, headers: cors });
 
     } catch (e) {
