@@ -1146,6 +1146,9 @@
       chatScrollArea.scrollTop = chatScrollArea.scrollHeight;
     }
 
+    // ── LIVE: Merlin brain via Cloudflare Worker (real model, server-side key) ──
+    const MERLIN_API = "https://merlin-keeper.epinoiahorizon.workers.dev/v1/chat/completions";
+
     async function replyAsMerlin(promptText) {
       // typing bubble
       const typing = addMessage('merlin', 'ᛝ Merlin conjuring…');
