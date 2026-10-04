@@ -1144,6 +1144,7 @@
       bubble.textContent = text;
       chatScrollArea.appendChild(bubble);
       chatScrollArea.scrollTop = chatScrollArea.scrollHeight;
+      return bubble;   // ← FIX: typing-handoff needs the element reference
     }
 
     // ── LIVE: Merlin brain via Cloudflare Worker (real model, server-side key) ──
