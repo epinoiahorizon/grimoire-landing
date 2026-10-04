@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EPINOIA HORIZON — 3D Art Design, Animation & Merlin Agent Harness</title>
-  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23002b36'/%3E%3Ctext x='32' y='45' font-size='32' text-anchor='middle' fill='%23b58900'%3E%E1%9B%9F%3C/text%3E%3C/svg%3E">
 
   <!-- Google Fonts: Luxury Angel Wish-style Display & Engineering Monospace -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,8 +14,26 @@
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- Tailwind: compiled static CSS (no production-unsafe CDN script) -->
-  <link rel="stylesheet" href="assets/tailwind.css">
+  <!-- Tailwind: original compiled asset didn't reach the repo (404 fix) —
+       Play CDN JIT + inline solarized config reproduces the exact palette -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            solar: {
+              base03: '#002b36', base02: '#073642', base01: '#586e75', base00: '#657b83',
+              base0: '#839496', base1: '#93a1a1', base2: '#eee8d5', base3: '#fdf6e3',
+              yellow: '#b58900', orange: '#cb4b16', red: '#dc322f',
+              magenta: '#d33682', violet: '#6c71c4', blue: '#268bd2',
+              cyan: '#2aa198', green: '#859900',
+            },
+          },
+        },
+      },
+    };
+  </script>
 
   <!-- Three.js Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
