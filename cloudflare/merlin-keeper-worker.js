@@ -282,6 +282,15 @@ export default {
         const r = String(choice.message.reasoning).trim();
         content = r ? `ᛝ ${r.slice(0, 600)}` : content;
       }
+      // ── inner-monologue guard: glm sometimes leaks chain-of-thought into
+      // content ("The visitor is asking... but wait — ..."), destroying the
+      // persona in public. Detect meta-reasoning openers and strip everything
+      // before the actual in-character reply if one is present.
+      if (content && /^[ᚨᚷᛟᛞᛝ]?\s*(The visitor|The user|I'?m (being )?asked|Wait,?—|But wait|Let me think|First,? (I|let)|Okay,? so)/i.test(content)) {
+        const cut = content.search(/(?:^|\n)\s*[ᚨᚷᛟᛞᛝ]?\s*(Ah|Well met|Welcome|ᛟ|ᛞ|ᛝ|ᚨ|Sure|Of course|Here)/i);
+        if (cut > 0) content = content.slice(cut).trim();
+        else content = "ᛝ Merlin leans in — ask once more, plainer, and the answer comes.";
+      }
       if (typeof content === "string") {
         choice.message.content = truncateReply(content, RESPONSE_CAP);
       } else if (!content) {
