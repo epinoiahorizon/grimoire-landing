@@ -17,7 +17,7 @@
 body{font:15px/1.55 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   background:var(--bg);color:var(--text);min-height:520px;padding:16px}
 
-/* ── bubble launcher (untuk embed ke landing) ── */
+/* ── bubble launcher (embed into landing) ── */
 .launcher{position:fixed;bottom:22px;right:22px;width:56px;height:56px;border-radius:50%;
   background:var(--yellow);color:var(--bg);border:none;cursor:pointer;font-size:24px;
   box-shadow:0 4px 18px rgba(0,0,0,.4);transition:transform .15s;z-index:99}
@@ -97,7 +97,7 @@ body{font:15px/1.55 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif
     <button type="submit" id="send">Cast ᛝ</button>
   </form>
 
-  <div class="pending" id="pending">⚠️ Demo mode — backend endpoint not yet wired. Live config: <span class="mono">/v1/chat/completions</span> (tapi backend gateway belum terpasang via tunnel — untuk demo, jawaban menggunakan knowledge base lokal yang sama dengan Merlin).</div>
+  <div class="pending" id="pending">⚠️ Demo mode — backend not yet wired. Live path: <span class="mono">/v1/chat/completions</span> (the gateway proxy isn't up via tunnel yet — for now, answers come from the same local knowledge base Merlin itself uses).</div>
 
   <div class="footnote">ᛟ You're chatting with a <b>live Grimoire instance</b> — the same harness customers install. <a href="#" onclick="parent?.postMessage({type:'open-pricing'},'*')">Pricing ↗</a> · <a href="#" onclick="parent?.postMessage({type:'open-founder'},'*')">Talk to the founder ↗</a></div>
 </div>
@@ -106,7 +106,7 @@ body{font:15px/1.55 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif
 /* ═════════════════════════════════════════════════════════════════
    CONFIG — endpoint yang bisa diarahkan ke cloudflared tunnel/VPS:
    window.GRIMOIRE_API = "https://YOUR-TUNNEL.trycloudflare.com/v1/chat/completions"
-   Kalau null → demo mode: jawaban dari KB lokal (offline-fallback).
+   If null → demo mode: answers from the local KB (offline fallback).
    ═════════════════════════════════════════════════════════════════ */
 window.GRIMOIRE_API = null; // ← paste tunnel URL here once tunnel is up
 
