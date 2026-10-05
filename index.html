@@ -881,11 +881,30 @@
 
     @media (max-width: 768px) {
       header.grimoire-nav {
-        padding: 1.1rem 1.5rem;
+        padding: 0.8rem 1rem;
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-template-rows: auto auto;
+        gap: 0.4rem 0.8rem;
+        align-items: center;
       }
-      .nav-title-group span {
-        display: none;
+      header.grimoire-nav .nav-brand { grid-column: 1; grid-row: 1; }
+      header.grimoire-nav .nav-title-group h1 { font-size: 1rem; white-space: nowrap; }
+      header.grimoire-nav .nav-title-group span { display: none; }
+      header.grimoire-nav .nav-controls { grid-column: 2; grid-row: 1; justify-self: end; display: flex; gap: 0.5rem; }
+      header.grimoire-nav .icon-round-btn { width: 34px; height: 34px; font-size: 0.78rem; }
+      header.grimoire-nav .view-switcher-bar {
+        grid-column: 1 / -1; grid-row: 2;
+        width: 100%;
+        justify-content: center;
+        gap: 0.4rem;
       }
+      header.grimoire-nav .switch-tab-btn {
+        padding: 0.45rem 0.9rem;
+        font-size: 0.66rem;
+      }
+      body { padding-bottom: 92px; }
+      .merlin-bubble { width: 46px !important; height: 46px !important; font-size: 20px !important; bottom: 14px; right: 14px; }
       .glass-monolith-trophy {
         padding: 2.2rem 1.4rem;
       }
