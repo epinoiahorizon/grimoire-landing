@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EPINOIA HORIZON — Grimoire Portal &amp; Merlin Sanctum</title>
+  <title>EPINOIA HORIZON — The Merlin Grimoire & Previsualisation</title>
   
-  <!-- Fonts: Angel Wish style serif (Cinzel Decorative) & Arcane Serif (Cormorant Garamond) -->
+  <!-- Typography: Cinzel Decorative, Cormorant Garamond & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   
-  <!-- FontAwesome Icons -->
+  <!-- FontAwesome 6 Icons for Relics & Controls -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- Three.js (r128) -->
@@ -33,32 +33,34 @@
       --solar-blue:   #268bd2;
       --solar-cyan:   #2aa198;
 
-      /* Dark Luxe Grimoire Mapping */
-      --bg-void: #001e26;
-      --bg-surface: rgba(7, 54, 66, 0.6);
-      --bg-pane: rgba(0, 43, 54, 0.72);
-      --border-sigil: rgba(42, 161, 152, 0.35);
-      --border-subtle: rgba(147, 161, 161, 0.16);
+      /* Dark Void Theme Tokens */
+      --bg-void: #001b23;
+      --bg-surface: rgba(7, 54, 66, 0.58);
+      --bg-glass: rgba(0, 43, 54, 0.74);
+      --border-subtle: rgba(147, 161, 161, 0.2);
+      --border-glow: rgba(42, 161, 152, 0.45);
       --text-gold: #b58900;
       --text-main: #eee8d5;
       --text-muted: #93a1a1;
       --text-faint: #586e75;
-      --rune-glow: #2aa198;
-      --tome-shadow: 0 25px 60px -15px rgba(0, 10, 15, 0.9), inset 0 1px 2px rgba(255, 255, 255, 0.12);
+      --sigil-cyan: #2aa198;
+      --sigil-violet: #6c71c4;
+      --tome-shadow: 0 35px 80px -15px rgba(0, 10, 15, 0.9), 0 0 1px 1px rgba(255, 255, 255, 0.1) inset;
     }
 
     body.light-mode {
-      --bg-void: #f8f3e5;
+      --bg-void: #f6f0df;
       --bg-surface: rgba(238, 232, 213, 0.75);
-      --bg-pane: rgba(253, 246, 227, 0.88);
-      --border-sigil: rgba(38, 139, 210, 0.4);
-      --border-subtle: rgba(88, 110, 117, 0.22);
+      --bg-glass: rgba(253, 246, 227, 0.88);
+      --border-subtle: rgba(88, 110, 117, 0.24);
+      --border-glow: rgba(38, 139, 210, 0.55);
       --text-gold: #b58900;
       --text-main: #073642;
       --text-muted: #586e75;
       --text-faint: #93a1a1;
-      --rune-glow: #268bd2;
-      --tome-shadow: 0 20px 50px -10px rgba(101, 123, 131, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.9);
+      --sigil-cyan: #268bd2;
+      --sigil-violet: #6c71c4;
+      --tome-shadow: 0 35px 70px -15px rgba(181, 137, 0, 0.16), 0 0 1px 1px rgba(255, 255, 255, 0.8) inset;
     }
 
     * {
@@ -73,26 +75,26 @@
       color: var(--text-main);
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-weight: 300;
-      min-height: 100vh;
       overflow-x: hidden;
-      transition: background-color 0.6s ease, color 0.6s ease;
+      line-height: 1.7;
+      min-height: 100vh;
+      transition: background-color 0.8s ease, color 0.8s ease;
       position: relative;
     }
 
-    /* Background Arcane Halo */
-    .arcane-aurora {
+    /* Ambient Grimoire Aurora Backdrop */
+    .ambient-aurora {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
       background: 
-        radial-gradient(circle at 18% 22%, rgba(42, 161, 152, 0.12) 0%, transparent 50%),
-        radial-gradient(circle at 82% 78%, rgba(181, 137, 0, 0.08) 0%, transparent 55%),
-        radial-gradient(circle at 50% 10%, rgba(108, 113, 196, 0.09) 0%, transparent 60%);
+        radial-gradient(circle at 18% 22%, rgba(42, 161, 152, 0.14) 0%, transparent 50%),
+        radial-gradient(circle at 82% 78%, rgba(181, 137, 0, 0.1) 0%, transparent 55%),
+        radial-gradient(circle at 50% 12%, rgba(108, 113, 196, 0.1) 0%, transparent 60%);
     }
 
-    /* Esoteric Hairline Grid */
-    .esoteric-grid {
+    .subtle-hairline-grid {
       position: fixed;
       inset: 0;
       background-size: 64px 64px;
@@ -103,8 +105,9 @@
       z-index: 0;
     }
 
+    /* Typography Classes */
     .font-angel {
-      font-family: 'Cinzel Decorative', serif;
+      font-family: 'Cinzel Decorative', Georgia, serif;
       letter-spacing: 0.18em;
       text-transform: uppercase;
     }
@@ -113,20 +116,15 @@
       font-family: 'Cormorant Garamond', Georgia, serif;
     }
 
-    .font-rune {
-      font-family: 'Cinzel Decorative', serif;
-      font-weight: 700;
-    }
-
     .iridescent-text {
-      background: linear-gradient(135deg, #ffffff 0%, var(--solar-base2) 30%, var(--rune-glow) 70%, var(--text-gold) 100%);
+      background: linear-gradient(135deg, #ffffff 0%, var(--solar-base2) 32%, var(--sigil-cyan) 68%, var(--text-gold) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 2px 14px rgba(42, 161, 152, 0.28));
+      filter: drop-shadow(0 3px 16px rgba(42, 161, 152, 0.3));
     }
 
     body.light-mode .iridescent-text {
-      background: linear-gradient(135deg, #002b36 0%, #073642 40%, #2aa198 75%, #b58900 100%);
+      background: linear-gradient(135deg, #002b36 0%, #073642 45%, var(--sigil-cyan) 75%, var(--text-gold) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       filter: none;
@@ -142,48 +140,42 @@
       justify-content: space-between;
       align-items: center;
       z-index: 100;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
       border-bottom: 1px solid var(--border-subtle);
-      background: rgba(0, 30, 38, 0.7);
-    }
-
-    /* nav-tabs: TRUE screen-center (absolute) — space-between offset it right
-       because .nav-left (logo block) is wider than .nav-right (2 icons) */
-    .nav-tabs {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    body.light-mode header.grimoire-nav {
-      background: rgba(248, 243, 229, 0.85);
-    }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      cursor: pointer;
-    }
-
-    .nav-rune-sigil {
-      width: 38px;
-      height: 38px;
-      border: 1px solid var(--border-sigil);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      color: var(--rune-glow);
-      background: var(--bg-surface);
-      box-shadow: 0 0 15px rgba(42, 161, 152, 0.15);
+      background: rgba(0, 27, 35, 0.78);
       transition: all 0.4s ease;
     }
 
-    .nav-left:hover .nav-rune-sigil {
+    body.light-mode header.grimoire-nav {
+      background: rgba(246, 240, 223, 0.85);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .nav-rune-sigil {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border-glow);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--sigil-cyan);
+      font-size: 1.1rem;
+      background: rgba(42, 161, 152, 0.1);
+      box-shadow: 0 0 15px rgba(42, 161, 152, 0.2);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-brand:hover .nav-rune-sigil {
       transform: rotate(45deg);
       border-color: var(--text-gold);
       color: var(--text-gold);
@@ -191,6 +183,7 @@
 
     .nav-title-group h1 {
       font-size: 1.15rem;
+      font-weight: 700;
       letter-spacing: 0.22em;
     }
 
@@ -202,87 +195,103 @@
       display: block;
     }
 
-    .nav-tabs {
+    /* Page Navigation Tabs */
+    .view-switcher-bar {
       display: flex;
-      gap: 2rem;
-      list-style: none;
+      gap: 0.4rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 0.3rem 0.4rem;
+      border-radius: 40px;
     }
 
-    .nav-tab-btn {
-      background: none;
+    .switch-tab-btn {
+      background: transparent;
       border: none;
       color: var(--text-muted);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.78rem;
-      letter-spacing: 0.2em;
+      padding: 0.45rem 1.4rem;
+      font-size: 0.74rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
+      border-radius: 30px;
       cursor: pointer;
-      padding: 0.4rem 0.2rem;
-      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: all 0.3s ease;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .switch-tab-btn i {
+      font-size: 0.85rem;
+      color: var(--text-gold);
       transition: color 0.3s ease;
     }
 
-    .nav-tab-btn.active, .nav-tab-btn:hover {
-      color: var(--text-main);
+    .switch-tab-btn.active {
+      background: var(--sigil-cyan);
+      color: #002b36;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(42, 161, 152, 0.35);
     }
 
-    .nav-tab-btn.active::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 100%;
-      height: 1.5px;
-      background: var(--rune-glow);
+    .switch-tab-btn.active i {
+      color: #002b36;
     }
 
-    .nav-actions {
+    .nav-controls {
       display: flex;
       align-items: center;
       gap: 0.8rem;
     }
 
-    .btn-circle {
+    .icon-round-btn {
       width: 38px;
       height: 38px;
       border-radius: 50%;
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       color: var(--text-muted);
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      font-size: 0.85rem;
       transition: all 0.3s ease;
     }
 
-    .btn-circle:hover {
-      color: var(--rune-glow);
-      border-color: var(--border-sigil);
-      transform: scale(1.05);
+    .icon-round-btn:hover {
+      color: var(--sigil-cyan);
+      border-color: var(--border-glow);
+      transform: scale(1.06);
     }
 
-    .view-page {
-      display: none;
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-      min-height: 100vh;
-      padding-top: 5.5rem;
+    main.view-host {
       position: relative;
       z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-top: 5.5rem;
     }
 
-    .view-page.active-page {
+    .page-view {
+      display: none;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      width: 100%;
+    }
+
+    .page-view.active-view {
       display: block;
       opacity: 1;
       transform: translateY(0);
     }
 
-    .portal-container {
-      max-width: 1080px;
-      margin: 2rem auto 4rem;
+    /* Landing Page Container */
+    .portal-landing-container {
+      max-width: 1100px;
+      margin: 2rem auto 4.5rem;
       padding: 0 1.5rem;
       display: flex;
       flex-direction: column;
@@ -290,33 +299,44 @@
       text-align: center;
     }
 
-    .acrylic-tome-plaque {
+    .glass-monolith-trophy {
       width: 100%;
-      background: var(--bg-pane);
-      backdrop-filter: blur(28px) saturate(160%);
-      -webkit-backdrop-filter: blur(28px) saturate(160%);
-      border: 1px solid var(--border-subtle);
+      background: var(--bg-glass);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
       border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
       box-shadow: var(--tome-shadow);
-      padding: 3rem 2.5rem 3.5rem;
+      padding: 3rem 3rem 4rem;
       position: relative;
       overflow: hidden;
     }
 
-    /* Arcane Corner Runes on Plaque */
-    .plaque-corner-rune {
+    .glass-monolith-trophy::before {
+      content: '';
       position: absolute;
-      font-size: 1.1rem;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), var(--sigil-cyan), var(--text-gold), transparent);
+    }
+
+    /* Plaque Corner Rune Brackets */
+    .corner-rune-bracket {
+      position: absolute;
+      font-size: 1.15rem;
       color: var(--text-faint);
       opacity: 0.6;
-      transition: all 0.4s ease;
+      user-select: none;
+      transition: color 0.4s ease, opacity 0.4s ease;
     }
-    .corner-tl { top: 1.4rem; left: 1.8rem; }
-    .corner-tr { top: 1.4rem; right: 1.8rem; }
-    .corner-bl { bottom: 1.4rem; left: 1.8rem; }
-    .corner-br { bottom: 1.4rem; right: 1.8rem; }
+    .corner-tl { top: 20px; left: 24px; }
+    .corner-tr { top: 20px; right: 24px; }
+    .corner-bl { bottom: 20px; left: 24px; }
+    .corner-br { bottom: 20px; right: 24px; }
 
-    .acrylic-tome-plaque:hover .plaque-corner-rune {
+    .glass-monolith-trophy:hover .corner-rune-bracket {
       color: var(--text-gold);
       opacity: 1;
       text-shadow: 0 0 12px var(--text-gold);
@@ -325,329 +345,511 @@
     .badge-sigil-tag {
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
-      padding: 0.4rem 1.2rem;
+      gap: 0.65rem;
+      padding: 0.45rem 1.4rem;
       border-radius: 30px;
-      background: rgba(42, 161, 152, 0.1);
-      border: 1px solid var(--border-sigil);
+      background: rgba(42, 161, 152, 0.08);
+      border: 1px solid rgba(42, 161, 152, 0.35);
       font-size: 0.72rem;
       letter-spacing: 0.24em;
       text-transform: uppercase;
-      color: var(--rune-glow);
-      margin-bottom: 1.2rem;
-    }
-
-    .canvas-3d-frame {
-      width: 100%;
-      height: 380px;
-      margin: 0.5rem auto 1.5rem;
-      cursor: grab;
-      position: relative;
-    }
-
-    .canvas-3d-frame:active {
-      cursor: grabbing;
-    }
-
-    .rune-chapter-row {
-      display: flex;
-      justify-content: center;
-      gap: 1.2rem;
-      margin: 1.8rem 0;
-      flex-wrap: wrap;
-    }
-
-    .rune-pill-badge {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      padding: 0.5rem 1.1rem;
-      border-radius: 20px;
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      color: var(--text-muted);
-      cursor: pointer;
+      color: var(--sigil-cyan);
+      margin-bottom: 1rem;
       transition: all 0.3s ease;
     }
 
-    .rune-pill-badge:hover, .rune-pill-badge.active {
-      border-color: var(--rune-glow);
-      color: var(--rune-glow);
-      box-shadow: 0 0 14px rgba(42, 161, 152, 0.2);
-      transform: translateY(-2px);
+    .badge-sigil-tag i {
+      font-size: 0.78rem;
     }
 
-    .rune-sym {
-      font-size: 1rem;
+    /* 3D Canvas Container */
+    .relic-3d-wrapper {
+      position: relative;
+      width: 100%;
+      height: 420px;
+      margin: 0 auto 1.2rem;
+      cursor: grab;
+      border-radius: 16px;
+    }
+
+    .relic-3d-wrapper:active {
+      cursor: grabbing;
+    }
+
+    .landing-headline {
+      font-size: clamp(2.3rem, 5vw, 4.2rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 0.6rem;
+    }
+
+    .landing-byline {
+      font-size: clamp(1rem, 1.8vw, 1.35rem);
+      letter-spacing: 0.28em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 300;
+      margin-bottom: 2.4rem;
+    }
+
+    /* Relic Pill Switchers */
+    .merlin-relics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2.4rem;
+    }
+
+    .relic-card-pill {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 0.95rem 1.1rem;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .relic-card-pill::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--sigil-cyan);
+      transition: width 0.4s ease;
+    }
+
+    .relic-card-pill:hover, .relic-card-pill.active {
+      border-color: var(--border-glow);
+      background: rgba(42, 161, 152, 0.14);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px -6px rgba(0, 43, 54, 0.5);
+    }
+
+    .relic-card-pill.active::after {
+      width: 100%;
+    }
+
+    .relic-icon-wrapper {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(0, 43, 54, 0.45);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
       color: var(--text-gold);
+      flex-shrink: 0;
+      transition: all 0.3s ease;
     }
 
+    .relic-card-pill:hover .relic-icon-wrapper,
+    .relic-card-pill.active .relic-icon-wrapper {
+      border-color: var(--sigil-cyan);
+      color: var(--sigil-cyan);
+      transform: scale(1.08);
+    }
+
+    .relic-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .relic-name {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-main);
+      margin-bottom: 0.2rem;
+    }
+
+    .relic-domain {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
+    /* Relic Lore Banner */
+    .relic-lore-banner {
+      background: rgba(7, 54, 66, 0.38);
+      border: 1px solid var(--border-subtle);
+      border-radius: 30px;
+      padding: 0.75rem 1.8rem;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--text-main);
+      max-width: 800px;
+      margin: 0 auto 2.2rem;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Primary CTA Button: Enter Merlin Sanctum */
     .portal-cta-btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.8rem;
-      background: linear-gradient(135deg, var(--solar-cyan) 0%, var(--solar-blue) 100%);
+      gap: 0.85rem;
+      background: linear-gradient(135deg, var(--sigil-cyan) 0%, #268bd2 100%);
       color: #002b36;
       border: none;
-      padding: 1rem 2.6rem;
+      padding: 1.05rem 2.8rem;
       border-radius: 40px;
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 0.8rem;
+      font-family: 'Cinzel Decorative', Georgia, serif;
+      font-size: 0.82rem;
       font-weight: 700;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       cursor: pointer;
-      box-shadow: 0 12px 32px -8px rgba(42, 161, 152, 0.5);
-      transition: all 0.4s ease;
-      margin-top: 1rem;
+      box-shadow: 0 12px 36px -8px rgba(42, 161, 152, 0.55);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .portal-cta-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 16px 42px -6px rgba(42, 161, 152, 0.75);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 18px 46px -6px rgba(42, 161, 152, 0.8);
+      background: linear-gradient(135deg, #38c8be 0%, #3ca0e6 100%);
     }
 
-    .sanctum-tome-wrapper {
+    .sanctum-chat-container {
       max-width: 1200px;
-      margin: 1.5rem auto 3rem;
+      margin: 1.5rem auto 4rem;
       padding: 0 1.5rem;
+      width: 100%;
     }
 
-    .grimoire-split-book {
-      display: grid;
-      grid-template-columns: 340px 1fr;
-      background: var(--bg-pane);
-      backdrop-filter: blur(28px) saturate(180%);
-      -webkit-backdrop-filter: blur(28px) saturate(180%);
+    .grimoire-split-tome {
+      background: var(--bg-glass);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
       border: 1px solid var(--border-subtle);
       border-radius: 24px;
       box-shadow: var(--tome-shadow);
-      min-height: 640px;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      min-height: 660px;
       overflow: hidden;
       position: relative;
     }
 
-    /* Spellbook Spine Separator */
-    .grimoire-split-book::after {
+    .grimoire-split-tome::after {
       content: '';
       position: absolute;
       top: 0;
       bottom: 0;
-      left: 340px;
+      left: 360px;
       width: 1px;
-      background: linear-gradient(180deg, transparent, var(--border-sigil), transparent);
+      background: linear-gradient(180deg, transparent, var(--border-glow), transparent);
     }
 
-    /* Left Folio: Grimoire Index & Incantations */
-    .folio-index {
+    .folio-left-spells {
+      background: var(--bg-surface);
       padding: 2.2rem 1.8rem;
-      background: rgba(0, 30, 38, 0.35);
       display: flex;
       flex-direction: column;
       gap: 1.8rem;
     }
 
-    .folio-avatar-box {
+    .merlin-tome-avatar {
       text-align: center;
-      padding-bottom: 1.5rem;
+      padding-bottom: 1.4rem;
       border-bottom: 1px solid var(--border-subtle);
     }
 
-    .avatar-halo-ring {
-      width: 72px;
-      height: 72px;
+    .avatar-astral-ring {
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
-      border: 1.5px dashed var(--rune-glow);
+      border: 1.5px dashed var(--sigil-cyan);
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto 0.8rem;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       color: var(--text-gold);
-      animation: spinHalo 24s linear infinite;
+      animation: spinAstral 30s linear infinite;
     }
 
-    @keyframes spinHalo {
+    @keyframes spinAstral {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
 
-    .incantation-list {
+    .incantations-list {
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.85rem;
     }
 
-    .incantation-chip {
-      background: var(--bg-surface);
+    .incantation-pill {
+      background: rgba(0, 43, 54, 0.45);
       border: 1px solid var(--border-subtle);
-      border-radius: 12px;
-      padding: 0.85rem 1rem;
-      text-align: left;
+      padding: 0.85rem 1.1rem;
+      border-radius: 14px;
       cursor: pointer;
+      text-align: left;
       transition: all 0.3s ease;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.85rem;
     }
 
-    .incantation-chip:hover {
-      border-color: var(--border-sigil);
+    .incantation-pill:hover {
+      border-color: var(--border-glow);
       background: rgba(42, 161, 152, 0.12);
       transform: translateX(4px);
-      box-shadow: 0 0 18px rgba(42, 161, 152, 0.15), inset 0 0 12px rgba(42, 161, 152, 0.05);
     }
 
-    .incantation-chip:hover .chip-rune {
-      color: var(--rune-glow);
-      text-shadow: 0 0 12px rgba(42, 161, 152, 0.6);
-      transform: scale(1.15) rotate(6deg);
-    }
-
-    .incantation-chip .chip-rune { transition: all 0.3s ease; }
-    .incantation-chip:active { transform: translateX(4px) scale(0.98); }
-
-    .chip-rune {
+    .incantation-icon {
       font-size: 1.1rem;
       color: var(--text-gold);
+      width: 24px;
+      text-align: center;
     }
 
-    .chip-title {
-      font-size: 0.8rem;
-      font-weight: 500;
+    .incantation-meta h6 {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
       color: var(--text-main);
-      display: block;
     }
 
-    .chip-sub {
+    .incantation-meta span {
       font-size: 0.68rem;
       color: var(--text-muted);
     }
 
-    /* Right Folio: Dynamic Chat Dialogue */
-    .folio-dialogue {
+    /* Right Folio: Dynamic Chat Dialogue Stream */
+    .folio-right-dialogue {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      height: 640px;
+      height: 660px;
+      position: relative;
     }
 
-    .dialogue-header {
-      padding: 1.4rem 2rem;
+    .chat-tome-header {
+      padding: 1.5rem 2.4rem;
       border-bottom: 1px solid var(--border-subtle);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      background: rgba(0, 27, 35, 0.3);
     }
 
-    .chat-scroll-area {
+    .merlin-active-state {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sigil-cyan);
+    }
+
+    .active-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--sigil-cyan);
+      box-shadow: 0 0 10px var(--sigil-cyan);
+      animation: pulseDot 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 0.4; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
+
+    .clear-dialogue-btn {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .clear-dialogue-btn:hover {
+      color: var(--text-main);
+      border-color: var(--border-glow);
+    }
+
+    .chat-scroll-stream {
       flex: 1;
-      padding: 2rem;
+      padding: 2.2rem 2.4rem;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 1.4rem;
+      gap: 1.6rem;
       scroll-behavior: smooth;
     }
 
-    .chat-bubble {
-      max-width: 82%;
-      padding: 1.1rem 1.4rem;
-      border-radius: 18px;
+    .dialogue-entry {
+      display: flex;
+      gap: 1.1rem;
+      max-width: 86%;
+      animation: entryFade 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes entryFade {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .dialogue-entry.agent-entry {
+      align-self: flex-start;
+    }
+
+    .dialogue-entry.user-entry {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+
+    .entry-sigil-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+
+    .agent-entry .entry-sigil-icon {
+      color: var(--sigil-cyan);
+      border-color: var(--border-glow);
+    }
+
+    .user-entry .entry-sigil-icon {
+      color: var(--text-gold);
+      border-color: rgba(181, 137, 0, 0.4);
+    }
+
+    .dialogue-entry .entry-parchment-bubble.typing { color: var(--text-muted); font-style: italic; opacity: .7; }
+    .entry-parchment-bubble {
+      background: rgba(7, 54, 66, 0.4);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 1.1rem 1.4rem;
       line-height: 1.65;
+      font-size: 0.95rem;
       position: relative;
     }
 
-    .bubble-merlin {
-      align-self: flex-start;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      border-bottom-left-radius: 4px;
-      color: var(--text-main);
+    .agent-entry .entry-parchment-bubble {
+      border-top-left-radius: 4px;
+      border-left: 2px solid var(--sigil-cyan);
     }
 
-    .bubble-merlin::before {
-      content: 'ᚨ MERLIN';
-      display: block;
-      font-family: 'Cinzel Decorative', serif;
+    .user-entry .entry-parchment-bubble {
+      background: rgba(42, 161, 152, 0.12);
+      border-color: var(--border-glow);
+      border-top-right-radius: 4px;
+    }
+
+    .bubble-author {
       font-size: 0.68rem;
       letter-spacing: 0.2em;
-      color: var(--text-gold);
-      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.35rem;
+      display: block;
     }
 
-    .bubble-user {
-      align-self: flex-end;
-      background: rgba(42, 161, 152, 0.18);
-      border: 1px solid var(--border-sigil);
-      border-bottom-right-radius: 4px;
-      color: var(--text-main);
+    .agent-entry .bubble-author {
+      color: var(--sigil-cyan);
+    }
+
+    .user-entry .bubble-author {
+      color: var(--text-gold);
       text-align: right;
     }
 
-    .bubble-user::before {
-      content: 'DIRECTOR';
-      display: block;
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 0.68rem;
-      letter-spacing: 0.2em;
-      color: var(--rune-glow);
-      margin-bottom: 0.4rem;
+    .bubble-text {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.16rem;
+      color: var(--text-main);
     }
 
-    /* Chat Input Form */
-    .dialogue-input-bar {
-      padding: 1.2rem 2rem;
+    /* Dialogue Composer / Input */
+    .dialogue-composer-box {
+      padding: 1.3rem 2.4rem;
       border-top: 1px solid var(--border-subtle);
-      background: rgba(0, 30, 38, 0.4);
+      background: rgba(0, 27, 35, 0.35);
       display: flex;
       align-items: center;
       gap: 1rem;
     }
 
-    .chat-input-text {
+    .composer-input {
       flex: 1;
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: 30px;
-      padding: 0.85rem 1.4rem;
+      padding: 0.85rem 1.6rem;
       color: var(--text-main);
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 1.2rem;
-      font-style: italic;
       outline: none;
-      transition: border-color 0.3s ease;
-    }
-
-    .chat-input-text:focus {
-      border-color: var(--rune-glow);
-    }
-
-    .chat-send-btn {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: var(--solar-cyan);
-      color: #002b36;
-      border: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1rem;
       transition: all 0.3s ease;
     }
 
-    .chat-send-btn:hover {
-      transform: scale(1.08);
-      background: #3accc0;
+    .composer-input:focus {
+      border-color: var(--border-glow);
+      box-shadow: 0 0 15px rgba(42, 161, 152, 0.25);
     }
 
-    /* Cursor Shimmer */
-    .cursor-spark {
+    .composer-input::placeholder {
+      color: var(--text-faint);
+      font-style: italic;
+    }
+
+    .cast-incantation-btn {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--sigil-cyan);
+      color: #002b36;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(42, 161, 152, 0.4);
+      flex-shrink: 0;
+    }
+
+    .cast-incantation-btn:hover {
+      background: #39cfc5;
+      transform: scale(1.08);
+    }
+
+    /* Subtle cursor sparkle */
+    .cursor-sparkle {
       position: fixed;
       pointer-events: none;
       border-radius: 50%;
@@ -658,55 +860,52 @@
       transition: transform 0.15s ease-out, opacity 0.4s ease-out;
     }
 
-    @media (max-width: 900px) {
-      .grimoire-split-book {
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .merlin-relics-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .grimoire-split-tome {
         grid-template-columns: 1fr;
       }
-      .grimoire-split-book::after {
+      .grimoire-split-tome::after {
         display: none;
       }
-      .folio-index {
+      .folio-left-spells {
         border-bottom: 1px solid var(--border-subtle);
       }
-      .folio-dialogue {
+      .folio-right-dialogue {
         height: 520px;
       }
+    }
+
+    @media (max-width: 768px) {
       header.grimoire-nav {
-        padding: 0.9rem 1.2rem;
-        display: grid;
-        grid-template-columns: auto auto;
-        grid-template-rows: auto auto;
-        gap: 0.3rem 1rem;
-        align-items: center;
+        padding: 1.1rem 1.5rem;
       }
-      header.grimoire-nav .nav-left { grid-column: 1; grid-row: 1; }
-      header.grimoire-nav .nav-actions { grid-column: 2; grid-row: 1; justify-self: end; }
-      header.grimoire-nav .btn-circle { width: 30px; height: 30px; font-size: 0.72rem; }
-      header.grimoire-nav::after { content: ''; grid-column: 2; width: 0; }  /* grid col2 min fix */
-      header.grimoire-nav .nav-tabs {
-        grid-column: 1 / -1; grid-row: 2;
-        position: static; transform: none;
-        justify-content: center; gap: 1.6rem;
-        width: 100%;
+      .nav-title-group span {
+        display: none;
       }
-      .nav-title-group h1 { font-size: 1.05rem; white-space: nowrap; }
-      .nav-title-group span { font-size: 0.6rem; white-space: nowrap; }
-      body { padding-bottom: 92px; }  /* orb clearance */
-      .merlin-bubble { width: 46px !important; height: 46px !important; font-size: 20px !important; bottom: 14px; right: 14px; }
-      .acrylic-tome-plaque {
-        padding: 2.2rem 1.5rem;
+      .glass-monolith-trophy {
+        padding: 2.2rem 1.4rem;
+      }
+      .relic-3d-wrapper {
+        height: 320px;
+      }
+      .merlin-relics-grid {
+        grid-template-columns: 1fr;
+      }
+      .dialogue-composer-box {
+        padding: 1rem 1.5rem;
       }
     }
   
-    .chat-bubble.typing { color: var(--text-faint); font-style: italic; font-size: 0.85rem; }
-
-
 /* ── Merlin live bubble (chat launcher) ── */
 .merlin-bubble{position:fixed;bottom:24px;right:24px;width:58px;height:58px;border-radius:50%;
   background:var(--solar-yellow);color:#002b36;border:none;cursor:pointer;font-size:26px;
   box-shadow:0 4px 18px rgba(0,0,0,.45);z-index:999;transition:transform .18s;display:flex;align-items:center;justify-content:center;
   font-family:'Cinzel Decorative',serif;font-weight:900}
-.merlin-bubble:hover{transform:scale(1.08);background:var(--solar-yellow)}
+.merlin-bubble:hover{transform:scale(1.08)}
 .merlin-frame{position:fixed;bottom:94px;right:24px;width:420px;max-width:calc(100vw - 32px);height:560px;
   max-height:calc(100vh - 120px);border-radius:16px;overflow:hidden;z-index:998;
   box-shadow:0 20px 60px -10px rgba(0,10,15,.9), inset 0 1px 2px rgba(255,255,255,.12);
@@ -718,506 +917,760 @@
 .merlin-bubble.open .x{display:block}
 .merlin-bubble.open .o{display:none}
 body.light-mode .merlin-frame{background:rgba(253,246,227,.96);border-color:rgba(38,139,210,.4)}
+body.light-mode .merlin-bubble{box-shadow:0 4px 18px rgba(101,123,131,.4)}
 @media (max-width: 480px){
   .merlin-frame{width:calc(100vw - 16px);right:8px;bottom:92px;height:calc(100vh - 120px)}
   .merlin-bubble{bottom:16px;right:16px;width:50px;height:50px;font-size:22px}
 }
-body.light-mode .merlin-bubble{box-shadow:0 4px 18px rgba(101,123,131,.4)}
 
 </style>
 </head>
 <body>
 
   <!-- Ambient Backdrop -->
-  <div class="arcane-aurora"></div>
-  <div class="esoteric-grid"></div>
+  <div class="ambient-aurora"></div>
+  <div class="subtle-hairline-grid"></div>
 
   <header class="grimoire-nav">
-    <div class="nav-left" id="navLogo">
-      <div class="nav-rune-sigil font-rune">ᛟ</div>
+    <a href="#" class="nav-brand" id="brandLogoHome">
+      <div class="nav-rune-sigil font-angel">ᛟ</div>
       <div class="nav-title-group">
         <h1 class="font-angel iridescent-text">EPINOIA HORIZON</h1>
-        <span>Grimoire of Previsualisation</span>
+        <span>The Grimoire of Previsualisation</span>
       </div>
+    </a>
+
+    <!-- Page Switcher Tabs -->
+    <div class="view-switcher-bar">
+      <button class="switch-tab-btn active" id="tabBtnPortal">
+        <i class="fa-solid fa-gem"></i>
+        <span>Portal</span>
+      </button>
+      <button class="switch-tab-btn" id="tabBtnSanctum">
+        <i class="fa-solid fa-hat-wizard"></i>
+        <span>Merlin Sanctum</span>
+      </button>
     </div>
 
-    <ul class="nav-tabs">
-      <li><button class="nav-tab-btn active" id="tabPortal">ᛟ Portal</button></li>
-      <li><button class="nav-tab-btn" id="tabChat">ᚨ Merlin Sanctum</button></li>
-    </ul>
-
-    <div class="nav-actions">
-      <button class="btn-circle" id="btnAudioToggle" title="Toggle Crystal Chimes">
+    <div class="nav-controls">
+      <button class="icon-round-btn" id="audioToggleBtn" title="Toggle Crystal Chimes">
         <i class="fa-solid fa-volume-xmark" id="audioIcon"></i>
       </button>
-      <button class="btn-circle" id="btnThemeToggle" title="Switch Solarized Light / Dark">
+      <button class="icon-round-btn" id="themeToggleBtn" title="Toggle Solarized Light/Dark">
         <i class="fa-solid fa-sun" id="themeIcon"></i>
       </button>
     </div>
   </header>
 
-  <main class="view-page active-page" id="viewPortal">
-    <div class="portal-container">
-      
-      <div class="acrylic-tome-plaque">
-        <!-- Elder Futhark Corner Sigils -->
-        <span class="plaque-corner-rune corner-tl font-rune">ᛟ</span>
-        <span class="plaque-corner-rune corner-tr font-rune">ᛞ</span>
-        <span class="plaque-corner-rune corner-bl font-rune">ᚨ</span>
-        <span class="plaque-corner-rune corner-br font-rune">ᛝ</span>
-
-        <div class="badge-sigil-tag font-angel">
-          <i class="fa-solid fa-gem" style="font-size: 0.75rem;"></i>
-          Optical Quartz Prism Artifact
-        </div>
-
-        <!-- 3D Three.js Container -->
-        <div class="canvas-3d-frame" id="threePortalFrame"></div>
-
-        <h2 class="font-angel iridescent-text" style="font-size: clamp(2rem, 4.5vw, 3.8rem); margin-bottom: 0.6rem;">
-          EPINOIA HORIZON
-        </h2>
+  <!-- Main View Container -->
+  <main class="view-host">
+    
+    <div class="page-view active-view" id="viewPortal">
+      <div class="portal-landing-container">
         
-        <p class="font-editorial" style="font-size: clamp(1.2rem, 2vw, 1.6rem); letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.8rem;">
-          A Previsualisation and Prototyping Group
-        </p>
+        <div class="glass-monolith-trophy">
+          <!-- Elder Futhark Corner Sigils -->
+          <span class="corner-rune-bracket corner-tl font-angel">ᛟ</span>
+          <span class="corner-rune-bracket corner-tr font-angel">ᛞ</span>
+          <span class="corner-rune-bracket corner-bl font-angel">ᚨ</span>
+          <span class="corner-rune-bracket corner-br font-angel">ᛝ</span>
 
-        <!-- Elder Futhark Chapter Pills -->
-        <div class="rune-chapter-row">
-          <div class="rune-pill-badge active" data-model="pyramid">
-            <span class="rune-sym font-rune">ᛟ</span>
-            <span>Othala &bull; Heritage</span>
-          </div>
-          <div class="rune-pill-badge" data-model="polyhedron">
-            <span class="rune-sym font-rune">ᛞ</span>
-            <span>Dagaz &bull; Metamorph</span>
-          </div>
-          <div class="rune-pill-badge" data-model="torus">
-            <span class="rune-sym font-rune">ᚨ</span>
-            <span>Ansuz &bull; Intelligence</span>
-          </div>
-          <div class="rune-pill-badge" data-model="wire">
-            <span class="rune-sym font-rune">ᛝ</span>
-            <span>Ingwaz &bull; Manifest</span>
-          </div>
-        </div>
-
-        <button class="portal-cta-btn" id="btnEnterMerlin">
-          <span>Enter Merlin Sanctum</span>
-          <i class="fa-solid fa-arrow-right"></i>
-        </button>
-
-      </div>
-
-    </div>
-  </main>
-
-  <main class="view-page" id="viewChat">
-    <div class="sanctum-tome-wrapper">
-      
-      <div class="grimoire-split-book">
-        
-        <!-- Left Folio: Grimoire Index & Directorial Incantations -->
-        <aside class="folio-index">
-          <div class="folio-avatar-box">
-            <div class="avatar-halo-ring font-rune">ᚨ</div>
-            <h3 class="font-angel iridescent-text" style="font-size: 1.1rem; letter-spacing: 0.16em;">Merlin Agent</h3>
-            <span style="font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-gold);">
-              Previs Familiar v6.4
-            </span>
+          <div class="badge-sigil-tag font-angel" id="activeArtifactBadge">
+            <i class="fa-solid fa-scroll"></i>
+            <span id="badgeArtifactName">Arcane Scroll Book Codex</span>
           </div>
 
-          <div>
-            <span style="font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.8rem;">
-              Ask the Magician
-            </span>
+          <!-- 3D Procedural Mesh Viewport (Replaces the pyramid with actual 3D models) -->
+          <div class="relic-3d-wrapper" id="threeRelicContainer" title="Drag to orbit the 3D relic artifact"></div>
 
-            <div class="incantation-list">
-              <div class="incantation-chip" data-prompt="Read me my horoscope — make it eerily specific, Merlin">
-                <span class="chip-rune font-rune">ᛟ</span>
-                <div>
-                  <span class="chip-title font-angel">Stars &amp; Signs</span>
-                  <span class="chip-sub">Your horoscope, conjured on the spot</span>
-                </div>
+          <h2 class="landing-headline font-angel iridescent-text">EPINOIA HORIZON</h2>
+          <p class="landing-byline">A previsualisation and prototyping group</p>
+
+          <!-- 4 Relics of Merlin (Scroll Book + 3 Merlin Artifacts) -->
+          <div class="merlin-relics-grid">
+            
+            <!-- Relic 1: Scroll Book -->
+            <div class="relic-card-pill active" data-relic="scroll">
+              <div class="relic-icon-wrapper">
+                <i class="fa-solid fa-scroll"></i>
               </div>
-
-              <div class="incantation-chip" data-prompt="Teach me something incredible in 60 seconds — pick the subject yourself">
-                <span class="chip-rune font-rune">ᛞ</span>
-                <div>
-                  <span class="chip-title font-angel">60-Second Wisdom</span>
-                  <span class="chip-sub">One astonishing lesson, chosen by Merlin</span>
-                </div>
-              </div>
-
-              <div class="incantation-chip" data-prompt="Explain quantum computing like I'm 12 — make it wonder, not homework">
-                <span class="chip-rune font-rune">ᚨ</span>
-                <div>
-                  <span class="chip-title font-angel">Explain Like I'm 12</span>
-                  <span class="chip-sub">Big ideas, small words, real magic</span>
-                </div>
-              </div>
-
-              <div class="incantation-chip" data-prompt="Draft a witty tweet about mornings, coffee, and the illusion of productivity">
-                <span class="chip-rune font-rune">ᛝ</span>
-                <div>
-                  <span class="chip-title font-angel">Wordsmith's Spell</span>
-                  <span class="chip-sub">Witty copy, drafted live</span>
-                </div>
-              </div>
-
-              <div class="incantation-chip" data-prompt="What can I cook from eggs, rice, garlic and one sad tomato? Give me a recipe with soul">
-                <span class="chip-rune font-rune">ᛟ</span>
-                <div>
-                  <span class="chip-title font-angel">Kitchen Alchemy</span>
-                  <span class="chip-sub">A recipe from what you have</span>
-                </div>
+              <div class="relic-details">
+                <span class="relic-name font-angel">Scroll Book</span>
+                <span class="relic-domain">Arcane Grimoire &bull; Codex</span>
               </div>
             </div>
 
-            <details style="margin-top: 1.1rem; border-top: 1px solid var(--border-subtle); padding-top: 0.9rem;">
-              <summary style="font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; user-select: none;">
-                ᛞ Directorial Incantations <span style="font-size: 0.55rem; color: var(--dim);">(previz studio)</span>
-              </summary>
-              <div class="incantation-list" style="margin-top: 0.8rem;">
-                <div class="incantation-chip" data-prompt="Deconstruct the crystal prism into procedural facet coordinates">
-                  <span class="chip-rune font-rune">ᛟ</span>
-                  <div>
-                    <span class="chip-title font-angel">Spatial Genesis</span>
-                    <span class="chip-sub">Deconstruct internal quartz facets</span>
-                  </div>
-                </div>
-
-                <div class="incantation-chip" data-prompt="Choreograph a kinetic metamorphosis for the character armature">
-                  <span class="chip-rune font-rune">ᛞ</span>
-                  <div>
-                    <span class="chip-title font-angel">Kinematic Motion</span>
-                    <span class="chip-sub">Organic skeletal deformation curve</span>
-                  </div>
-                </div>
-
-                <div class="incantation-chip" data-prompt="Diffuse warm ochre and cyan caustics across the volumetric lenses">
-                  <span class="chip-rune font-rune">ᚨ</span>
-                  <div>
-                    <span class="chip-title font-angel">Prismatic Dispersion</span>
-                    <span class="chip-sub">Solarized photometric IOR pass</span>
-                  </div>
-                </div>
-
-                <div class="incantation-chip" data-prompt="Synthesize camera trajectory, volumetric depth, and lighting harmony">
-                  <span class="chip-rune font-rune">ᛝ</span>
-                  <div>
-                    <span class="chip-title font-angel">Harmonic Symphony</span>
-                    <span class="chip-sub">Autonomous multi-agent previsualisation</span>
-                  </div>
-                </div>
+            <!-- Relic 2: Merlin's Staff -->
+            <div class="relic-card-pill" data-relic="staff">
+              <div class="relic-icon-wrapper">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
               </div>
-            </details>
+              <div class="relic-details">
+                <span class="relic-name font-angel">Merlin's Staff</span>
+                <span class="relic-domain">Stave of Arcanum &bull; Vectors</span>
+              </div>
+            </div>
 
-            <div id="sanctum-quota" style="margin-top: 1rem; font-size: 0.72rem; color: var(--text-muted); text-align: center;"></div>
-            <a href="https://epinoiahorizon.com/main-site/" target="_blank" rel="noopener" style="display:block;margin-top:0.6rem;text-align:center;font-size:0.75rem;color:var(--rune-glow);text-decoration:underline;text-underline-offset:3px;">Unlock the full brain →</a>
+            <!-- Relic 3: Scrying Orb -->
+            <div class="relic-card-pill" data-relic="orb">
+              <div class="relic-icon-wrapper">
+                <i class="fa-solid fa-circle-dot"></i>
+              </div>
+              <div class="relic-details">
+                <span class="relic-name font-angel">Scrying Orb</span>
+                <span class="relic-domain">Crystal Foresight &bull; Previs</span>
+              </div>
+            </div>
+
+            <!-- Relic 4: Ring of Avalon -->
+            <div class="relic-card-pill" data-relic="ring">
+              <div class="relic-icon-wrapper">
+                <i class="fa-solid fa-ring"></i>
+              </div>
+              <div class="relic-details">
+                <span class="relic-name font-angel">Ring of Avalon</span>
+                <span class="relic-domain">Eternal Synthesis &bull; Swarm</span>
+              </div>
+            </div>
+
           </div>
-        </aside>
 
-        <!-- Right Folio: Dynamic Chat Dialogue Area -->
-        <section class="folio-dialogue">
-          <div class="dialogue-header">
+          <!-- Dynamic Attunement Lore Banner -->
+          <div class="relic-lore-banner" id="relicLoreBanner">
+            "The Sacred Scroll Book unfolds: Ancient procedural geometry algorithms transcribed onto glowing parchment."
+          </div>
+
+          <!-- Primary Call to Action -->
+          <div style="display: flex; justify-content: center;">
+            <button class="portal-cta-btn" id="btnEnterSanctum">
+              <span>Enter Merlin Sanctum</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="page-view" id="viewSanctum">
+      <div class="sanctum-chat-container">
+        
+        <div class="grimoire-split-tome">
+          
+          <!-- Left Folio: Grimoire Index & Relic Spells -->
+          <aside class="folio-left-spells">
+            <div class="merlin-tome-avatar">
+              <div class="avatar-astral-ring font-angel">ᚨ</div>
+              <h3 class="font-angel iridescent-text" style="font-size: 1.15rem; letter-spacing: 0.16em;">Merlin Agent</h3>
+              <span style="font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-gold);">
+                Previs Familiar v6.4
+              </span>
+            </div>
+
             <div>
-              <span class="font-angel" style="font-size: 0.85rem; letter-spacing: 0.18em; color: var(--text-main);">
-                Communion with Merlin
+              <span style="font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.8rem;">
+                Relic Incantations
               </span>
-              <span style="display: block; font-size: 0.7rem; color: var(--rune-glow); letter-spacing: 0.15em;">
-                &bull; Resonance Synchronized
-              </span>
-            </div>
-            <button class="btn-circle" id="btnClearChat" title="Reset Dialogue">
-              <i class="fa-solid fa-rotate-right"></i>
-            </button>
-          </div>
 
-          <div class="chat-scroll-area" id="chatScrollArea">
-            <div class="chat-bubble bubble-merlin font-editorial">
-              ᛟ Welcome, traveler. I am Merlin — and I answer anything: horoscopes, science, code, recipes, history, advice, riddles. Ask without hesitation; the grimoire listens.
-            </div>
-          </div>
+              <div class="incantations-list">
+                <div class="incantation-pill" data-prompt="Consult the Scroll Book: Transcribe procedural facet algorithms into the crystal lattice.">
+                  <div class="incantation-icon"><i class="fa-solid fa-scroll"></i></div>
+                  <div class="incantation-meta">
+                    <h6 class="font-angel">Scroll Inscription</h6>
+                    <span>Procedural facet architecture</span>
+                  </div>
+                </div>
 
-          <form class="dialogue-input-bar" id="chatForm">
-            <input type="text" id="userInputField" class="chat-input-text" placeholder="Ask Merlin anything — stars to code..." autocomplete="off">
-            <button type="submit" class="chat-send-btn" title="Cast Intent">
-              <i class="fa-solid fa-arrow-up"></i>
-            </button>
-          </form>
-        </section>
+                <div class="incantation-pill" data-prompt="Channel Merlin's Staff: Route directional kinetic energy curves across character joints.">
+                  <div class="incantation-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                  <div class="incantation-meta">
+                    <h6 class="font-angel">Staff Vector Surge</h6>
+                    <span>Kinetic motion & armature rig</span>
+                  </div>
+                </div>
+
+                <div class="incantation-pill" data-prompt="Gaze into the Scrying Orb: Render high-index Solarized caustics and light refractions.">
+                  <div class="incantation-icon"><i class="fa-solid fa-circle-dot"></i></div>
+                  <div class="incantation-meta">
+                    <h6 class="font-angel">Scrying Caustics</h6>
+                    <span>Photometric ray dispersion</span>
+                  </div>
+                </div>
+
+                <div class="incantation-pill" data-prompt="Invoke the Ring of Avalon: Bind camera trajectory, lighting passes, and models into harmony.">
+                  <div class="incantation-icon"><i class="fa-solid fa-ring"></i></div>
+                  <div class="incantation-meta">
+                    <h6 class="font-angel">Avalon Harmonization</h6>
+                    <span>Holistic director previs swarm</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Right Folio: Dynamic Chat Dialogue Stream -->
+          <section class="folio-right-dialogue">
+            <div class="chat-tome-header">
+              <div class="merlin-active-state">
+                <span class="active-dot"></span>
+                <span>Merlin Resonance: 0.94 GHz</span>
+              </div>
+              <button class="clear-dialogue-btn font-angel" id="btnClearChat">Clear Tome</button>
+            </div>
+
+            <!-- Dialogue Stream -->
+            <div class="chat-scroll-stream" id="chatScrollStream">
+              <div class="dialogue-entry agent-entry">
+                <div class="entry-sigil-icon font-angel">ᚨ</div>
+                <div class="entry-parchment-bubble">
+                  <span class="bubble-author font-angel">Merlin</span>
+                  <p class="bubble-text">
+                    ᛟ Welcome, traveler. I am Merlin — and I answer anything: horoscopes, science, code, recipes, history, advice, riddles — alongside the relics of the Grimoire: the Sacred Scroll Book, the Stave of Arcanum, the Scrying Orb, the Ring of Avalon. Ask without hesitation.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dialogue Input Bar -->
+            <form class="dialogue-composer-box" id="dialogueForm">
+              <input type="text" id="dialogueInput" class="composer-input" placeholder="Speak your directorial intent into the Grimoire..." autocomplete="off">
+              <button type="submit" class="cast-incantation-btn" title="Cast Intent">
+                <i class="fa-solid fa-feather-pointed"></i>
+              </button>
+            </form>
+          </section>
+
+        </div>
 
       </div>
-
     </div>
+
   </main>
 
   <script>
-    const tabPortal = document.getElementById('tabPortal');
-    const tabChat = document.getElementById('tabChat');
+    const tabBtnPortal = document.getElementById('tabBtnPortal');
+    const tabBtnSanctum = document.getElementById('tabBtnSanctum');
     const viewPortal = document.getElementById('viewPortal');
-    const viewChat = document.getElementById('viewChat');
-    const btnEnterMerlin = document.getElementById('btnEnterMerlin');
-    const navLogo = document.getElementById('navLogo');
+    const viewSanctum = document.getElementById('viewSanctum');
+    const btnEnterSanctum = document.getElementById('btnEnterSanctum');
+    const brandLogoHome = document.getElementById('brandLogoHome');
 
-    function switchPage(targetPage) {
-      if (targetPage === 'portal') {
-        tabPortal.classList.add('active');
-        tabChat.classList.remove('active');
-        viewPortal.classList.add('active-page');
-        viewChat.classList.remove('active-page');
+    function navigateTo(page) {
+      if (page === 'sanctum') {
+        tabBtnPortal.classList.remove('active');
+        tabBtnSanctum.classList.add('active');
+        viewPortal.classList.remove('active-view');
+        viewSanctum.classList.add('active-view');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const scrollStream = document.getElementById('chatScrollStream');
+        scrollStream.scrollTop = scrollStream.scrollHeight;
+        triggerSound(580);
       } else {
-        tabChat.classList.add('active');
-        tabPortal.classList.remove('active');
-        viewChat.classList.add('active-page');
-        viewPortal.classList.remove('active-page');
+        tabBtnSanctum.classList.remove('active');
+        tabBtnPortal.classList.add('active');
+        viewSanctum.classList.remove('active-view');
+        viewPortal.classList.add('active-view');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        triggerSound(480);
       }
-      playChime(560);
     }
 
-    tabPortal.addEventListener('click', () => switchPage('portal'));
-    tabChat.addEventListener('click', () => switchPage('chat'));
-    btnEnterMerlin.addEventListener('click', () => switchPage('chat'));
-    navLogo.addEventListener('click', () => switchPage('portal'));
-
-    const btnThemeToggle = document.getElementById('btnThemeToggle');
-    const themeIcon = document.getElementById('themeIcon');
-    let isLight = false;
-
-    btnThemeToggle.addEventListener('click', () => {
-      isLight = !isLight;
-      document.body.classList.toggle('light-mode', isLight);
-      themeIcon.className = isLight ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
-      playChime(isLight ? 620 : 440);
+    tabBtnPortal.addEventListener('click', () => navigateTo('portal'));
+    tabBtnSanctum.addEventListener('click', () => navigateTo('sanctum'));
+    btnEnterSanctum.addEventListener('click', () => navigateTo('sanctum'));
+    brandLogoHome.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigateTo('portal');
     });
 
-    let audioCtx = null;
-    let sfxOn = false;
-    const btnAudioToggle = document.getElementById('btnAudioToggle');
+    // Theme Toggle
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    let isLightMode = false;
+
+    themeToggleBtn.addEventListener('click', () => {
+      isLightMode = !isLightMode;
+      document.body.classList.toggle('light-mode', isLightMode);
+      themeIcon.className = isLightMode ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+      if (scene) {
+        keyLight.color.setHex(isLightMode ? 0x268bd2 : 0x2aa198);
+        fillLight.color.setHex(isLightMode ? 0xb58900 : 0x6c71c4);
+      }
+      triggerSound(isLightMode ? 620 : 440);
+    });
+
+    // Web Audio Synthesizer
+    let audioContext = null;
+    let isAudioEnabled = false;
+    const audioToggleBtn = document.getElementById('audioToggleBtn');
     const audioIcon = document.getElementById('audioIcon');
 
-    function playChime(freq = 520) {
-      if (!sfxOn) return;
+    function triggerSound(freq = 520) {
+      if (!isAudioEnabled) return;
       try {
-        if (!audioCtx) {
-          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (!audioContext) {
+          audioContext = new (window.AudioContext || window.webkitAudioContext)();
         }
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
+        if (audioContext.state === 'suspended') audioContext.resume();
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(freq * 1.5, audioCtx.currentTime + 0.15);
-        gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.15);
+        osc.frequency.setValueAtTime(freq, audioContext.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.45, audioContext.currentTime + 0.18);
+        gain.gain.setValueAtTime(0.04, audioContext.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 0.18);
         osc.connect(gain);
-        gain.connect(audioCtx.destination);
+        gain.connect(audioContext.destination);
         osc.start();
-        osc.stop(audioCtx.currentTime + 0.16);
-      } catch (e) {}
+        osc.stop(audioContext.currentTime + 0.19);
+      } catch (err) {}
     }
 
-    btnAudioToggle.addEventListener('click', () => {
-      sfxOn = !sfxOn;
-      audioIcon.className = sfxOn ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark';
-      if (sfxOn) playChime(580);
+    audioToggleBtn.addEventListener('click', () => {
+      isAudioEnabled = !isAudioEnabled;
+      audioIcon.className = isAudioEnabled ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark';
+      if (isAudioEnabled) triggerSound(560);
     });
 
-    const threeContainer = document.getElementById('threePortalFrame');
-    let scene, camera, renderer, crystalMesh, circuitCore, particles;
-    let rotationRate = 0.004;
+    const container3D = document.getElementById('threeRelicContainer');
+    let scene, camera, renderer, currentRelicGroup, particleStars;
+    let keyLight, fillLight, rimLight;
+    let currentRelicType = 'scroll';
+    let targetRotationSpeed = 0.004;
 
-    function initThree() {
-      const w = threeContainer.clientWidth || 600;
-      const h = threeContainer.clientHeight || 380;
+    function initThreeStudio() {
+      const width = container3D.clientWidth || 800;
+      const height = container3D.clientHeight || 420;
 
       scene = new THREE.Scene();
-      camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 1000);
-      camera.position.set(0, 0, 8);
+      camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+      camera.position.set(0, 0, 8.5);
 
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setSize(w, h);
+      renderer.setSize(width, height);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      threeContainer.appendChild(renderer.domElement);
+      renderer.toneMappingExposure = 1.35;
+      container3D.appendChild(renderer.domElement);
 
-      // Studio Lighting
-      const ambLight = new THREE.AmbientLight(0x073642, 2.2);
-      scene.add(ambLight);
+      // Studio Lighting for Materials
+      const amb = new THREE.AmbientLight(0x073642, 2.2);
+      scene.add(amb);
 
-      const keyLight = new THREE.DirectionalLight(0x2aa198, 3.4);
-      keyLight.position.set(4, 7, 5);
+      keyLight = new THREE.DirectionalLight(0x2aa198, 2.8);
+      keyLight.position.set(5, 8, 6);
       scene.add(keyLight);
 
-      const fillLight = new THREE.PointLight(0x6c71c4, 2.8, 18);
-      fillLight.position.set(-5, -3, 3);
+      fillLight = new THREE.PointLight(0x6c71c4, 2.8, 25);
+      fillLight.position.set(-6, -3, 4);
       scene.add(fillLight);
 
-      const goldLight = new THREE.PointLight(0xb58900, 2.2, 16);
-      goldLight.position.set(0, 4, -4);
-      scene.add(goldLight);
+      rimLight = new THREE.PointLight(0xb58900, 2.4, 20);
+      rimLight.position.set(0, -6, -4);
+      scene.add(rimLight);
 
-      buildModel('pyramid');
-
-      // Stardust Sparkles
-      const count = 140;
-      const geo = new THREE.BufferGeometry();
-      const pos = new Float32Array(count * 3);
-      for (let i = 0; i < count * 3; i += 3) {
-        pos[i] = (Math.random() - 0.5) * 11;
-        pos[i+1] = (Math.random() - 0.5) * 7;
-        pos[i+2] = (Math.random() - 0.5) * 9;
+      // Ambient Quantum Particle Field
+      const partCount = 160;
+      const partGeo = new THREE.BufferGeometry();
+      const coords = new Float32Array(partCount * 3);
+      for (let i = 0; i < partCount * 3; i += 3) {
+        coords[i] = (Math.random() - 0.5) * 11;
+        coords[i+1] = (Math.random() - 0.5) * 8;
+        coords[i+2] = (Math.random() - 0.5) * 9;
       }
-      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-      const mat = new THREE.PointsMaterial({
+      partGeo.setAttribute('position', new THREE.BufferAttribute(coords, 3));
+      const partMat = new THREE.PointsMaterial({
         color: 0x2aa198,
-        size: 0.045,
+        size: 0.05,
         transparent: true,
         opacity: 0.7,
         blending: THREE.AdditiveBlending
       });
-      particles = new THREE.Points(geo, mat);
-      scene.add(particles);
+      particleStars = new THREE.Points(partGeo, partMat);
+      scene.add(particleStars);
 
-      setupPointerInteraction();
-      animateThree();
-    }
+      // Spawn initial 3D model (Scroll Book)
+      buildRelicMesh('scroll');
 
-    function createProceduralTraces() {
-      const cv = document.createElement('canvas');
-      cv.width = 1024;
-      cv.height = 1024;
-      const ctx = cv.getContext('2d');
-      ctx.fillStyle = '#002b36';
-      ctx.fillRect(0, 0, 1024, 1024);
-      ctx.strokeStyle = '#2aa198';
-      ctx.lineWidth = 3;
-      ctx.shadowColor = '#2aa198';
-      ctx.shadowBlur = 8;
-
-      for (let i = 0; i < 40; i++) {
-        let x = Math.random() * 1024;
-        let y = Math.random() * 1024;
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        let len = 60 + Math.random() * 140;
-        let d = Math.floor(Math.random() * 4);
-        if (d === 0) x += len;
-        else if (d === 1) y += len;
-        else if (d === 2) x -= len;
-        else y -= len;
-        ctx.lineTo(x, y);
-        x += (Math.random() > 0.5 ? 40 : -40);
-        y += (Math.random() > 0.5 ? 40 : -40);
-        ctx.lineTo(x, y);
-        ctx.stroke();
-
-        ctx.fillStyle = '#b58900';
-        ctx.beginPath();
-        ctx.arc(x, y, 4, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      return new THREE.CanvasTexture(cv);
-    }
-
-    function buildModel(type) {
-      if (crystalMesh) scene.remove(crystalMesh);
-      if (circuitCore) scene.remove(circuitCore);
-
-      let geo, coreGeo;
-      if (type === 'pyramid') {
-        geo = new THREE.ConeGeometry(2.3, 3.2, 4);
-        coreGeo = new THREE.ConeGeometry(1.5, 2.2, 4);
-      } else if (type === 'polyhedron') {
-        geo = new THREE.IcosahedronGeometry(2.1, 1);
-        coreGeo = new THREE.IcosahedronGeometry(1.3, 0);
-      } else if (type === 'torus') {
-        geo = new THREE.TorusGeometry(1.8, 0.65, 16, 40);
-        coreGeo = new THREE.TorusGeometry(1.8, 0.15, 8, 40);
-      } else if (type === 'wire') {
-        geo = new THREE.OctahedronGeometry(2.2, 0);
-        coreGeo = new THREE.OctahedronGeometry(1.4, 0);
-      }
-
-      const traceTex = createProceduralTraces();
-      const glassMat = new THREE.MeshPhysicalMaterial({
-        color: 0x93a1a1,
-        metalness: 0.15,
-        roughness: 0.08,
-        transmission: 0.88,
-        ior: 1.62,
-        transparent: true,
-        opacity: 0.92,
-        map: traceTex,
-        wireframe: (type === 'wire')
-      });
-
-      crystalMesh = new THREE.Mesh(geo, glassMat);
-      crystalMesh.position.y = -0.15;
-      scene.add(crystalMesh);
-
-      const coreMat = new THREE.MeshBasicMaterial({
-        color: 0x2aa198,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.75
-      });
-      circuitCore = new THREE.Mesh(coreGeo, coreMat);
-      circuitCore.position.y = -0.15;
-      scene.add(circuitCore);
-    }
-
-    function setupPointerInteraction() {
+      // Mouse drag controls
       let isDragging = false;
-      let prevX = 0, prevY = 0;
+      let prevPos = { x: 0, y: 0 };
 
-      threeContainer.addEventListener('mousedown', (e) => {
+      container3D.addEventListener('mousedown', (e) => {
         isDragging = true;
-        prevX = e.clientX;
-        prevY = e.clientY;
+        prevPos = { x: e.clientX, y: e.clientY };
       });
       window.addEventListener('mouseup', () => { isDragging = false; });
       window.addEventListener('mousemove', (e) => {
-        if (!isDragging || !crystalMesh) return;
-        const dx = e.clientX - prevX;
-        const dy = e.clientY - prevY;
-        crystalMesh.rotation.y += dx * 0.009;
-        crystalMesh.rotation.x += dy * 0.009;
-        if (circuitCore) {
-          circuitCore.rotation.y += dx * 0.009;
-          circuitCore.rotation.x += dy * 0.009;
-        }
-        prevX = e.clientX;
-        prevY = e.clientY;
+        if (!isDragging || !currentRelicGroup) return;
+        const dx = e.clientX - prevPos.x;
+        const dy = e.clientY - prevPos.y;
+        currentRelicGroup.rotation.y += dx * 0.008;
+        currentRelicGroup.rotation.x += dy * 0.008;
+        prevPos = { x: e.clientX, y: e.clientY };
       });
 
-      // Chapter Pills Click
-      document.querySelectorAll('.rune-chapter-row .rune-pill-badge').forEach(pill => {
-        pill.addEventListener('click', function() {
-          document.querySelectorAll('.rune-chapter-row .rune-pill-badge').forEach(p => p.classList.remove('active'));
-          this.classList.add('active');
-          buildModel(this.dataset.model);
-          playChime(640);
-        });
+      // Touch controls
+      container3D.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          isDragging = true;
+          prevPos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
       });
+      window.addEventListener('touchend', () => { isDragging = false; });
+      window.addEventListener('touchmove', (e) => {
+        if (!isDragging || !currentRelicGroup || e.touches.length !== 1) return;
+        const dx = e.touches[0].clientX - prevPos.x;
+        const dy = e.touches[0].clientY - prevPos.y;
+        currentRelicGroup.rotation.y += dx * 0.008;
+        currentRelicGroup.rotation.x += dy * 0.008;
+        prevPos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      });
+
+      window.addEventListener('resize', onStudioResize);
+      renderStudioLoop();
+    }
+
+    function onStudioResize() {
+      if (!container3D || !renderer || !camera) return;
+      const w = container3D.clientWidth;
+      const h = container3D.clientHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    }
+
+    function buildRelicMesh(type) {
+      if (currentRelicGroup) {
+        scene.remove(currentRelicGroup);
+        currentRelicGroup.traverse(child => {
+          if (child.geometry) child.geometry.dispose();
+          if (child.material) {
+            if (Array.isArray(child.material)) child.material.forEach(m => m.dispose());
+            else child.material.dispose();
+          }
+        });
+      }
+
+      currentRelicType = type;
+      currentRelicGroup = new THREE.Group();
+
+      const goldMat = new THREE.MeshStandardMaterial({
+        color: 0xb58900,
+        metalness: 0.85,
+        roughness: 0.25,
+        emissive: 0x332600,
+        emissiveIntensity: 0.2
+      });
+
+      const cyanGlowMat = new THREE.MeshStandardMaterial({
+        color: 0x2aa198,
+        emissive: 0x2aa198,
+        emissiveIntensity: 0.75,
+        roughness: 0.1,
+        metalness: 0.2
+      });
+
+      if (type === 'scroll') {
+        // 1. SCROLL BOOK (Ancient Parchment Curled Scroll with Cylinder Rods and Illuminated Sigils)
+        const parchmentMat = new THREE.MeshStandardMaterial({
+          color: 0xeee8d5,
+          roughness: 0.5,
+          metalness: 0.05,
+          side: THREE.DoubleSide
+        });
+
+        const darkWoodMat = new THREE.MeshStandardMaterial({
+          color: 0x073642,
+          roughness: 0.4,
+          metalness: 0.2
+        });
+
+        // Left & Right Carved Roller Rods
+        const rodGeo = new THREE.CylinderGeometry(0.12, 0.12, 3.4, 24);
+        const rodLeft = new THREE.Mesh(rodGeo, darkWoodMat);
+        rodLeft.position.set(-1.6, 0, 0);
+        rodLeft.rotation.z = Math.PI * 0.05;
+
+        const rodRight = new THREE.Mesh(rodGeo, darkWoodMat);
+        rodRight.position.set(1.6, 0, 0);
+        rodRight.rotation.z = -Math.PI * 0.05;
+
+        // Gold finial caps for rods
+        const capGeo = new THREE.SphereGeometry(0.2, 16, 16);
+        [-1.7, 1.7].forEach(y => {
+          const capL = new THREE.Mesh(capGeo, goldMat);
+          capL.position.set(0, y, 0);
+          rodLeft.add(capL);
+
+          const capR = new THREE.Mesh(capGeo, goldMat);
+          capR.position.set(0, y, 0);
+          rodRight.add(capR);
+        });
+
+        // Curled Parchment Body
+        const scrollCurve = new THREE.CubicBezierCurve3(
+          new THREE.Vector3(-1.6, 0, 0),
+          new THREE.Vector3(-0.8, 0.35, 0.4),
+          new THREE.Vector3(0.8, -0.35, 0.4),
+          new THREE.Vector3(1.6, 0, 0)
+        );
+        const points = scrollCurve.getPoints(24);
+        const shape = new THREE.Shape();
+        shape.moveTo(points[0].x, points[0].y);
+        points.forEach(p => shape.lineTo(p.x, p.y));
+
+        const extrudeSettings = {
+          steps: 1,
+          depth: 2.6,
+          bevelEnabled: false
+        };
+        const scrollGeo = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+        scrollGeo.center();
+        const scrollParchment = new THREE.Mesh(scrollGeo, parchmentMat);
+        scrollParchment.rotation.x = Math.PI / 2;
+
+        // Glowing Inscribed Sigil Ring on the parchment
+        const sigilRingGeo = new THREE.RingGeometry(0.45, 0.52, 32);
+        const sigilRing = new THREE.Mesh(sigilRingGeo, cyanGlowMat);
+        sigilRing.rotation.x = -Math.PI / 2;
+        sigilRing.position.set(0, 0.1, 0);
+
+        // Core Runic Crystal Emblem floating above scroll
+        const emblemGeo = new THREE.OctahedronGeometry(0.3, 0);
+        const runeEmblem = new THREE.Mesh(emblemGeo, cyanGlowMat);
+        runeEmblem.position.set(0, 0.55, 0);
+        runeEmblem.name = "scrollEmblem";
+
+        currentRelicGroup.add(rodLeft);
+        currentRelicGroup.add(rodRight);
+        currentRelicGroup.add(scrollParchment);
+        currentRelicGroup.add(sigilRing);
+        currentRelicGroup.add(runeEmblem);
+
+      } else if (type === 'staff') {
+        // 2. MERLIN'S STAFF (Stave of Arcanum with twisted finial cradle and levitating orbital crystal)
+        const woodMat = new THREE.MeshStandardMaterial({
+          color: 0x586e75,
+          roughness: 0.6,
+          metalness: 0.15
+        });
+
+        // Tall Stave Shaft with taper
+        const shaftGeo = new THREE.CylinderGeometry(0.1, 0.16, 4.4, 20);
+        const staffShaft = new THREE.Mesh(shaftGeo, woodMat);
+        staffShaft.position.y = -0.5;
+
+        // Gold Ring Bands along the shaft
+        const bandGeo = new THREE.TorusGeometry(0.16, 0.04, 16, 24);
+        [-1.2, -0.4, 0.4, 1.2].forEach(yPos => {
+          const band = new THREE.Mesh(bandGeo, goldMat);
+          band.rotation.x = Math.PI / 2;
+          band.position.y = yPos;
+          staffShaft.add(band);
+        });
+
+        // Intricate Finial Head Cradle
+        const cradleGroup = new THREE.Group();
+        cradleGroup.position.y = 1.8;
+
+        for (let i = 0; i < 4; i++) {
+          const angle = (i / 4) * Math.PI * 2;
+          const prongCurve = new THREE.CatmullRomCurve3([
+            new THREE.Vector3(0, 0, 0),
+            new THREE.Vector3(Math.cos(angle) * 0.45, 0.5, Math.sin(angle) * 0.45),
+            new THREE.Vector3(Math.cos(angle) * 0.3, 1.1, Math.sin(angle) * 0.3)
+          ]);
+          const prongGeo = new THREE.TubeGeometry(prongCurve, 16, 0.04, 8, false);
+          const prong = new THREE.Mesh(prongGeo, goldMat);
+          cradleGroup.add(prong);
+        }
+
+        // Levitating Optical Quartz Gem in cradle
+        const gemGeo = new THREE.OctahedronGeometry(0.5, 0);
+        const gemMat = new THREE.MeshPhysicalMaterial({
+          color: 0x268bd2,
+          emissive: 0x268bd2,
+          emissiveIntensity: 0.55,
+          transmission: 0.7,
+          ior: 1.6,
+          roughness: 0.1,
+          metalness: 0.1
+        });
+        const crystalGem = new THREE.Mesh(gemGeo, gemMat);
+        crystalGem.position.y = 0.55;
+        crystalGem.name = "staffGem";
+        cradleGroup.add(crystalGem);
+
+        // Orbital Ring around the gem
+        const orbitGeo = new THREE.TorusGeometry(0.7, 0.025, 16, 36);
+        const orbitRing = new THREE.Mesh(orbitGeo, cyanGlowMat);
+        orbitRing.position.y = 0.55;
+        orbitRing.name = "staffOrbitRing";
+        cradleGroup.add(orbitRing);
+
+        currentRelicGroup.add(staffShaft);
+        currentRelicGroup.add(cradleGroup);
+
+      } else if (type === 'orb') {
+        // 3. SCRYING ORB (Translucent Glass Sphere with Swirling Inner Core & Astrolabe Gimbal Stand)
+        // Translucent Glass Sphere
+        const sphereGeo = new THREE.SphereGeometry(1.6, 48, 48);
+        const glassMat = new THREE.MeshPhysicalMaterial({
+          color: 0x93a1a1,
+          metalness: 0.1,
+          roughness: 0.05,
+          transmission: 0.9,
+          ior: 1.54,
+          transparent: true,
+          opacity: 0.88,
+          reflectivity: 0.9
+        });
+        const outerSphere = new THREE.Mesh(sphereGeo, glassMat);
+
+        // Swirling Internal Caustic Nebula Core
+        const coreGeo = new THREE.IcosahedronGeometry(1.0, 2);
+        const coreMat = new THREE.MeshBasicMaterial({
+          color: 0x6c71c4,
+          wireframe: true,
+          transparent: true,
+          opacity: 0.75
+        });
+        const innerNebula = new THREE.Mesh(coreGeo, coreMat);
+        innerNebula.name = "orbInnerNebula";
+        outerSphere.add(innerNebula);
+
+        // Concentric Gimbal Rings (Astrolabe Stand)
+        const ring1Geo = new THREE.TorusGeometry(1.85, 0.05, 16, 48);
+        const ring1 = new THREE.Mesh(ring1Geo, goldMat);
+        ring1.name = "orbGimbal1";
+
+        const ring2Geo = new THREE.TorusGeometry(2.05, 0.04, 16, 48);
+        const ring2 = new THREE.Mesh(ring2Geo, cyanGlowMat);
+        ring2.rotation.x = Math.PI / 3;
+        ring2.name = "orbGimbal2";
+
+        // Ornate Tripod Base
+        const baseGroup = new THREE.Group();
+        baseGroup.position.y = -1.8;
+        for (let i = 0; i < 3; i++) {
+          const a = (i / 3) * Math.PI * 2;
+          const legGeo = new THREE.CylinderGeometry(0.08, 0.12, 1.2, 16);
+          const leg = new THREE.Mesh(legGeo, goldMat);
+          leg.position.set(Math.cos(a) * 0.9, -0.4, Math.sin(a) * 0.9);
+          leg.rotation.z = Math.cos(a) * 0.3;
+          leg.rotation.x = -Math.sin(a) * 0.3;
+          baseGroup.add(leg);
+        }
+
+        currentRelicGroup.add(outerSphere);
+        currentRelicGroup.add(ring1);
+        currentRelicGroup.add(ring2);
+        currentRelicGroup.add(baseGroup);
+
+      } else if (type === 'ring') {
+        // 4. RING OF AVALON (Braided Möbius / Torus of Runes with Internal Singularity & Gyro Rings)
+        // Braided Primary Torus
+        const torusGeo = new THREE.TorusGeometry(1.8, 0.28, 24, 64);
+        const ringMat = new THREE.MeshStandardMaterial({
+          color: 0xb58900,
+          metalness: 0.9,
+          roughness: 0.2,
+          emissive: 0x473600,
+          emissiveIntensity: 0.35
+        });
+        const primaryRing = new THREE.Mesh(torusGeo, ringMat);
+        primaryRing.name = "avalonPrimaryRing";
+
+        // Second Intersecting Gyro Ring (Avalon Orbit)
+        const gyroGeo = new THREE.TorusGeometry(2.15, 0.06, 16, 64);
+        const gyroRing = new THREE.Mesh(gyroGeo, cyanGlowMat);
+        gyroRing.rotation.x = Math.PI / 2.5;
+        gyroRing.name = "avalonGyroRing";
+
+        // Third Counter-Rotating Runic Ring
+        const gyro2Geo = new THREE.TorusGeometry(1.4, 0.05, 16, 48);
+        const gyroRing2 = new THREE.Mesh(gyro2Geo, new THREE.MeshStandardMaterial({
+          color: 0x6c71c4,
+          metalness: 0.7,
+          roughness: 0.2,
+          emissive: 0x6c71c4,
+          emissiveIntensity: 0.4
+        }));
+        gyroRing2.rotation.y = Math.PI / 3;
+        gyroRing2.name = "avalonGyroRing2";
+
+        // Inner Singularity Core (Octahedral Quantum Gem)
+        const singularityGeo = new THREE.OctahedronGeometry(0.65, 0);
+        const singularity = new THREE.Mesh(singularityGeo, cyanGlowMat);
+        singularity.name = "avalonSingularity";
+
+        currentRelicGroup.add(primaryRing);
+        currentRelicGroup.add(gyroRing);
+        currentRelicGroup.add(gyroRing2);
+        currentRelicGroup.add(singularity);
+      }
+
+      currentRelicGroup.position.set(0, 0, 0);
+      scene.add(currentRelicGroup);
     }
 
     let clock = new THREE.Clock();
-    function animateThree() {
-      requestAnimationFrame(animateThree);
-      const elapsed = clock.getElapsedTime();
 
-      if (crystalMesh) {
-        crystalMesh.rotation.y += rotationRate;
-        crystalMesh.rotation.x = Math.sin(elapsed * 0.4) * 0.08;
+    function renderStudioLoop() {
+      requestAnimationFrame(renderStudioLoop);
+      const delta = clock.getDelta();
+      const time = clock.getElapsedTime();
+
+      if (currentRelicGroup) {
+        currentRelicGroup.rotation.y += targetRotationSpeed;
+
+        // Custom organic float and child rotations based on relic type
+        if (currentRelicType === 'scroll') {
+          currentRelicGroup.rotation.x = Math.sin(time * 0.6) * 0.12;
+          const emblem = currentRelicGroup.getObjectByName("scrollEmblem");
+          if (emblem) {
+            emblem.rotation.y += 0.02;
+            emblem.position.y = 0.55 + Math.sin(time * 2.0) * 0.08;
+          }
+        } else if (currentRelicType === 'staff') {
+          currentRelicGroup.rotation.z = Math.sin(time * 0.5) * 0.08;
+          const gem = currentRelicGroup.getObjectByName("staffGem");
+          const orbit = currentRelicGroup.getObjectByName("staffOrbitRing");
+          if (gem) {
+            gem.rotation.y -= 0.025;
+            gem.position.y = 0.55 + Math.sin(time * 1.8) * 0.06;
+          }
+          if (orbit) {
+            orbit.rotation.x = Math.sin(time * 1.2) * 0.4;
+            orbit.rotation.z += 0.03;
+          }
+        } else if (currentRelicType === 'orb') {
+          const nebula = currentRelicGroup.getObjectByName("orbInnerNebula");
+          const g1 = currentRelicGroup.getObjectByName("orbGimbal1");
+          const g2 = currentRelicGroup.getObjectByName("orbGimbal2");
+          if (nebula) {
+            nebula.rotation.y -= 0.015;
+            nebula.rotation.x += 0.01;
+          }
+          if (g1) g1.rotation.y += 0.012;
+          if (g2) g2.rotation.z -= 0.015;
+        } else if (currentRelicType === 'ring') {
+          const g1 = currentRelicGroup.getObjectByName("avalonGyroRing");
+          const g2 = currentRelicGroup.getObjectByName("avalonGyroRing2");
+          const core = currentRelicGroup.getObjectByName("avalonSingularity");
+          if (g1) g1.rotation.z += 0.02;
+          if (g2) g2.rotation.x -= 0.025;
+          if (core) {
+            core.rotation.y += 0.03;
+            core.rotation.x += 0.02;
+          }
+        }
       }
-      if (circuitCore) {
-        circuitCore.rotation.y -= rotationRate * 1.5;
-        circuitCore.rotation.z = Math.cos(elapsed * 0.5) * 0.12;
-      }
-      if (particles) {
-        particles.rotation.y += 0.001;
+
+      if (particleStars) {
+        particleStars.rotation.y += 0.001;
       }
 
       if (renderer && scene && camera) {
@@ -1225,44 +1678,92 @@ body.light-mode .merlin-bubble{box-shadow:0 4px 18px rgba(101,123,131,.4)}
       }
     }
 
-    window.addEventListener('resize', () => {
-      if (threeContainer && renderer && camera) {
-        const w = threeContainer.clientWidth;
-        const h = threeContainer.clientHeight;
-        camera.aspect = w / h;
-        camera.updateProjectionMatrix();
-        renderer.setSize(w, h);
+    const relicCards = document.querySelectorAll('.relic-card-pill');
+    const relicLoreBanner = document.getElementById('relicLoreBanner');
+    const activeArtifactBadge = document.getElementById('activeArtifactBadge');
+    const badgeArtifactName = document.getElementById('badgeArtifactName');
+
+    const relicData = {
+      scroll: {
+        badgeIcon: 'fa-solid fa-scroll',
+        badgeTitle: 'Arcane Scroll Book Codex',
+        color: 0x2aa198,
+        lore: '"The Sacred Scroll Book unfolds: Ancient procedural geometry algorithms transcribed onto glowing parchment."',
+        soundFreq: 520,
+        boost: 0.014
+      },
+      staff: {
+        badgeIcon: 'fa-solid fa-wand-magic-sparkles',
+        badgeTitle: 'Stave of Arcanum • Vectors',
+        color: 0x268bd2,
+        lore: '"Merlin’s Staff resonates: Directorial kinetic vector arcs surging through character joint hierarchies."',
+        soundFreq: 640,
+        boost: 0.018
+      },
+      orb: {
+        badgeIcon: 'fa-solid fa-circle-dot',
+        badgeTitle: 'Scrying Orb • Previs Foresight',
+        color: 0x6c71c4,
+        lore: '"The Scrying Orb illuminates: Solarized caustics and chromatic dispersion refract across optical lenses."',
+        soundFreq: 720,
+        boost: 0.016
+      },
+      ring: {
+        badgeIcon: 'fa-solid fa-ring',
+        badgeTitle: 'Ring of Avalon • Synthesis',
+        color: 0xb58900,
+        lore: '"The Ring of Avalon turns: Unifying camera trajectories, illumination passes, and spatial models into harmony."',
+        soundFreq: 460,
+        boost: 0.022
       }
-    });
-
-    const chatForm = document.getElementById('chatForm');
-    const userInputField = document.getElementById('userInputField');
-    const chatScrollArea = document.getElementById('chatScrollArea');
-    const btnClearChat = document.getElementById('btnClearChat');
-
-    const merlinResponses = {
-      spatial: "Under the sigil ᛟ Othala: I have deconstructed the monolithic crystal into 64 facet nodes. Internal circuit traces are mapped along the non-Euclidean optical axes. The geometry stands ready for previsualisation.",
-      kinematic: "Under the sigil ᛞ Dagaz: Metamorphic curves attuned. Skeletal deformation weights calculated with smooth organic transitions across 60 fps keyframes.",
-      photometric: "Under the sigil ᚨ Ansuz: Solarized cyan and warm ochre light packets injected. Caustic dispersion index set to 1.62 with frosted edge reflections.",
-      symphony: "Under the sigil ᛝ Ingwaz: The multi-agent swarm converges. Camera orbit arcs, volumetric crystal depth, and lighting passes harmonized in holistic synchrony."
     };
 
-    function addMessage(sender, text) {
-      const bubble = document.createElement('div');
-      bubble.className = `chat-bubble bubble-${sender} font-editorial`;
-      bubble.textContent = text;
-      chatScrollArea.appendChild(bubble);
-      chatScrollArea.scrollTop = chatScrollArea.scrollHeight;
-      return bubble;   // ← FIX: typing-handoff needs the element reference
-    }
+    relicCards.forEach(card => {
+      card.addEventListener('click', function() {
+        relicCards.forEach(c => c.classList.remove('active'));
+        this.classList.add('active');
+
+        const relicKey = this.dataset.relic;
+        const config = relicData[relicKey];
+
+        // 1. Swap the active 3D model immediately
+        buildRelicMesh(relicKey);
+
+        // 2. Retune particle stardust color
+        if (particleStars) particleStars.material.color.setHex(config.color);
+
+        // 3. Transient rotational speed boost
+        targetRotationSpeed = config.boost;
+        setTimeout(() => { targetRotationSpeed = 0.004; }, 1000);
+
+        // 4. Update Badge & Lore Banner
+        activeArtifactBadge.querySelector('i').className = config.badgeIcon;
+        badgeArtifactName.textContent = config.badgeTitle;
+
+        relicLoreBanner.style.opacity = '0';
+        setTimeout(() => {
+          relicLoreBanner.textContent = config.lore;
+          relicLoreBanner.style.opacity = '1';
+        }, 180);
+
+        // 5. Sound synthesized chime
+        triggerSound(config.soundFreq);
+      });
+    });
+
+    const dialogueForm = document.getElementById('dialogueForm');
+    const dialogueInput = document.getElementById('dialogueInput');
+    const chatScrollStream = document.getElementById('chatScrollStream');
+    const btnClearChat = document.getElementById('btnClearChat');
+    const incantationPills = document.querySelectorAll('.incantation-pill');
 
     // ── LIVE: Merlin brain via Cloudflare Worker (real model, server-side key) ──
     const MERLIN_API = "https://merlin-keeper.epinoiahorizon.workers.dev/v1/chat/completions";
 
     async function replyAsMerlin(promptText) {
-      // typing bubble
-      const typing = addMessage('merlin', 'ᛝ Merlin conjuring…');
-      typing.classList.add('typing');
+      const typing = addDialogue('Merlin', 'ᛝ Merlin conjuring…', true);
+      const bubbleEl = typing.querySelector('.entry-parchment-bubble, .dialogue-entry');
+      if (bubbleEl) bubbleEl.classList.add('typing');
       try {
         const ctrl = new AbortController();
         const kill = setTimeout(() => ctrl.abort(), 20000);
@@ -1276,59 +1777,117 @@ body.light-mode .merlin-bubble{box-shadow:0 4px 18px rgba(101,123,131,.4)}
           })
         });
         clearTimeout(kill);
+        if (resp.status === 429) {
+          let jj = {}; try { jj = await resp.json(); } catch(e){}
+          if (jj.error && jj.error.code === 'free_quota_spent') {
+            typing.remove();
+            addDialogue('Merlin', 'ᛝ ' + jj.error.message, true);
+            return;
+          }
+          throw new Error(resp.status);
+        }
         if (!resp.ok) throw new Error(resp.status);
         const j = await resp.json();
+        const m = j.choices?.[0]?.message || {};
+        const answer = (m.content || '').trim();
         typing.remove();
-        addMessage('merlin', (j.choices?.[0]?.message?.content || 'ᛝ The tome is silent — ask once more.') );
-              const __a = (j.choices?.[0]?.message?.content || '').slice(0,2000);
-      if(__a) (window.__hist = window.__hist || []).push({role:'assistant', content:__a});
-      playChime(680);
+        (window.__hist = window.__hist || []).push({role:'assistant', content:answer.slice(0,2000)});
+        addDialogue('Merlin', answer || 'ᛝ The tome is silent — ask once more.', true);
+        triggerSound(680);
       } catch (e) {
         typing.remove();
-        addMessage('merlin', 'ᛝ The mists interrupted — one more try.');
-        playChime(300);
+        addDialogue('Merlin', 'ᛝ The mists interrupted — one more try.', true);
       }
     }
 
-    
-    chatForm.addEventListener('submit', (e) => {
+    function addDialogue(author, text, isMerlin = false) {
+      const entry = document.createElement('div');
+      entry.className = `dialogue-entry ${isMerlin ? 'agent-entry' : 'user-entry'}`;
+
+      const icon = document.createElement('div');
+      icon.className = 'entry-sigil-icon font-angel';
+      icon.innerHTML = isMerlin ? 'ᚨ' : '<i class="fa-solid fa-crown" style="font-size:0.75rem;"></i>';
+
+      const bubble = document.createElement('div');
+      bubble.className = 'entry-parchment-bubble';
+
+      const authorTag = document.createElement('span');
+      authorTag.className = 'bubble-author font-angel';
+      authorTag.textContent = author;
+
+      const p = document.createElement('p');
+      p.className = 'bubble-text font-editorial';
+      p.textContent = text;
+
+      bubble.appendChild(authorTag);
+      bubble.appendChild(p);
+      entry.appendChild(icon);
+      entry.appendChild(bubble);
+
+      chatScrollStream.appendChild(entry);
+      chatScrollStream.scrollTop = chatScrollStream.scrollHeight;
+    }
+
+    function generateMerlinReply(prompt) {
+      const p = prompt.toLowerCase();
+      
+      if (p.includes('scroll') || p.includes('facet') || p.includes('procedural')) {
+        return "By the Sacred Scroll Book: The procedural geometry formulas have been parsed. 128 crystalline facet coordinates registered along the 4-axis symmetry grid. The spatial mesh stands ready.";
+      } else if (p.includes('staff') || p.includes('kinetic') || p.includes('motion') || p.includes('rig')) {
+        return "Channeling through the Stave of Arcanum: Kinetic energy vector curves calculated. The skeletal armature blends organic weights with smooth 60fps dynamic interpolation.";
+      } else if (p.includes('orb') || p.includes('scrying') || p.includes('caustic') || p.includes('light')) {
+        return "Peering into the Scrying Orb: Solarized turquoise and ochre caustics mapped at 1.62 refractive index. Optical dispersion illuminates all frosted quartz edges.";
+      } else if (p.includes('ring') || p.includes('avalon') || p.includes('harmony') || p.includes('previs')) {
+        return "Bound by the Ring of Avalon: The autonomous director swarm converges. Camera orbit arcs, volumetric lighting passes, and kinetic models synchronize into flawless unity.";
+      } else {
+        return `“${prompt}” has been transcribed into the Grimoire. Merlin attunes the optical prisms and kinetic rigs to manifest your creative vision.`;
+      }
+    }
+
+    dialogueForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const val = userInputField.value.trim();
+      const val = dialogueInput.value.trim();
       if (!val) return;
-      addMessage('user', val);
+
+      addDialogue('Director', val, false);
+      dialogueInput.value = '';
+      triggerSound(480);
       (window.__hist = window.__hist || []).push({role:'user', content:val.slice(0,2000)});
-      userInputField.value = '';
-      playChime(480);
       replyAsMerlin(val);
     });
 
-    // Preset Incantation Chips (click = send prompt to LIVE brain + push history)
-    document.querySelectorAll('.incantation-chip').forEach(chip => {
-      chip.addEventListener('click', function() {
+    incantationPills.forEach(pill => {
+      pill.addEventListener('click', function() {
         const prompt = this.dataset.prompt;
-        addMessage('user', prompt);
+        addDialogue('Director', prompt, false);
+        triggerSound(500);
         (window.__hist = window.__hist || []).push({role:'user', content:prompt.slice(0,2000)});
-        playChime(500);
         replyAsMerlin(prompt);
       });
     });
 
     btnClearChat.addEventListener('click', () => {
-      window.__hist = [];
-      chatScrollArea.innerHTML = `
-        <div class="chat-bubble bubble-merlin font-editorial">
-          ᛟ The tome is renewed. Ask me anything — the mists are fresh.
+      chatScrollStream.innerHTML = `
+        <div class="dialogue-entry agent-entry">
+          <div class="entry-sigil-icon font-angel">ᚨ</div>
+          <div class="entry-parchment-bubble">
+            <span class="bubble-author font-angel">Merlin</span>
+            <p class="bubble-text">
+              "The parchment is restored. Speak your directorial intent or summon an incantation from the left folio to orchestrate your next spatial vision."
+            </p>
+          </div>
         </div>
       `;
-      playChime(420);
+      triggerSound(420);
     });
 
+    // Subtle Cursor Sparkle
     let lastSparkle = 0;
     window.addEventListener('mousemove', (e) => {
       const now = Date.now();
       if (now - lastSparkle > 80) {
         const s = document.createElement('div');
-        s.className = 'cursor-spark';
+        s.className = 'cursor-sparkle';
         const sz = Math.random() * 7 + 4;
         s.style.width = sz + 'px';
         s.style.height = sz + 'px';
@@ -1344,8 +1903,9 @@ body.light-mode .merlin-bubble{box-shadow:0 4px 18px rgba(101,123,131,.4)}
       }
     });
 
+    // Boot Three.js studio on DOM ready
     window.addEventListener('DOMContentLoaded', () => {
-      initThree();
+      initThreeStudio();
     });
   </script>
 
