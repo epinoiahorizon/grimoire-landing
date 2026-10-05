@@ -1826,6 +1826,7 @@ body.light-mode .merlin-bubble{box-shadow:0 4px 18px rgba(101,123,131,.4)}
 
       chatScrollStream.appendChild(entry);
       chatScrollStream.scrollTop = chatScrollStream.scrollHeight;
+      return entry;   // typing-handoff needs the element (same contract as fixed earlier)
     }
 
     function generateMerlinReply(prompt) {
