@@ -51,9 +51,10 @@ command -v jq >/dev/null || fail deps "jq missing after install"
 # ─── Stage 2: merlin install (upstream installer, pinned release) ───────────
 stage "install-merlin"
 if [ ! -d "$AGENT_DIR/.git" ]; then
-  curl -fsSL "$BASE_URL/merlin-install.sh" | bash -s -- --branch main \
-    || curl -fsSL https://raw.githubusercontent.com/epinoiahorizon/Merlin-Agent/main/install.sh | bash -s -- --branch main \
-    || fail install "merlin installer failed"
+  # Primary: canonical installer at its real repo path (grimoire host's own
+  # merlin-install.sh died with the VPS migration — do not fall back to it).
+  curl -fsSL https://raw.githubusercontent.com/epinoiahorizon/Merlin-Agent/main/scripts/install.sh | bash -s -- --branch main \
+    || fail install "merlin installer failed (raw.githubusercontent.com/scripts/install.sh unreachable)"
 fi
 [ -x "$MERLIN_HOME/bin/merlin" ] || [ -x "$HOME/.local/bin/merlin" ] || fail install "merlin binary not on disk"
 log "merlin installed at $AGENT_DIR"
