@@ -2150,7 +2150,7 @@ body.light-mode .merlin-bubble{box-shadow:0 4px 18px rgba(101,123,131,.4)}
       var el = document.getElementById('merlin');
       if (el) {
         clearInterval(timer);
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        el.scrollIntoView({ behavior: 'auto', block: 'start' });
       } else if (tries > 60) {
         clearInterval(timer);
       }
