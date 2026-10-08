@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 1200px; height: 630px; background: #0a0a12; font-family: Georgia, serif; overflow: hidden; }
+  .wrap { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;
+          background: radial-gradient(ellipse at 30% 20%, rgba(120, 81, 169, 0.35), transparent 55%),
+                      radial-gradient(ellipse at 75% 85%, rgba(191, 128, 255, 0.22), transparent 50%),
+                      #0a0a12; position: relative; }
+  .stars { position: absolute; inset: 0; background-image:
+      radial-gradient(1.5px 1.5px at 120px 90px, rgba(255,255,255,0.8) 50%, transparent),
+      radial-gradient(1px 1px at 340px 210px, rgba(255,255,255,0.6) 50%, transparent),
+      radial-gradient(2px 2px at 890px 120px, rgba(255,255,255,0.5) 50%, transparent),
+      radial-gradient(1px 1px at 1050px 400px, rgba(255,255,255,0.7) 50%, transparent),
+      radial-gradient(1.5px 1.5px at 560px 520px, rgba(255,255,255,0.4) 50%, transparent),
+      radial-gradient(1px 1px at 210px 480px, rgba(255,255,255,0.5) 50%, transparent),
+      radial-gradient(1px 1px at 720px 340px, rgba(255,255,255,0.4) 50%, transparent); }
+  .brand { font-size: 88px; letter-spacing: 0.22em; color: #e8dcc8; text-shadow: 0 0 40px rgba(191,128,255,0.5); font-weight: normal; }
+  .sub { margin-top: 14px; font-size: 30px; letter-spacing: 0.5em; color: #b08de0; font-style: italic; }
+  .line { margin: 36px 0 28px; width: 380px; height: 1px;
+          background: linear-gradient(90deg, transparent, #b08de0, transparent); }
+  .tag { font-size: 34px; color: #e8dcc8; font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 300; letter-spacing: 0.04em; }
+  .tag b { color: #c9a6ff; font-weight: 600; }
+  .footer { position: absolute; bottom: 52px; font-size: 24px; letter-spacing: 0.35em; color: rgba(232,220,200,0.55);
+            font-family: 'Helvetica Neue', Arial, sans-serif; }
+  .glyph { position: absolute; font-size: 420px; color: rgba(176, 141, 224, 0.06); top: 40px; right: 60px; font-family: Georgia, serif; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="stars"></div>
+  <div class="glyph">✦</div>
+  <div class="brand">EPINOIA HORIZON</div>
+  <div class="sub">The Grimoire of Previsualisation</div>
+  <div class="line"></div>
+  <div class="tag">Merlin Agent — the <b>self-improving</b> open-source AI harness</div>
+  <div class="footer">epinoiahorizon.com</div>
+</div>
+</body>
+</html>
