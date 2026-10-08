@@ -2144,12 +2144,17 @@ body.light-mode .merlin-bubble{box-shadow:0 4px 18px rgba(101,123,131,.4)}
   // Merlin section (the same target as epinoiahorizon.com/main-site/#merlin).
   (function () {
     if (location.hash) return;                    // explicit anchor or #merlin already set — respect it
-    var scroll = function () {
+    var tries = 0;
+    var timer = setInterval(function () {
+      tries++;
       var el = document.getElementById('merlin');
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    };
-    if (document.readyState === 'complete') setTimeout(scroll, 350);
-    else window.addEventListener('load', function () { setTimeout(scroll, 350); });
+      if (el) {
+        clearInterval(timer);
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else if (tries > 60) {
+        clearInterval(timer);
+      }
+    }, 250);
   })();
 </script>
 </body>
