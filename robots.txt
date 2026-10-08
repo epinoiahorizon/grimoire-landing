@@ -1,0 +1,23 @@
+# robots.txt — welcoming classic crawlers and the new AI answer engines
+# (GPTBot, ClaudeBot, PerplexityBot, Google-Extended for AI training/answers)
+
+User-agent: *
+Allow: /
+
+# AI answer engines — explicitly welcome so Merlin gets cited in AI answers
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://epinoiahorizon.com/sitemap.xml
