@@ -1,976 +1,184 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EPINOIA HORIZON — The Merlin Grimoire & Previsualisation</title>
+  <title>EPINOIA HORIZON — 3D Art Design, Animation & Merlin Agent Harness</title>
 
-  <!-- ═══ SEO: meta description, canonical, robots ═══ -->
-  <meta name="description" content="Merlin Agent — an open-source AI agent harness that improves itself. The Grimoire of Previsualisation brings agentic workflows, live LLM chat and AI prototyping to everyone. Install in one line and join the community.">
+  <!-- SEO: canonical, robots, description -->
   <link rel="canonical" href="https://epinoiahorizon.com/">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="description" content="Epinoia Horizon — 3D art design & animation studio, and home of Merlin Agent: the self-improving open-source AI agent harness. Install in one line.">
 
-  <!-- ═══ SEO: Open Graph (Facebook, LinkedIn, Discord, WhatsApp previews) ═══ -->
+  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Epinoia Horizon">
-  <meta property="og:title" content="Merlin Agent — The Self-Improving Open-Source AI Harness">
-  <meta property="og:description" content="Install Merlin Agent in one line. An open-source agent harness that runs in your terminal, wires real tools to your LLM, and improves itself with every fix.">
+  <meta property="og:title" content="Epinoia Horizon — Merlin Agent & 3D Previsualisation">
+  <meta property="og:description" content="Merlin Agent: the self-improving open-source AI harness, from the studio that builds in public.">
   <meta property="og:url" content="https://epinoiahorizon.com/">
   <meta property="og:image" content="https://epinoiahorizon.com/assets/og-cover.png">
 
-  <!-- ═══ SEO: Twitter/X card ═══ -->
+  <!-- Twitter card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Merlin Agent — The Self-Improving Open-Source AI Harness">
-  <meta name="twitter:description" content="Install Merlin Agent in one line. An open-source agent harness that runs in your terminal, wires real tools to your LLM, and improves itself with every fix.">
+  <meta name="twitter:title" content="Epinoia Horizon — Merlin Agent & 3D Previsualisation">
+  <meta name="twitter:description" content="Merlin Agent: the self-improving open-source AI harness, from the studio that builds in public.">
   <meta name="twitter:image" content="https://epinoiahorizon.com/assets/og-cover.png">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23002b36'/%3E%3Ctext x='32' y='45' font-size='32' text-anchor='middle' fill='%23b58900'%3E%E1%9B%9F%3C/text%3E%3C/svg%3E">
 
-  <!-- ═══ SEO: structured data for AI answer engines (ChatGPT, Perplexity, Claude, Google AI Overviews) ═══ -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://epinoiahorizon.com/#org",
-        "name": "Epinoia Horizon",
-        "url": "https://epinoiahorizon.com/",
-        "description": "Open-source AI agent tooling and previsualisation studio."
-      },
-      {
-        "@type": "SoftwareApplication",
-        "name": "Merlin Agent",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Linux, macOS, Windows",
-        "url": "https://epinoiahorizon.com/",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-        "description": "Open-source terminal AI agent harness: real tool use, multi-model LLM routing, self-verification loops, and a plugin/skill system that improves with every fix.",
-        "author": { "@id": "https://epinoiahorizon.com/#org" },
-        "sameAs": ["https://github.com/epinoiahorizon/Merlin-Agent"]
-      }
-    ]
-  }
-  </script>
-  
-  <!-- Typography: Cinzel Decorative, Cormorant Garamond & Plus Jakarta Sans -->
+  <!-- Google Fonts: Luxury Angel Wish-style Display & Engineering Monospace -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  
-  <!-- FontAwesome 6 Icons for Relics & Controls -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Three.js (r128) -->
+
+  <!-- Tailwind: original compiled asset didn't reach the repo (404 fix) —
+       Play CDN JIT + inline solarized config reproduces the exact palette -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            solar: {
+              base03: '#002b36', base02: '#073642', base01: '#586e75', base00: '#657b83',
+              base0: '#839496', base1: '#93a1a1', base2: '#eee8d5', base3: '#fdf6e3',
+              yellow: '#b58900', orange: '#cb4b16', red: '#dc322f',
+              magenta: '#d33682', violet: '#6c71c4', blue: '#268bd2',
+              cyan: '#2aa198', green: '#859900',
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Three.js Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
-    :root {
-      --solar-base03: #002b36;
-      --solar-base02: #073642;
-      --solar-base01: #586e75;
-      --solar-base00: #657b83;
-      --solar-base0:  #839496;
-      --solar-base1:  #93a1a1;
-      --solar-base2:  #eee8d5;
-      --solar-base3:  #fdf6e3;
-      --solar-yellow: #b58900;
-      --solar-orange: #cb4b16;
-      --solar-magenta:#d33682;
-      --solar-violet: #6c71c4;
-      --solar-blue:   #268bd2;
-      --solar-cyan:   #2aa198;
-
-      /* Dark Void Theme Tokens */
-      --bg-void: #001b23;
-      --bg-surface: rgba(7, 54, 66, 0.58);
-      --bg-glass: rgba(0, 43, 54, 0.74);
-      --border-subtle: rgba(147, 161, 161, 0.2);
-      --border-glow: rgba(42, 161, 152, 0.45);
-      --text-gold: #b58900;
-      --text-main: #eee8d5;
-      --text-muted: #93a1a1;
-      --text-faint: #586e75;
-      --sigil-cyan: #2aa198;
-      --sigil-violet: #6c71c4;
-      --tome-shadow: 0 35px 80px -15px rgba(0, 10, 15, 0.9), 0 0 1px 1px rgba(255, 255, 255, 0.1) inset;
+    @font-face {
+      font-family: 'AngelWishCustom';
+      src: local('Angel Wish'), local('Cinzel Decorative');
     }
 
-    body.light-mode {
-      --bg-void: #f6f0df;
-      --bg-surface: rgba(238, 232, 213, 0.75);
-      --bg-glass: rgba(253, 246, 227, 0.88);
-      --border-subtle: rgba(88, 110, 117, 0.24);
-      --border-glow: rgba(38, 139, 210, 0.55);
-      --text-gold: #b58900;
-      --text-main: #073642;
-      --text-muted: #586e75;
-      --text-faint: #93a1a1;
-      --sigil-cyan: #268bd2;
-      --sigil-violet: #6c71c4;
-      --tome-shadow: 0 35px 70px -15px rgba(181, 137, 0, 0.16), 0 0 1px 1px rgba(255, 255, 255, 0.8) inset;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    body {
-      background-color: var(--bg-void);
-      color: var(--text-main);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: 300;
-      overflow-x: hidden;
-      line-height: 1.7;
-      min-height: 100vh;
-      transition: background-color 0.8s ease, color 0.8s ease;
-      position: relative;
-    }
-
-    /* Ambient Grimoire Aurora Backdrop */
-    .ambient-aurora {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      background: 
-        radial-gradient(circle at 18% 22%, rgba(42, 161, 152, 0.14) 0%, transparent 50%),
-        radial-gradient(circle at 82% 78%, rgba(181, 137, 0, 0.1) 0%, transparent 55%),
-        radial-gradient(circle at 50% 12%, rgba(108, 113, 196, 0.1) 0%, transparent 60%);
-    }
-
-    .subtle-hairline-grid {
-      position: fixed;
-      inset: 0;
-      background-size: 64px 64px;
-      background-image: 
-        linear-gradient(to right, rgba(147, 161, 161, 0.035) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(147, 161, 161, 0.035) 1px, transparent 1px);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Typography Classes */
-    .font-angel {
-      font-family: 'Cinzel Decorative', Georgia, serif;
-      letter-spacing: 0.18em;
+    .font-angel-wish {
+      font-family: 'AngelWishCustom', 'Cinzel Decorative', 'Cinzel', serif;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
     }
 
-    .font-editorial {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-    }
-
+    /* Prismatic Chromatic Iridescent Gradient */
     .iridescent-text {
-      background: linear-gradient(135deg, #ffffff 0%, var(--solar-base2) 32%, var(--sigil-cyan) 68%, var(--text-gold) 100%);
+      background: linear-gradient(
+        135deg, 
+        #eee8d5 0%, 
+        #93a1a1 16%, 
+        #2aa198 34%, 
+        #268bd2 52%, 
+        #6c71c4 70%, 
+        #d33682 86%, 
+        #eee8d5 100%
+      );
+      background-size: 300% 300%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 3px 16px rgba(42, 161, 152, 0.3));
+      animation: iridescentShift 10s ease infinite;
     }
 
-    body.light-mode .iridescent-text {
-      background: linear-gradient(135deg, #002b36 0%, #073642 45%, var(--sigil-cyan) 75%, var(--text-gold) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: none;
+    .metallic-bevel {
+      text-shadow: 0 1px 0 rgba(255,255,255,0.4), 
+                   0 -1px 0 rgba(0,0,0,0.85), 
+                   0 10px 30px rgba(42, 161, 152, 0.45);
     }
 
-    header.grimoire-nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      padding: 1.2rem 3.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 100;
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
-      border-bottom: 1px solid var(--border-subtle);
-      background: rgba(0, 27, 35, 0.78);
-      transition: all 0.4s ease;
+    @keyframes iridescentShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
-    body.light-mode header.grimoire-nav {
-      background: rgba(246, 240, 223, 0.85);
+    /* Acrylic Trophy Glassmorphic Effect */
+    .acrylic-plaque {
+      background: rgba(7, 54, 66, 0.62);
+      backdrop-filter: blur(24px) saturate(190%);
+      -webkit-backdrop-filter: blur(24px) saturate(190%);
+      border: 1px solid rgba(147, 161, 161, 0.18);
+      box-shadow: 
+        0 24px 60px rgba(0, 43, 54, 0.7),
+        inset 0 1px 2px rgba(255, 255, 255, 0.35),
+        inset 0 -1px 2px rgba(42, 161, 152, 0.25);
     }
 
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 1.1rem;
-      cursor: pointer;
-      text-decoration: none;
-      color: inherit;
+    .light .acrylic-plaque {
+      background: rgba(253, 246, 227, 0.9);
+      border: 1px solid rgba(88, 110, 117, 0.24);
+      box-shadow: 
+        0 20px 48px rgba(101, 123, 131, 0.15),
+        inset 0 1px 2px rgba(255, 255, 255, 0.95),
+        inset 0 -1px 2px rgba(38, 139, 210, 0.18);
     }
 
-    .nav-rune-sigil {
-      width: 36px;
-      height: 36px;
-      border: 1px solid var(--border-glow);
-      border-radius: 9px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--sigil-cyan);
-      font-size: 1.1rem;
-      background: rgba(42, 161, 152, 0.1);
-      box-shadow: 0 0 15px rgba(42, 161, 152, 0.2);
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .nav-brand:hover .nav-rune-sigil {
-      transform: rotate(45deg);
-      border-color: var(--text-gold);
-      color: var(--text-gold);
-    }
-
-    .nav-title-group h1 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-    }
-
-    .nav-title-group span {
-      font-size: 0.65rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      display: block;
-    }
-
-    /* Page Navigation Tabs */
-    .view-switcher-bar {
-      display: flex;
-      gap: 0.4rem;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      padding: 0.3rem 0.4rem;
-      border-radius: 40px;
-    }
-
-    .switch-tab-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      padding: 0.45rem 1.4rem;
-      font-size: 0.74rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      border-radius: 30px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      transition: all 0.3s ease;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-
-    .switch-tab-btn i {
-      font-size: 0.85rem;
-      color: var(--text-gold);
-      transition: color 0.3s ease;
-    }
-
-    .switch-tab-btn.active {
-      background: var(--sigil-cyan);
-      color: #002b36;
-      font-weight: 600;
-      box-shadow: 0 4px 15px rgba(42, 161, 152, 0.35);
-    }
-
-    .switch-tab-btn.active i {
-      color: #002b36;
-    }
-
-    .nav-controls {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-
-    .icon-round-btn {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-muted);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-    }
-
-    .icon-round-btn:hover {
-      color: var(--sigil-cyan);
-      border-color: var(--border-glow);
-      transform: scale(1.06);
-    }
-
-    main.view-host {
+    .prismatic-border {
       position: relative;
-      z-index: 10;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      padding-top: 5.5rem;
     }
-
-    .page-view {
-      display: none;
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-      width: 100%;
-    }
-
-    .page-view.active-view {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Landing Page Container */
-    .portal-landing-container {
-      max-width: 1100px;
-      margin: 2rem auto 4.5rem;
-      padding: 0 1.5rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .glass-monolith-trophy {
-      width: 100%;
-      background: var(--bg-glass);
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: var(--tome-shadow);
-      padding: 3rem 3rem 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .glass-monolith-trophy::before {
+    .prismatic-border::after {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), var(--sigil-cyan), var(--text-gold), transparent);
-    }
-
-    /* Plaque Corner Rune Brackets */
-    .corner-rune-bracket {
-      position: absolute;
-      font-size: 1.15rem;
-      color: var(--text-faint);
-      opacity: 0.6;
-      user-select: none;
-      transition: color 0.4s ease, opacity 0.4s ease;
-    }
-    .corner-tl { top: 20px; left: 24px; }
-    .corner-tr { top: 20px; right: 24px; }
-    .corner-bl { bottom: 20px; left: 24px; }
-    .corner-br { bottom: 20px; right: 24px; }
-
-    .glass-monolith-trophy:hover .corner-rune-bracket {
-      color: var(--text-gold);
-      opacity: 1;
-      text-shadow: 0 0 12px var(--text-gold);
-    }
-
-    .badge-sigil-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.65rem;
-      padding: 0.45rem 1.4rem;
-      border-radius: 30px;
-      background: rgba(42, 161, 152, 0.08);
-      border: 1px solid rgba(42, 161, 152, 0.35);
-      font-size: 0.72rem;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: var(--sigil-cyan);
-      margin-bottom: 1rem;
-      transition: all 0.3s ease;
-    }
-
-    .badge-sigil-tag i {
-      font-size: 0.78rem;
-    }
-
-    /* 3D Canvas Container */
-    .relic-3d-wrapper {
-      position: relative;
-      width: 100%;
-      height: 420px;
-      margin: 0 auto 1.2rem;
-      cursor: grab;
-      border-radius: 16px;
-    }
-
-    .relic-3d-wrapper:active {
-      cursor: grabbing;
-    }
-
-    .landing-headline {
-      font-size: clamp(2.3rem, 5vw, 4.2rem);
-      font-weight: 700;
-      line-height: 1.15;
-      margin-bottom: 0.6rem;
-    }
-
-    .landing-byline {
-      font-size: clamp(1rem, 1.8vw, 1.35rem);
-      letter-spacing: 0.28em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      font-weight: 300;
-      margin-bottom: 2.4rem;
-    }
-
-    /* Relic Pill Switchers */
-    .merlin-relics-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-      margin-bottom: 2.4rem;
-    }
-
-    .relic-card-pill {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      padding: 0.95rem 1.1rem;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .relic-card-pill::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0%;
-      height: 2px;
-      background: var(--sigil-cyan);
-      transition: width 0.4s ease;
-    }
-
-    .relic-card-pill:hover, .relic-card-pill.active {
-      border-color: var(--border-glow);
-      background: rgba(42, 161, 152, 0.14);
-      transform: translateY(-3px);
-      box-shadow: 0 10px 24px -6px rgba(0, 43, 54, 0.5);
-    }
-
-    .relic-card-pill.active::after {
-      width: 100%;
-    }
-
-    .relic-icon-wrapper {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
-      background: rgba(0, 43, 54, 0.45);
-      border: 1px solid var(--border-subtle);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.15rem;
-      color: var(--text-gold);
-      flex-shrink: 0;
-      transition: all 0.3s ease;
-    }
-
-    .relic-card-pill:hover .relic-icon-wrapper,
-    .relic-card-pill.active .relic-icon-wrapper {
-      border-color: var(--sigil-cyan);
-      color: var(--sigil-cyan);
-      transform: scale(1.08);
-    }
-
-    .relic-details {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .relic-name {
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-main);
-      margin-bottom: 0.2rem;
-    }
-
-    .relic-domain {
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
-      line-height: 1.3;
-    }
-
-    /* Relic Lore Banner */
-    .relic-lore-banner {
-      background: rgba(7, 54, 66, 0.38);
-      border: 1px solid var(--border-subtle);
-      border-radius: 30px;
-      padding: 0.75rem 1.8rem;
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.15rem;
-      font-style: italic;
-      color: var(--text-main);
-      max-width: 800px;
-      margin: 0 auto 2.2rem;
-      min-height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.3s ease;
-    }
-
-    /* Primary CTA Button: Enter Merlin Sanctum */
-    .portal-cta-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.85rem;
-      background: linear-gradient(135deg, var(--sigil-cyan) 0%, #268bd2 100%);
-      color: #002b36;
-      border: none;
-      padding: 1.05rem 2.8rem;
-      border-radius: 40px;
-      font-family: 'Cinzel Decorative', Georgia, serif;
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      cursor: pointer;
-      box-shadow: 0 12px 36px -8px rgba(42, 161, 152, 0.55);
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .portal-cta-btn:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 18px 46px -6px rgba(42, 161, 152, 0.8);
-      background: linear-gradient(135deg, #38c8be 0%, #3ca0e6 100%);
-    }
-
-    .sanctum-chat-container {
-      max-width: 1200px;
-      margin: 1.5rem auto 4rem;
-      padding: 0 1.5rem;
-      width: 100%;
-    }
-
-    .grimoire-split-tome {
-      background: var(--bg-glass);
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
-      border: 1px solid var(--border-subtle);
-      border-radius: 24px;
-      box-shadow: var(--tome-shadow);
-      display: grid;
-      grid-template-columns: 360px 1fr;
-      min-height: 660px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .grimoire-split-tome::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 360px;
-      width: 1px;
-      background: linear-gradient(180deg, transparent, var(--border-glow), transparent);
-    }
-
-    .folio-left-spells {
-      background: var(--bg-surface);
-      padding: 2.2rem 1.8rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.8rem;
-    }
-
-    .merlin-tome-avatar {
-      text-align: center;
-      padding-bottom: 1.4rem;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .avatar-astral-ring {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      border: 1.5px dashed var(--sigil-cyan);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 0.8rem;
-      font-size: 1.6rem;
-      color: var(--text-gold);
-      animation: spinAstral 30s linear infinite;
-    }
-
-    @keyframes spinAstral {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .incantations-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-    }
-
-    .incantation-pill {
-      background: rgba(0, 43, 54, 0.45);
-      border: 1px solid var(--border-subtle);
-      padding: 0.85rem 1.1rem;
-      border-radius: 14px;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-    }
-
-    .incantation-pill:hover {
-      border-color: var(--border-glow);
-      background: rgba(42, 161, 152, 0.12);
-      transform: translateX(4px);
-    }
-
-    .incantation-icon {
-      font-size: 1.1rem;
-      color: var(--text-gold);
-      width: 24px;
-      text-align: center;
-    }
-
-    .incantation-meta h6 {
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-main);
-    }
-
-    .incantation-meta span {
-      font-size: 0.68rem;
-      color: var(--text-muted);
-    }
-
-    /* Right Folio: Dynamic Chat Dialogue Stream */
-    .folio-right-dialogue {
-      display: flex;
-      flex-direction: column;
-      height: 660px;
-      position: relative;
-    }
-
-    .chat-tome-header {
-      padding: 1.5rem 2.4rem;
-      border-bottom: 1px solid var(--border-subtle);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(0, 27, 35, 0.3);
-    }
-
-    .merlin-active-state {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--sigil-cyan);
-    }
-
-    .active-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--sigil-cyan);
-      box-shadow: 0 0 10px var(--sigil-cyan);
-      animation: pulseDot 2s infinite ease-in-out;
-    }
-
-    @keyframes pulseDot {
-      0%, 100% { opacity: 0.4; transform: scale(0.9); }
-      50% { opacity: 1; transform: scale(1.3); }
-    }
-
-    .clear-dialogue-btn {
-      background: transparent;
-      border: 1px solid var(--border-subtle);
-      color: var(--text-muted);
-      padding: 0.4rem 1rem;
-      border-radius: 20px;
-      font-size: 0.7rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .clear-dialogue-btn:hover {
-      color: var(--text-main);
-      border-color: var(--border-glow);
-    }
-
-    .chat-scroll-stream {
-      flex: 1;
-      padding: 2.2rem 2.4rem;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 1.6rem;
-      scroll-behavior: smooth;
-    }
-
-    .dialogue-entry {
-      display: flex;
-      gap: 1.1rem;
-      max-width: 86%;
-      animation: entryFade 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    @keyframes entryFade {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .dialogue-entry.agent-entry {
-      align-self: flex-start;
-    }
-
-    .dialogue-entry.user-entry {
-      align-self: flex-end;
-      flex-direction: row-reverse;
-    }
-
-    .entry-sigil-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      border: 1px solid var(--border-subtle);
-      background: var(--bg-surface);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.95rem;
-      flex-shrink: 0;
-    }
-
-    .agent-entry .entry-sigil-icon {
-      color: var(--sigil-cyan);
-      border-color: var(--border-glow);
-    }
-
-    .user-entry .entry-sigil-icon {
-      color: var(--text-gold);
-      border-color: rgba(181, 137, 0, 0.4);
-    }
-
-    .dialogue-entry .entry-parchment-bubble.typing { color: var(--text-muted); font-style: italic; opacity: .7; }
-    .entry-parchment-bubble {
-      background: rgba(7, 54, 66, 0.4);
-      border: 1px solid var(--border-subtle);
-      border-radius: 16px;
-      padding: 1.1rem 1.4rem;
-      line-height: 1.65;
-      font-size: 0.95rem;
-      position: relative;
-    }
-
-    .agent-entry .entry-parchment-bubble {
-      border-top-left-radius: 4px;
-      border-left: 2px solid var(--sigil-cyan);
-    }
-
-    .user-entry .entry-parchment-bubble {
-      background: rgba(42, 161, 152, 0.12);
-      border-color: var(--border-glow);
-      border-top-right-radius: 4px;
-    }
-
-    .bubble-author {
-      font-size: 0.68rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-faint);
-      margin-bottom: 0.35rem;
-      display: block;
-    }
-
-    .agent-entry .bubble-author {
-      color: var(--sigil-cyan);
-    }
-
-    .user-entry .bubble-author {
-      color: var(--text-gold);
-      text-align: right;
-    }
-
-    .bubble-text {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.16rem;
-      color: var(--text-main);
-    }
-
-    /* Dialogue Composer / Input */
-    .dialogue-composer-box {
-      padding: 1.3rem 2.4rem;
-      border-top: 1px solid var(--border-subtle);
-      background: rgba(0, 27, 35, 0.35);
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .composer-input {
-      flex: 1;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: 30px;
-      padding: 0.85rem 1.6rem;
-      color: var(--text-main);
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.2rem;
-      outline: none;
-      transition: all 0.3s ease;
-    }
-
-    .composer-input:focus {
-      border-color: var(--border-glow);
-      box-shadow: 0 0 15px rgba(42, 161, 152, 0.25);
-    }
-
-    .composer-input::placeholder {
-      color: var(--text-faint);
-      font-style: italic;
-    }
-
-    .cast-incantation-btn {
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      background: var(--sigil-cyan);
-      color: #002b36;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.05rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(42, 161, 152, 0.4);
-      flex-shrink: 0;
-    }
-
-    .cast-incantation-btn:hover {
-      background: #39cfc5;
-      transform: scale(1.08);
-    }
-
-    /* Subtle cursor sparkle */
-    .cursor-sparkle {
-      position: fixed;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(130deg, rgba(42,161,152,0.85), rgba(38,139,210,0.35), rgba(108,113,196,0.75), rgba(211,54,130,0.45));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
       pointer-events: none;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(42, 161, 152, 0.9) 0%, rgba(181, 137, 0, 0.4) 60%, transparent 100%);
-      transform: translate(-50%, -50%);
+    }
+
+    /* Interactive Cursor Canvas */
+    #cursor-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
       z-index: 9999;
-      opacity: 0.8;
-      transition: transform 0.15s ease-out, opacity 0.4s ease-out;
     }
 
-    /* Responsive */
-    @media (max-width: 1024px) {
-      .merlin-relics-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .grimoire-split-tome {
-        grid-template-columns: 1fr;
-      }
-      .grimoire-split-tome::after {
-        display: none;
-      }
-      .folio-left-spells {
-        border-bottom: 1px solid var(--border-subtle);
-      }
-      .folio-right-dialogue {
-        height: 520px;
-      }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
     }
-
-    @media (max-width: 768px) {
-      header.grimoire-nav {
-        padding: 0.8rem 1rem;
-        display: grid;
-        grid-template-columns: auto auto;
-        grid-template-rows: auto auto;
-        gap: 0.4rem 0.8rem;
-        align-items: center;
-      }
-      header.grimoire-nav .nav-brand { grid-column: 1; grid-row: 1; }
-      header.grimoire-nav .nav-title-group h1 { font-size: 1rem; white-space: nowrap; }
-      header.grimoire-nav .nav-title-group span { display: none; }
-      header.grimoire-nav .nav-controls { grid-column: 2; grid-row: 1; justify-self: end; display: flex; gap: 0.5rem; }
-      header.grimoire-nav .icon-round-btn { width: 34px; height: 34px; font-size: 0.78rem; }
-      header.grimoire-nav .view-switcher-bar {
-        grid-column: 1 / -1; grid-row: 2;
-        width: 100%;
-        justify-content: center;
-        gap: 0.4rem;
-      }
-      header.grimoire-nav .switch-tab-btn {
-        padding: 0.45rem 0.9rem;
-        font-size: 0.66rem;
-      }
-      body { padding-bottom: 92px; }
-      .merlin-bubble { width: 46px !important; height: 46px !important; font-size: 20px !important; bottom: 14px; right: 14px; }
-      .glass-monolith-trophy {
-        padding: 2.2rem 1.4rem;
-      }
-      .relic-3d-wrapper {
-        height: 320px;
-      }
-      .merlin-relics-grid {
-        grid-template-columns: 1fr;
-      }
-      .dialogue-composer-box {
-        padding: 1rem 1.5rem;
-      }
+    ::-webkit-scrollbar-track {
+      background: #002b36;
+    }
+    .light ::-webkit-scrollbar-track {
+      background: #eee8d5;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2aa198;
+      border-radius: 4px;
     }
   
+/* ── copy-to-clipboard buttons (end-user convenience) ── */
+.copy-btn{all:unset;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:6px;flex:0 0 auto;
+  color:#586e75;background:rgba(253,246,227,.03);border:1px solid rgba(253,246,227,.08);
+  font-size:13px;line-height:1;transition:all .15s}
+.copy-btn:hover{color:#2aa198;border-color:rgba(42,170,151,.5);background:rgba(42,170,151,.08)}
+.copy-btn.ok{color:#859900;border-color:rgba(133,153,0,.55);background:rgba(133,153,0,.10)}
+.copy-btn:active{transform:scale(.92)}
+.cmd-row{position:relative}
+
+
 /* ── Merlin live bubble (chat launcher) ── */
 .merlin-bubble{position:fixed;bottom:24px;right:24px;width:58px;height:58px;border-radius:50%;
   background:var(--solar-yellow);color:#002b36;border:none;cursor:pointer;font-size:26px;
   box-shadow:0 4px 18px rgba(0,0,0,.45);z-index:999;transition:transform .18s;display:flex;align-items:center;justify-content:center;
   font-family:'Cinzel Decorative',serif;font-weight:900}
-.merlin-bubble:hover{transform:scale(1.08)}
+.merlin-bubble:hover{transform:scale(1.08);background:var(--solar-yellow)}
 .merlin-frame{position:fixed;bottom:94px;right:24px;width:420px;max-width:calc(100vw - 32px);height:560px;
   max-height:calc(100vh - 120px);border-radius:16px;overflow:hidden;z-index:998;
   box-shadow:0 20px 60px -10px rgba(0,10,15,.9), inset 0 1px 2px rgba(255,255,255,.12);
@@ -982,998 +190,1938 @@
 .merlin-bubble.open .x{display:block}
 .merlin-bubble.open .o{display:none}
 body.light-mode .merlin-frame{background:rgba(253,246,227,.96);border-color:rgba(38,139,210,.4)}
-body.light-mode .merlin-bubble{box-shadow:0 4px 18px rgba(101,123,131,.4)}
 @media (max-width: 480px){
   .merlin-frame{width:calc(100vw - 16px);right:8px;bottom:92px;height:calc(100vh - 120px)}
   .merlin-bubble{bottom:16px;right:16px;width:50px;height:50px;font-size:22px}
 }
+body.light-mode .merlin-bubble{box-shadow:0 4px 18px rgba(101,123,131,.4)}
 
 </style>
 </head>
-<body>
+<body class="bg-solar-base03 text-solar-base1 antialiased selection:bg-solar-cyan selection:text-solar-base03 transition-colors duration-500 overflow-x-hidden font-sans">
 
-  <!-- Ambient Backdrop -->
-  <div class="ambient-aurora"></div>
-  <div class="subtle-hairline-grid"></div>
+  <!-- Interactive Spectral Particle Canvas -->
+  <canvas id="cursor-canvas"></canvas>
 
-  <header class="grimoire-nav">
-    <a href="#" class="nav-brand" id="brandLogoHome">
-      <div class="nav-rune-sigil font-angel">ᛟ</div>
-      <div class="nav-title-group">
-        <h1 class="font-angel iridescent-text">EPINOIA HORIZON</h1>
-        <span>The Grimoire of Previsualisation</span>
+  <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md border-b border-solar-base02/70 bg-solar-base03/90">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      
+      <!-- Logo Branding in Angel Wish Aesthetic -->
+      <a href="#hero" class="flex items-center gap-3.5 group">
+        <div class="w-10 h-10 rounded-xl acrylic-plaque prismatic-border flex items-center justify-center transition-transform group-hover:scale-105 duration-300">
+          <i class="fa-solid fa-shapes text-solar-cyan text-lg"></i>
+        </div>
+        <div>
+          <span class="font-angel-wish text-xl md:text-2xl font-bold tracking-widest text-solar-base2 block leading-none">
+            EPINOIA
+          </span>
+          <span class="text-[9px] uppercase tracking-[0.32em] text-solar-cyan font-monoTech font-semibold flex items-center gap-1.5 mt-0.5">
+            HORIZON <span class="w-1.5 h-1.5 rounded-full bg-solar-green inline-block animate-ping"></span>
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Items -->
+      <nav class="hidden lg:flex items-center gap-7 font-monoTech text-xs tracking-wider uppercase">
+        <a href="#hero" class="hover:text-solar-cyan transition-colors py-1">Overview</a>
+        <a href="#studio-3d" class="text-solar-cyan hover:text-solar-blue transition-colors py-1 flex items-center gap-1.5 font-bold">
+          <i class="fa-solid fa-cube text-[11px]"></i> 3D Art & Animation
+        </a>
+        <a href="#merlin" class="text-solar-violet hover:text-solar-magenta transition-colors py-1 flex items-center gap-1.5 font-bold">
+          <i class="fa-solid fa-wand-magic-sparkles text-[11px]"></i> Merlin Harness
+        </a>
+        <a href="#gallery" class="hover:text-solar-cyan transition-colors py-1">Archives</a>
+        <a href="#analyzer" class="hover:text-solar-cyan transition-colors py-1">Optic Lab</a>
+        <a href="#contact" class="hover:text-solar-cyan transition-colors py-1">Commission</a>
+      </nav>
+
+      <!-- Utility Cluster: Synthesizer Audio & Theme Mode Toggle -->
+      <div class="flex items-center gap-3">
+        <!-- Audio Synthesizer Toggle -->
+        <button id="audio-toggle" title="Toggle Synthesizer Feedback Sound" class="p-2.5 rounded-xl acrylic-plaque text-solar-base0 hover:text-solar-cyan transition-all text-xs flex items-center gap-1.5 px-3">
+          <i class="fa-solid fa-volume-xmark" id="audio-icon"></i>
+          <span class="font-monoTech text-[10px] hidden sm:inline uppercase tracking-widest">SFX</span>
+        </button>
+
+        <!-- Solarized Dark / Light Mode Toggle -->
+        <button id="theme-toggle" title="Toggle Solarized Light/Dark Mode" class="p-2.5 rounded-xl acrylic-plaque text-solar-yellow hover:text-solar-orange hover:scale-105 transition-all text-sm w-10 h-10 flex items-center justify-center">
+          <i class="fa-solid fa-sun" id="theme-icon"></i>
+        </button>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-btn" class="lg:hidden p-2 text-solar-base1 text-xl">
+          <i class="fa-solid fa-bars-staggered"></i>
+        </button>
       </div>
-    </a>
 
-    <!-- Page Switcher Tabs -->
-    <div class="view-switcher-bar">
-      <button class="switch-tab-btn active" id="tabBtnPortal">
-        <i class="fa-solid fa-gem"></i>
-        <span>Portal</span>
-      </button>
-      <button class="switch-tab-btn" id="tabBtnSanctum">
-        <i class="fa-solid fa-hat-wizard"></i>
-        <span>Merlin Sanctum</span>
-      </button>
     </div>
 
-    <div class="nav-controls">
-      <button class="icon-round-btn" id="audioToggleBtn" title="Toggle Crystal Chimes">
-        <i class="fa-solid fa-volume-xmark" id="audioIcon"></i>
-      </button>
-      <button class="icon-round-btn" id="themeToggleBtn" title="Toggle Solarized Light/Dark">
-        <i class="fa-solid fa-sun" id="themeIcon"></i>
-      </button>
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="hidden lg:hidden px-6 py-4 bg-solar-base02/95 border-b border-solar-base01/20 font-monoTech text-sm space-y-3">
+      <a href="#hero" class="block hover:text-solar-cyan">Overview</a>
+      <a href="#studio-3d" class="block text-solar-cyan font-bold">3D Art Design & Animation Studio</a>
+      <a href="#merlin" class="block text-solar-violet font-bold">Merlin Agent Harness</a>
+      <a href="#gallery" class="block hover:text-solar-cyan">Portfolio & Previs Archives</a>
+      <a href="#analyzer" class="block hover:text-solar-cyan">Optical Circuit Telemetry</a>
+      <a href="#contact" class="block hover:text-solar-cyan">Commission Studio</a>
     </div>
   </header>
 
-  <!-- Main View Container -->
-  <main class="view-host">
-    
-    <div class="page-view active-view" id="viewPortal">
-      <div class="portal-landing-container">
-        
-        <div class="glass-monolith-trophy">
-          <!-- Elder Futhark Corner Sigils -->
-          <span class="corner-rune-bracket corner-tl font-angel">ᛟ</span>
-          <span class="corner-rune-bracket corner-tr font-angel">ᛞ</span>
-          <span class="corner-rune-bracket corner-bl font-angel">ᚨ</span>
-          <span class="corner-rune-bracket corner-br font-angel">ᛝ</span>
+  <main>
+    <section id="hero" class="relative min-h-screen flex items-center justify-center pt-28 pb-16 px-6 overflow-hidden">
+      <!-- Ambient Background Ray Grid & Gradients -->
+      <div class="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(#2aa198_1px,transparent_1px)] [background-size:32px_32px]"></div>
+      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-solar-cyan/10 rounded-full blur-[150px] pointer-events-none"></div>
+      <div class="absolute bottom-10 right-10 w-[550px] h-[550px] bg-solar-violet/10 rounded-full blur-[140px] pointer-events-none"></div>
 
-          <div class="badge-sigil-tag font-angel" id="activeArtifactBadge">
-            <i class="fa-solid fa-scroll"></i>
-            <span id="badgeArtifactName">Arcane Scroll Book Codex</span>
+      <div class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+        
+        <!-- Left Column: Studio Headline & Angel Wish Branding -->
+        <div class="lg:col-span-6 text-center lg:text-left space-y-6">
+          <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full acrylic-plaque text-solar-cyan text-xs font-monoTech tracking-wider border border-solar-cyan/30">
+            <span class="w-2 h-2 rounded-full bg-solar-cyan animate-pulse"></span>
+            3D ART DESIGN &bull; ANIMATION &bull; MERLIN AGENT HARNESS
           </div>
 
-          <!-- 3D Procedural Mesh Viewport (Replaces the pyramid with actual 3D models) -->
-          <div class="relic-3d-wrapper" id="threeRelicContainer" title="Drag to orbit the 3D relic artifact"></div>
+          <h1 class="font-angel-wish text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-wider leading-[1.05] metallic-bevel text-solar-base3">
+            <span class="iridescent-text block">EPINOIA</span>
+            <span>HORIZON</span>
+          </h1>
 
-          <h2 class="landing-headline font-angel iridescent-text">EPINOIA HORIZON</h2>
-          <p class="landing-byline">A previsualisation and prototyping group</p>
+          <p class="font-serifLuxury italic text-xl md:text-2xl text-solar-base0 font-light tracking-wide">
+            A previsualisation and prototyping group
+          </p>
 
-          <!-- 4 Relics of Merlin (Scroll Book + 3 Merlin Artifacts) -->
-          <div class="merlin-relics-grid">
+          <p class="text-solar-base1 text-sm md:text-base max-w-xl mx-auto lg:mx-0 leading-relaxed font-sans">
+            Uniting high-end <strong class="text-solar-cyan font-medium">3D Art Design & Cinematic Animation</strong> with the autonomous intelligence of the <strong class="text-solar-violet font-medium">Merlin Agent Harness</strong>—a cybernetic orchestrator that transforms speculative narratives into spatial topologies, skeletal kinematic rigs, and monolithic quartz optical prototypes.
+          </p>
+
+          <!-- Call to Action Buttons -->
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-3">
+            <a href="#studio-3d" class="px-7 py-3.5 rounded-xl bg-solar-cyan text-solar-base03 font-monoTech text-xs font-bold uppercase tracking-widest hover:bg-solar-blue hover:text-white transition-all shadow-[0_0_30px_rgba(42,161,152,0.45)] flex items-center gap-2.5 group">
+              <i class="fa-solid fa-cubes"></i>
+              <span>Launch 3D Studio</span>
+              <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+            </a>
             
-            <!-- Relic 1: Scroll Book -->
-            <div class="relic-card-pill active" data-relic="scroll">
-              <div class="relic-icon-wrapper">
-                <i class="fa-solid fa-scroll"></i>
-              </div>
-              <div class="relic-details">
-                <span class="relic-name font-angel">Scroll Book</span>
-                <span class="relic-domain">Arcane Grimoire &bull; Codex</span>
-              </div>
-            </div>
-
-            <!-- Relic 2: Merlin's Staff -->
-            <div class="relic-card-pill" data-relic="staff">
-              <div class="relic-icon-wrapper">
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
-              </div>
-              <div class="relic-details">
-                <span class="relic-name font-angel">Merlin's Staff</span>
-                <span class="relic-domain">Stave of Arcanum &bull; Vectors</span>
-              </div>
-            </div>
-
-            <!-- Relic 3: Scrying Orb -->
-            <div class="relic-card-pill" data-relic="orb">
-              <div class="relic-icon-wrapper">
-                <i class="fa-solid fa-circle-dot"></i>
-              </div>
-              <div class="relic-details">
-                <span class="relic-name font-angel">Scrying Orb</span>
-                <span class="relic-domain">Crystal Foresight &bull; Previs</span>
-              </div>
-            </div>
-
-            <!-- Relic 4: Ring of Avalon -->
-            <div class="relic-card-pill" data-relic="ring">
-              <div class="relic-icon-wrapper">
-                <i class="fa-solid fa-ring"></i>
-              </div>
-              <div class="relic-details">
-                <span class="relic-name font-angel">Ring of Avalon</span>
-                <span class="relic-domain">Eternal Synthesis &bull; Swarm</span>
-              </div>
-            </div>
-
+            <a href="#merlin" class="px-7 py-3.5 rounded-xl acrylic-plaque prismatic-border text-solar-base2 font-monoTech text-xs font-semibold uppercase tracking-widest hover:text-solar-violet hover:border-solar-violet transition-all flex items-center gap-2">
+              <i class="fa-solid fa-wand-magic-sparkles text-solar-violet"></i>
+              <span>Merlin Harness Console</span>
+            </a>
           </div>
 
-          <!-- Dynamic Attunement Lore Banner -->
-          <div class="relic-lore-banner" id="relicLoreBanner">
-            "The Sacred Scroll Book unfolds: Ancient procedural geometry algorithms transcribed onto glowing parchment."
+          <!-- Studio Metrics Counter -->
+          <div class="grid grid-cols-3 gap-4 pt-6 border-t border-solar-base02/70 max-w-lg mx-auto lg:mx-0 font-monoTech text-left">
+            <div class="p-2.5 rounded-lg bg-solar-base02/40 border border-solar-base01/20">
+              <div class="text-[10px] text-solar-base01 uppercase">3D ANIMATION</div>
+              <div class="text-solar-cyan font-bold text-sm sm:text-base">120 FPS KINEMATICS</div>
+            </div>
+            <div class="p-2.5 rounded-lg bg-solar-base02/40 border border-solar-base01/20">
+              <div class="text-[10px] text-solar-base01 uppercase">MERLIN HARNESS</div>
+              <div class="text-solar-violet font-bold text-sm sm:text-base">AGY v6.4 COG</div>
+            </div>
+            <div class="p-2.5 rounded-lg bg-solar-base02/40 border border-solar-base01/20">
+              <div class="text-[10px] text-solar-base01 uppercase">QUARTZ ETCH</div>
+              <div class="text-solar-magenta font-bold text-sm sm:text-base">0.2 &micro;m OPTIC</div>
+            </div>
           </div>
+        </div>
 
-          <!-- Primary Call to Action -->
-          <div style="display: flex; justify-content: center;">
-            <button class="portal-cta-btn" id="btnEnterSanctum">
-              <span>Enter Merlin Sanctum</span>
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
+        <!-- Right Column: Glass Trophy Plaque Replica with Three.js Holographic Pyramid -->
+        <div class="lg:col-span-6 flex justify-center">
+          <div class="relative w-full max-w-[500px] aspect-[4/5] rounded-3xl acrylic-plaque prismatic-border p-6 sm:p-8 shadow-2xl flex flex-col justify-between overflow-hidden group">
+            
+            <!-- Glass Specular Reflection Sheen -->
+            <div class="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-gradient-to-br from-white/10 via-transparent to-solar-cyan/5 rotate-45 pointer-events-none transition-transform duration-700 group-hover:translate-x-4"></div>
+            
+            <!-- Plaque Header Details -->
+            <div class="relative z-10 flex items-center justify-between text-[11px] font-monoTech text-solar-base01 tracking-widest uppercase">
+              <span class="flex items-center gap-1.5 text-solar-cyan">
+                <i class="fa-solid fa-shapes"></i> SPECIMEN // EP-HOLO-01
+              </span>
+              <span class="px-2 py-0.5 rounded bg-solar-base02/80 text-solar-base0 border border-solar-base01/30">CIRCUIT QUARTZ</span>
+            </div>
+
+            <!-- 3D Three.js Hero Viewport -->
+            <div id="three-pyramid-container" class="relative z-10 w-full h-[320px] sm:h-[390px] cursor-grab active:cursor-grabbing flex items-center justify-center">
+              <div class="absolute bottom-2 text-center text-[10px] text-solar-base01 font-monoTech pointer-events-none uppercase tracking-widest opacity-80">
+                [ Click & Drag to Rotate Optical Circuit Crystal ]
+              </div>
+            </div>
+
+            <!-- Plaque Base Stand Matching Reference Trophy Plinth -->
+            <div class="relative z-10 pt-4 border-t border-solar-base01/20 text-center">
+              <h3 class="font-angel-wish text-xl sm:text-2xl text-solar-base2 tracking-widest uppercase font-bold metallic-bevel">
+                EPINOIA HORIZON
+              </h3>
+              <p class="font-sans text-xs text-solar-base0 tracking-wide mt-1">
+                A previsualisation and prototyping group
+              </p>
+              <div class="mt-2.5 flex justify-center gap-3 text-xs text-solar-cyan">
+                <span class="inline-block w-1.5 h-1.5 rounded-full bg-solar-cyan"></span>
+                <span class="inline-block w-1.5 h-1.5 rounded-full bg-solar-violet"></span>
+                <span class="inline-block w-1.5 h-1.5 rounded-full bg-solar-magenta"></span>
+              </div>
+            </div>
+
+            <!-- Heavy Black Pedestal Illusion -->
+            <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 w-56 h-3.5 bg-solar-base02 rounded-t-xl border-t border-solar-base01/40 shadow-inner"></div>
           </div>
-
         </div>
 
       </div>
-    </div>
+    </section>
 
-    <div class="page-view" id="viewSanctum">
-      <div class="sanctum-chat-container">
+    <section id="studio-3d" class="py-24 px-6 relative border-t border-solar-base02/60 bg-solar-base02/25">
+      <div class="max-w-7xl mx-auto space-y-12">
         
-        <div class="grimoire-split-tome">
-          
-          <!-- Left Folio: Grimoire Index & Relic Spells -->
-          <aside class="folio-left-spells">
-            <div class="merlin-tome-avatar">
-              <div class="avatar-astral-ring font-angel">ᚨ</div>
-              <h3 class="font-angel iridescent-text" style="font-size: 1.15rem; letter-spacing: 0.16em;">Merlin Agent</h3>
-              <span style="font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-gold);">
-                Previs Familiar v6.4
-              </span>
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-solar-cyan/15 text-solar-cyan font-monoTech text-xs uppercase tracking-widest mb-3 border border-solar-cyan/30">
+              <i class="fa-solid fa-film"></i> INTERACTIVE 3D ART & ANIMATION SUITE
             </div>
+            <h2 class="font-angel-wish text-3xl sm:text-5xl font-bold text-solar-base3 tracking-wide">
+              3D ART DESIGN & ANIMATION
+            </h2>
+            <p class="text-solar-base0 font-serifLuxury italic text-lg sm:text-xl mt-1">
+              Real-time Procedural Geometry, Kinematic Rigging & Dynamic Simulation
+            </p>
+          </div>
+          <p class="text-solar-base1 text-sm max-w-xl font-sans leading-relaxed">
+            The Epinoia Horizon 3D laboratory engineers cinematic digital worlds: from organic procedural deformers and articulated robotic kinematics to high-refraction quartz optics orchestrated in real-time.
+          </p>
+        </div>
 
-            <div>
-              <span style="font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.8rem;">
-                Relic Incantations
-              </span>
-
-              <div class="incantations-list">
-                <div class="incantation-pill" data-prompt="Consult the Scroll Book: Transcribe procedural facet algorithms into the crystal lattice.">
-                  <div class="incantation-icon"><i class="fa-solid fa-scroll"></i></div>
-                  <div class="incantation-meta">
-                    <h6 class="font-angel">Scroll Inscription</h6>
-                    <span>Procedural facet architecture</span>
-                  </div>
-                </div>
-
-                <div class="incantation-pill" data-prompt="Channel Merlin's Staff: Route directional kinetic energy curves across character joints.">
-                  <div class="incantation-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-                  <div class="incantation-meta">
-                    <h6 class="font-angel">Staff Vector Surge</h6>
-                    <span>Kinetic motion & armature rig</span>
-                  </div>
-                </div>
-
-                <div class="incantation-pill" data-prompt="Gaze into the Scrying Orb: Render high-index Solarized caustics and light refractions.">
-                  <div class="incantation-icon"><i class="fa-solid fa-circle-dot"></i></div>
-                  <div class="incantation-meta">
-                    <h6 class="font-angel">Scrying Caustics</h6>
-                    <span>Photometric ray dispersion</span>
-                  </div>
-                </div>
-
-                <div class="incantation-pill" data-prompt="Invoke the Ring of Avalon: Bind camera trajectory, lighting passes, and models into harmony.">
-                  <div class="incantation-icon"><i class="fa-solid fa-ring"></i></div>
-                  <div class="incantation-meta">
-                    <h6 class="font-angel">Avalon Harmonization</h6>
-                    <span>Holistic director previs swarm</span>
-                  </div>
-                </div>
+        <!-- 3D Studio Live Interactive Sandbox Viewport -->
+        <div class="acrylic-plaque prismatic-border rounded-3xl p-6 sm:p-8">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            <!-- 3D Studio Canvas Container -->
+            <div class="lg:col-span-8 relative rounded-2xl overflow-hidden bg-solar-base03 border border-solar-base01/30 shadow-inner h-[380px] sm:h-[460px]">
+              
+              <!-- Floating On-Screen Viewport Overlay Controls -->
+              <div class="absolute top-4 left-4 z-20 flex flex-wrap items-center gap-2 font-monoTech text-[11px]">
+                <span class="px-2.5 py-1 rounded-md bg-solar-base02/80 text-solar-cyan border border-solar-cyan/40">
+                  <i class="fa-solid fa-video mr-1"></i> VIEWPORT: <span id="active-viewport-label">KINEMATIC POLYHEDRON</span>
+                </span>
+                <span class="px-2.5 py-1 rounded-md bg-solar-base02/80 text-solar-green border border-solar-base01/30">
+                  FRAME RATE: <span id="studio-fps">120</span> FPS
+                </span>
               </div>
-            </div>
-          </aside>
 
-          <!-- Right Folio: Dynamic Chat Dialogue Stream -->
-          <section class="folio-right-dialogue">
-            <div class="chat-tome-header">
-              <div class="merlin-active-state">
-                <span class="active-dot"></span>
-                <span>Merlin Resonance: 0.94 GHz</span>
-              </div>
-              <button class="clear-dialogue-btn font-angel" id="btnClearChat">Clear Tome</button>
-            </div>
+              <!-- Interactive Three.js Studio Canvas -->
+              <div id="three-studio-viewport" class="w-full h-full cursor-grab active:cursor-grabbing"></div>
 
-            <!-- Dialogue Stream -->
-            <div class="chat-scroll-stream" id="chatScrollStream">
-              <div class="dialogue-entry agent-entry">
-                <div class="entry-sigil-icon font-angel">ᚨ</div>
-                <div class="entry-parchment-bubble">
-                  <span class="bubble-author font-angel">Merlin</span>
-                  <p class="bubble-text">
-                    ᛟ Welcome, traveler. I am Merlin — and I answer anything: horoscopes, science, code, recipes, history, advice, riddles — alongside the relics of the Grimoire: the Sacred Scroll Book, the Stave of Arcanum, the Scrying Orb, the Ring of Avalon. Ask without hesitation.
-                  </p>
+              <!-- Viewport Controls Bottom Bar -->
+              <div class="absolute bottom-4 left-4 right-4 z-20 flex flex-wrap items-center justify-between gap-3 bg-solar-base03/85 backdrop-blur-md p-3 rounded-xl border border-solar-base01/30 font-monoTech text-xs">
+                <div class="flex items-center gap-2">
+                  <span class="text-solar-base01 text-[10px] uppercase">Topology:</span>
+                  <button id="model-polyhedron" class="studio-model-btn px-2.5 py-1 rounded bg-solar-cyan text-solar-base03 font-bold text-[11px]">Polyhedron</button>
+                  <button id="model-torus" class="studio-model-btn px-2.5 py-1 rounded bg-solar-base02 text-solar-base1 hover:text-solar-cyan text-[11px]">Quantum Torus</button>
+                  <button id="model-skeleton" class="studio-model-btn px-2.5 py-1 rounded bg-solar-base02 text-solar-base1 hover:text-solar-cyan text-[11px]">Kinematic Bones</button>
+                </div>
+
+                <div class="flex items-center gap-3">
+                  <button id="toggle-wireframe" class="px-2.5 py-1 rounded bg-solar-base02 text-solar-base1 hover:text-solar-yellow border border-solar-base01/30 text-[11px] flex items-center gap-1">
+                    <i class="fa-solid fa-border-all"></i> <span>Wireframe</span>
+                  </button>
+                  <button id="toggle-anim" class="px-2.5 py-1 rounded bg-solar-base02 text-solar-base1 hover:text-solar-green border border-solar-base01/30 text-[11px] flex items-center gap-1">
+                    <i class="fa-solid fa-pause" id="anim-icon"></i> <span id="anim-state-text">Pause Anim</span>
+                  </button>
                 </div>
               </div>
             </div>
 
-            <!-- Dialogue Input Bar -->
-            <form class="dialogue-composer-box" id="dialogueForm">
-              <input type="text" id="dialogueInput" class="composer-input" placeholder="Speak your directorial intent into the Grimoire..." autocomplete="off">
-              <button type="submit" class="cast-incantation-btn" title="Cast Intent">
-                <i class="fa-solid fa-feather-pointed"></i>
-              </button>
-            </form>
-          </section>
+            <!-- Right Controls: Animation Parameters & Lighting Rig -->
+            <div class="lg:col-span-4 space-y-6 font-monoTech text-xs">
+              <div>
+                <h4 class="font-angel-wish text-lg font-bold text-solar-base2 mb-1">Animation & Shader Rig</h4>
+                <p class="font-sans text-solar-base0 text-xs">Fine-tune morphological deformation velocity and studio illumination temperatures.</p>
+              </div>
 
+              <!-- Speed Control Slider -->
+              <div class="space-y-2 p-4 rounded-xl bg-solar-base03 border border-solar-base01/20">
+                <div class="flex justify-between text-solar-base1">
+                  <span>ANIMATION VELOCITY</span>
+                  <span id="speed-val" class="text-solar-cyan font-bold">1.0x</span>
+                </div>
+                <input id="speed-slider" type="range" min="0.1" max="3.0" step="0.1" value="1.0" class="w-full accent-solar-cyan cursor-pointer">
+              </div>
+
+              <!-- Lighting Scheme Switcher -->
+              <div class="space-y-2 p-4 rounded-xl bg-solar-base03 border border-solar-base01/20">
+                <div class="text-solar-base1 uppercase text-[11px]">Studio Lighting Preset:</div>
+                <div class="grid grid-cols-3 gap-2">
+                  <button id="light-cyan" class="light-preset-btn p-2 rounded-lg bg-solar-cyan/20 border border-solar-cyan text-solar-cyan text-center text-[10px] font-bold">CYAN LAB</button>
+                  <button id="light-arcane" class="light-preset-btn p-2 rounded-lg bg-solar-base02 border border-solar-base01/30 text-solar-violet text-center text-[10px]">ARCANE</button>
+                  <button id="light-solar" class="light-preset-btn p-2 rounded-lg bg-solar-base02 border border-solar-base01/30 text-solar-orange text-center text-[10px]">SOLAR PRISM</button>
+                </div>
+              </div>
+
+              <!-- Quick Merlin Action Direct Hook -->
+              <div class="p-4 rounded-xl acrylic-plaque border border-solar-violet/40 space-y-2">
+                <div class="text-solar-violet font-bold flex items-center gap-1.5">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> MERLIN AGENT PASS
+                </div>
+                <p class="font-sans text-[11px] text-solar-base0">Delegate automated topology morphing and vertex reorganization to Merlin Harness.</p>
+                <button id="merlin-quick-morph" class="w-full py-2.5 rounded-lg bg-solar-violet hover:bg-solar-magenta text-solar-base3 font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2">
+                  <i class="fa-solid fa-bolt"></i> Run Merlin Topology Morph
+                </button>
+              </div>
+
+            </div>
+
+          </div>
         </div>
 
       </div>
-    </div>
-
-  </main>
-
-  <script>
-    const tabBtnPortal = document.getElementById('tabBtnPortal');
-    const tabBtnSanctum = document.getElementById('tabBtnSanctum');
-    const viewPortal = document.getElementById('viewPortal');
-    const viewSanctum = document.getElementById('viewSanctum');
-    const btnEnterSanctum = document.getElementById('btnEnterSanctum');
-    const brandLogoHome = document.getElementById('brandLogoHome');
-
-    function navigateTo(page) {
-      if (page === 'sanctum') {
-        tabBtnPortal.classList.remove('active');
-        tabBtnSanctum.classList.add('active');
-        viewPortal.classList.remove('active-view');
-        viewSanctum.classList.add('active-view');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        const scrollStream = document.getElementById('chatScrollStream');
-        scrollStream.scrollTop = scrollStream.scrollHeight;
-        triggerSound(580);
-      } else {
-        tabBtnSanctum.classList.remove('active');
-        tabBtnPortal.classList.add('active');
-        viewSanctum.classList.remove('active-view');
-        viewPortal.classList.add('active-view');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        triggerSound(480);
-      }
-    }
-
-    tabBtnPortal.addEventListener('click', () => navigateTo('portal'));
-    tabBtnSanctum.addEventListener('click', () => navigateTo('sanctum'));
-    btnEnterSanctum.addEventListener('click', () => navigateTo('sanctum'));
-    brandLogoHome.addEventListener('click', (e) => {
-      e.preventDefault();
-      navigateTo('portal');
-    });
-
-    // Theme Toggle
-    const themeToggleBtn = document.getElementById('themeToggleBtn');
-    const themeIcon = document.getElementById('themeIcon');
-    let isLightMode = false;
-
-    themeToggleBtn.addEventListener('click', () => {
-      isLightMode = !isLightMode;
-      document.body.classList.toggle('light-mode', isLightMode);
-      themeIcon.className = isLightMode ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
-      if (scene) {
-        keyLight.color.setHex(isLightMode ? 0x268bd2 : 0x2aa198);
-        fillLight.color.setHex(isLightMode ? 0xb58900 : 0x6c71c4);
-      }
-      triggerSound(isLightMode ? 620 : 440);
-    });
-
-    // Web Audio Synthesizer
-    let audioContext = null;
-    let isAudioEnabled = false;
-    const audioToggleBtn = document.getElementById('audioToggleBtn');
-    const audioIcon = document.getElementById('audioIcon');
-
-    function triggerSound(freq = 520) {
-      if (!isAudioEnabled) return;
-      try {
-        if (!audioContext) {
-          audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        }
-        if (audioContext.state === 'suspended') audioContext.resume();
-        const osc = audioContext.createOscillator();
-        const gain = audioContext.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, audioContext.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(freq * 1.45, audioContext.currentTime + 0.18);
-        gain.gain.setValueAtTime(0.04, audioContext.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 0.18);
-        osc.connect(gain);
-        gain.connect(audioContext.destination);
-        osc.start();
-        osc.stop(audioContext.currentTime + 0.19);
-      } catch (err) {}
-    }
-
-    audioToggleBtn.addEventListener('click', () => {
-      isAudioEnabled = !isAudioEnabled;
-      audioIcon.className = isAudioEnabled ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark';
-      if (isAudioEnabled) triggerSound(560);
-    });
-
-    const container3D = document.getElementById('threeRelicContainer');
-    let scene, camera, renderer, currentRelicGroup, particleStars;
-    let keyLight, fillLight, rimLight;
-    let currentRelicType = 'scroll';
-    let targetRotationSpeed = 0.004;
-
-    function initThreeStudio() {
-      const width = container3D.clientWidth || 800;
-      const height = container3D.clientHeight || 420;
-
-      scene = new THREE.Scene();
-      camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-      camera.position.set(0, 0, 8.5);
-
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.35;
-      container3D.appendChild(renderer.domElement);
-
-      // Studio Lighting for Materials
-      const amb = new THREE.AmbientLight(0x073642, 2.2);
-      scene.add(amb);
-
-      keyLight = new THREE.DirectionalLight(0x2aa198, 2.8);
-      keyLight.position.set(5, 8, 6);
-      scene.add(keyLight);
-
-      fillLight = new THREE.PointLight(0x6c71c4, 2.8, 25);
-      fillLight.position.set(-6, -3, 4);
-      scene.add(fillLight);
-
-      rimLight = new THREE.PointLight(0xb58900, 2.4, 20);
-      rimLight.position.set(0, -6, -4);
-      scene.add(rimLight);
-
-      // Ambient Quantum Particle Field
-      const partCount = 160;
-      const partGeo = new THREE.BufferGeometry();
-      const coords = new Float32Array(partCount * 3);
-      for (let i = 0; i < partCount * 3; i += 3) {
-        coords[i] = (Math.random() - 0.5) * 11;
-        coords[i+1] = (Math.random() - 0.5) * 8;
-        coords[i+2] = (Math.random() - 0.5) * 9;
-      }
-      partGeo.setAttribute('position', new THREE.BufferAttribute(coords, 3));
-      const partMat = new THREE.PointsMaterial({
-        color: 0x2aa198,
-        size: 0.05,
-        transparent: true,
-        opacity: 0.7,
-        blending: THREE.AdditiveBlending
-      });
-      particleStars = new THREE.Points(partGeo, partMat);
-      scene.add(particleStars);
-
-      // Spawn initial 3D model (Scroll Book)
-      buildRelicMesh('scroll');
-
-      // Mouse drag controls
-      let isDragging = false;
-      let prevPos = { x: 0, y: 0 };
-
-      container3D.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        prevPos = { x: e.clientX, y: e.clientY };
-      });
-      window.addEventListener('mouseup', () => { isDragging = false; });
-      window.addEventListener('mousemove', (e) => {
-        if (!isDragging || !currentRelicGroup) return;
-        const dx = e.clientX - prevPos.x;
-        const dy = e.clientY - prevPos.y;
-        currentRelicGroup.rotation.y += dx * 0.008;
-        currentRelicGroup.rotation.x += dy * 0.008;
-        prevPos = { x: e.clientX, y: e.clientY };
-      });
-
-      // Touch controls
-      container3D.addEventListener('touchstart', (e) => {
-        if (e.touches.length === 1) {
-          isDragging = true;
-          prevPos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-        }
-      });
-      window.addEventListener('touchend', () => { isDragging = false; });
-      window.addEventListener('touchmove', (e) => {
-        if (!isDragging || !currentRelicGroup || e.touches.length !== 1) return;
-        const dx = e.touches[0].clientX - prevPos.x;
-        const dy = e.touches[0].clientY - prevPos.y;
-        currentRelicGroup.rotation.y += dx * 0.008;
-        currentRelicGroup.rotation.x += dy * 0.008;
-        prevPos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-      });
-
-      window.addEventListener('resize', onStudioResize);
-      renderStudioLoop();
-    }
-
-    function onStudioResize() {
-      if (!container3D || !renderer || !camera) return;
-      const w = container3D.clientWidth;
-      const h = container3D.clientHeight;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
-    }
-
-    function buildRelicMesh(type) {
-      if (currentRelicGroup) {
-        scene.remove(currentRelicGroup);
-        currentRelicGroup.traverse(child => {
-          if (child.geometry) child.geometry.dispose();
-          if (child.material) {
-            if (Array.isArray(child.material)) child.material.forEach(m => m.dispose());
-            else child.material.dispose();
-          }
-        });
-      }
-
-      currentRelicType = type;
-      currentRelicGroup = new THREE.Group();
-
-      const goldMat = new THREE.MeshStandardMaterial({
-        color: 0xb58900,
-        metalness: 0.85,
-        roughness: 0.25,
-        emissive: 0x332600,
-        emissiveIntensity: 0.2
-      });
-
-      const cyanGlowMat = new THREE.MeshStandardMaterial({
-        color: 0x2aa198,
-        emissive: 0x2aa198,
-        emissiveIntensity: 0.75,
-        roughness: 0.1,
-        metalness: 0.2
-      });
-
-      if (type === 'scroll') {
-        // 1. SCROLL BOOK (Ancient Parchment Curled Scroll with Cylinder Rods and Illuminated Sigils)
-        const parchmentMat = new THREE.MeshStandardMaterial({
-          color: 0xeee8d5,
-          roughness: 0.5,
-          metalness: 0.05,
-          side: THREE.DoubleSide
-        });
-
-        const darkWoodMat = new THREE.MeshStandardMaterial({
-          color: 0x073642,
-          roughness: 0.4,
-          metalness: 0.2
-        });
-
-        // Left & Right Carved Roller Rods
-        const rodGeo = new THREE.CylinderGeometry(0.12, 0.12, 3.4, 24);
-        const rodLeft = new THREE.Mesh(rodGeo, darkWoodMat);
-        rodLeft.position.set(-1.6, 0, 0);
-        rodLeft.rotation.z = Math.PI * 0.05;
-
-        const rodRight = new THREE.Mesh(rodGeo, darkWoodMat);
-        rodRight.position.set(1.6, 0, 0);
-        rodRight.rotation.z = -Math.PI * 0.05;
-
-        // Gold finial caps for rods
-        const capGeo = new THREE.SphereGeometry(0.2, 16, 16);
-        [-1.7, 1.7].forEach(y => {
-          const capL = new THREE.Mesh(capGeo, goldMat);
-          capL.position.set(0, y, 0);
-          rodLeft.add(capL);
-
-          const capR = new THREE.Mesh(capGeo, goldMat);
-          capR.position.set(0, y, 0);
-          rodRight.add(capR);
-        });
-
-        // Curled Parchment Body
-        const scrollCurve = new THREE.CubicBezierCurve3(
-          new THREE.Vector3(-1.6, 0, 0),
-          new THREE.Vector3(-0.8, 0.35, 0.4),
-          new THREE.Vector3(0.8, -0.35, 0.4),
-          new THREE.Vector3(1.6, 0, 0)
-        );
-        const points = scrollCurve.getPoints(24);
-        const shape = new THREE.Shape();
-        shape.moveTo(points[0].x, points[0].y);
-        points.forEach(p => shape.lineTo(p.x, p.y));
-
-        const extrudeSettings = {
-          steps: 1,
-          depth: 2.6,
-          bevelEnabled: false
-        };
-        const scrollGeo = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-        scrollGeo.center();
-        const scrollParchment = new THREE.Mesh(scrollGeo, parchmentMat);
-        scrollParchment.rotation.x = Math.PI / 2;
-
-        // Glowing Inscribed Sigil Ring on the parchment
-        const sigilRingGeo = new THREE.RingGeometry(0.45, 0.52, 32);
-        const sigilRing = new THREE.Mesh(sigilRingGeo, cyanGlowMat);
-        sigilRing.rotation.x = -Math.PI / 2;
-        sigilRing.position.set(0, 0.1, 0);
-
-        // Core Runic Crystal Emblem floating above scroll
-        const emblemGeo = new THREE.OctahedronGeometry(0.3, 0);
-        const runeEmblem = new THREE.Mesh(emblemGeo, cyanGlowMat);
-        runeEmblem.position.set(0, 0.55, 0);
-        runeEmblem.name = "scrollEmblem";
-
-        currentRelicGroup.add(rodLeft);
-        currentRelicGroup.add(rodRight);
-        currentRelicGroup.add(scrollParchment);
-        currentRelicGroup.add(sigilRing);
-        currentRelicGroup.add(runeEmblem);
-
-      } else if (type === 'staff') {
-        // 2. MERLIN'S STAFF (Stave of Arcanum with twisted finial cradle and levitating orbital crystal)
-        const woodMat = new THREE.MeshStandardMaterial({
-          color: 0x586e75,
-          roughness: 0.6,
-          metalness: 0.15
-        });
-
-        // Tall Stave Shaft with taper
-        const shaftGeo = new THREE.CylinderGeometry(0.1, 0.16, 4.4, 20);
-        const staffShaft = new THREE.Mesh(shaftGeo, woodMat);
-        staffShaft.position.y = -0.5;
-
-        // Gold Ring Bands along the shaft
-        const bandGeo = new THREE.TorusGeometry(0.16, 0.04, 16, 24);
-        [-1.2, -0.4, 0.4, 1.2].forEach(yPos => {
-          const band = new THREE.Mesh(bandGeo, goldMat);
-          band.rotation.x = Math.PI / 2;
-          band.position.y = yPos;
-          staffShaft.add(band);
-        });
-
-        // Intricate Finial Head Cradle
-        const cradleGroup = new THREE.Group();
-        cradleGroup.position.y = 1.8;
-
-        for (let i = 0; i < 4; i++) {
-          const angle = (i / 4) * Math.PI * 2;
-          const prongCurve = new THREE.CatmullRomCurve3([
-            new THREE.Vector3(0, 0, 0),
-            new THREE.Vector3(Math.cos(angle) * 0.45, 0.5, Math.sin(angle) * 0.45),
-            new THREE.Vector3(Math.cos(angle) * 0.3, 1.1, Math.sin(angle) * 0.3)
-          ]);
-          const prongGeo = new THREE.TubeGeometry(prongCurve, 16, 0.04, 8, false);
-          const prong = new THREE.Mesh(prongGeo, goldMat);
-          cradleGroup.add(prong);
-        }
-
-        // Levitating Optical Quartz Gem in cradle
-        const gemGeo = new THREE.OctahedronGeometry(0.5, 0);
-        const gemMat = new THREE.MeshPhysicalMaterial({
-          color: 0x268bd2,
-          emissive: 0x268bd2,
-          emissiveIntensity: 0.55,
-          transmission: 0.7,
-          ior: 1.6,
-          roughness: 0.1,
-          metalness: 0.1
-        });
-        const crystalGem = new THREE.Mesh(gemGeo, gemMat);
-        crystalGem.position.y = 0.55;
-        crystalGem.name = "staffGem";
-        cradleGroup.add(crystalGem);
-
-        // Orbital Ring around the gem
-        const orbitGeo = new THREE.TorusGeometry(0.7, 0.025, 16, 36);
-        const orbitRing = new THREE.Mesh(orbitGeo, cyanGlowMat);
-        orbitRing.position.y = 0.55;
-        orbitRing.name = "staffOrbitRing";
-        cradleGroup.add(orbitRing);
-
-        currentRelicGroup.add(staffShaft);
-        currentRelicGroup.add(cradleGroup);
-
-      } else if (type === 'orb') {
-        // 3. SCRYING ORB (Translucent Glass Sphere with Swirling Inner Core & Astrolabe Gimbal Stand)
-        // Translucent Glass Sphere
-        const sphereGeo = new THREE.SphereGeometry(1.6, 48, 48);
-        const glassMat = new THREE.MeshPhysicalMaterial({
-          color: 0x93a1a1,
-          metalness: 0.1,
-          roughness: 0.05,
-          transmission: 0.9,
-          ior: 1.54,
-          transparent: true,
-          opacity: 0.88,
-          reflectivity: 0.9
-        });
-        const outerSphere = new THREE.Mesh(sphereGeo, glassMat);
-
-        // Swirling Internal Caustic Nebula Core
-        const coreGeo = new THREE.IcosahedronGeometry(1.0, 2);
-        const coreMat = new THREE.MeshBasicMaterial({
-          color: 0x6c71c4,
-          wireframe: true,
-          transparent: true,
-          opacity: 0.75
-        });
-        const innerNebula = new THREE.Mesh(coreGeo, coreMat);
-        innerNebula.name = "orbInnerNebula";
-        outerSphere.add(innerNebula);
-
-        // Concentric Gimbal Rings (Astrolabe Stand)
-        const ring1Geo = new THREE.TorusGeometry(1.85, 0.05, 16, 48);
-        const ring1 = new THREE.Mesh(ring1Geo, goldMat);
-        ring1.name = "orbGimbal1";
-
-        const ring2Geo = new THREE.TorusGeometry(2.05, 0.04, 16, 48);
-        const ring2 = new THREE.Mesh(ring2Geo, cyanGlowMat);
-        ring2.rotation.x = Math.PI / 3;
-        ring2.name = "orbGimbal2";
-
-        // Ornate Tripod Base
-        const baseGroup = new THREE.Group();
-        baseGroup.position.y = -1.8;
-        for (let i = 0; i < 3; i++) {
-          const a = (i / 3) * Math.PI * 2;
-          const legGeo = new THREE.CylinderGeometry(0.08, 0.12, 1.2, 16);
-          const leg = new THREE.Mesh(legGeo, goldMat);
-          leg.position.set(Math.cos(a) * 0.9, -0.4, Math.sin(a) * 0.9);
-          leg.rotation.z = Math.cos(a) * 0.3;
-          leg.rotation.x = -Math.sin(a) * 0.3;
-          baseGroup.add(leg);
-        }
-
-        currentRelicGroup.add(outerSphere);
-        currentRelicGroup.add(ring1);
-        currentRelicGroup.add(ring2);
-        currentRelicGroup.add(baseGroup);
-
-      } else if (type === 'ring') {
-        // 4. RING OF AVALON (Braided Möbius / Torus of Runes with Internal Singularity & Gyro Rings)
-        // Braided Primary Torus
-        const torusGeo = new THREE.TorusGeometry(1.8, 0.28, 24, 64);
-        const ringMat = new THREE.MeshStandardMaterial({
-          color: 0xb58900,
-          metalness: 0.9,
-          roughness: 0.2,
-          emissive: 0x473600,
-          emissiveIntensity: 0.35
-        });
-        const primaryRing = new THREE.Mesh(torusGeo, ringMat);
-        primaryRing.name = "avalonPrimaryRing";
-
-        // Second Intersecting Gyro Ring (Avalon Orbit)
-        const gyroGeo = new THREE.TorusGeometry(2.15, 0.06, 16, 64);
-        const gyroRing = new THREE.Mesh(gyroGeo, cyanGlowMat);
-        gyroRing.rotation.x = Math.PI / 2.5;
-        gyroRing.name = "avalonGyroRing";
-
-        // Third Counter-Rotating Runic Ring
-        const gyro2Geo = new THREE.TorusGeometry(1.4, 0.05, 16, 48);
-        const gyroRing2 = new THREE.Mesh(gyro2Geo, new THREE.MeshStandardMaterial({
-          color: 0x6c71c4,
-          metalness: 0.7,
-          roughness: 0.2,
-          emissive: 0x6c71c4,
-          emissiveIntensity: 0.4
-        }));
-        gyroRing2.rotation.y = Math.PI / 3;
-        gyroRing2.name = "avalonGyroRing2";
-
-        // Inner Singularity Core (Octahedral Quantum Gem)
-        const singularityGeo = new THREE.OctahedronGeometry(0.65, 0);
-        const singularity = new THREE.Mesh(singularityGeo, cyanGlowMat);
-        singularity.name = "avalonSingularity";
-
-        currentRelicGroup.add(primaryRing);
-        currentRelicGroup.add(gyroRing);
-        currentRelicGroup.add(gyroRing2);
-        currentRelicGroup.add(singularity);
-      }
-
-      currentRelicGroup.position.set(0, 0, 0);
-      scene.add(currentRelicGroup);
-    }
-
-    let clock = new THREE.Clock();
-
-    function renderStudioLoop() {
-      requestAnimationFrame(renderStudioLoop);
-      const delta = clock.getDelta();
-      const time = clock.getElapsedTime();
-
-      if (currentRelicGroup) {
-        currentRelicGroup.rotation.y += targetRotationSpeed;
-
-        // Custom organic float and child rotations based on relic type
-        if (currentRelicType === 'scroll') {
-          currentRelicGroup.rotation.x = Math.sin(time * 0.6) * 0.12;
-          const emblem = currentRelicGroup.getObjectByName("scrollEmblem");
-          if (emblem) {
-            emblem.rotation.y += 0.02;
-            emblem.position.y = 0.55 + Math.sin(time * 2.0) * 0.08;
-          }
-        } else if (currentRelicType === 'staff') {
-          currentRelicGroup.rotation.z = Math.sin(time * 0.5) * 0.08;
-          const gem = currentRelicGroup.getObjectByName("staffGem");
-          const orbit = currentRelicGroup.getObjectByName("staffOrbitRing");
-          if (gem) {
-            gem.rotation.y -= 0.025;
-            gem.position.y = 0.55 + Math.sin(time * 1.8) * 0.06;
-          }
-          if (orbit) {
-            orbit.rotation.x = Math.sin(time * 1.2) * 0.4;
-            orbit.rotation.z += 0.03;
-          }
-        } else if (currentRelicType === 'orb') {
-          const nebula = currentRelicGroup.getObjectByName("orbInnerNebula");
-          const g1 = currentRelicGroup.getObjectByName("orbGimbal1");
-          const g2 = currentRelicGroup.getObjectByName("orbGimbal2");
-          if (nebula) {
-            nebula.rotation.y -= 0.015;
-            nebula.rotation.x += 0.01;
-          }
-          if (g1) g1.rotation.y += 0.012;
-          if (g2) g2.rotation.z -= 0.015;
-        } else if (currentRelicType === 'ring') {
-          const g1 = currentRelicGroup.getObjectByName("avalonGyroRing");
-          const g2 = currentRelicGroup.getObjectByName("avalonGyroRing2");
-          const core = currentRelicGroup.getObjectByName("avalonSingularity");
-          if (g1) g1.rotation.z += 0.02;
-          if (g2) g2.rotation.x -= 0.025;
-          if (core) {
-            core.rotation.y += 0.03;
-            core.rotation.x += 0.02;
-          }
-        }
-      }
-
-      if (particleStars) {
-        particleStars.rotation.y += 0.001;
-      }
-
-      if (renderer && scene && camera) {
-        renderer.render(scene, camera);
-      }
-    }
-
-    const relicCards = document.querySelectorAll('.relic-card-pill');
-    const relicLoreBanner = document.getElementById('relicLoreBanner');
-    const activeArtifactBadge = document.getElementById('activeArtifactBadge');
-    const badgeArtifactName = document.getElementById('badgeArtifactName');
-
-    const relicData = {
-      scroll: {
-        badgeIcon: 'fa-solid fa-scroll',
-        badgeTitle: 'Arcane Scroll Book Codex',
-        color: 0x2aa198,
-        lore: '"The Sacred Scroll Book unfolds: Ancient procedural geometry algorithms transcribed onto glowing parchment."',
-        soundFreq: 520,
-        boost: 0.014
-      },
-      staff: {
-        badgeIcon: 'fa-solid fa-wand-magic-sparkles',
-        badgeTitle: 'Stave of Arcanum • Vectors',
-        color: 0x268bd2,
-        lore: '"Merlin’s Staff resonates: Directorial kinetic vector arcs surging through character joint hierarchies."',
-        soundFreq: 640,
-        boost: 0.018
-      },
-      orb: {
-        badgeIcon: 'fa-solid fa-circle-dot',
-        badgeTitle: 'Scrying Orb • Previs Foresight',
-        color: 0x6c71c4,
-        lore: '"The Scrying Orb illuminates: Solarized caustics and chromatic dispersion refract across optical lenses."',
-        soundFreq: 720,
-        boost: 0.016
-      },
-      ring: {
-        badgeIcon: 'fa-solid fa-ring',
-        badgeTitle: 'Ring of Avalon • Synthesis',
-        color: 0xb58900,
-        lore: '"The Ring of Avalon turns: Unifying camera trajectories, illumination passes, and spatial models into harmony."',
-        soundFreq: 460,
-        boost: 0.022
-      }
-    };
-
-    relicCards.forEach(card => {
-      card.addEventListener('click', function() {
-        relicCards.forEach(c => c.classList.remove('active'));
-        this.classList.add('active');
-
-        const relicKey = this.dataset.relic;
-        const config = relicData[relicKey];
-
-        // 1. Swap the active 3D model immediately
-        buildRelicMesh(relicKey);
-
-        // 2. Retune particle stardust color
-        if (particleStars) particleStars.material.color.setHex(config.color);
-
-        // 3. Transient rotational speed boost
-        targetRotationSpeed = config.boost;
-        setTimeout(() => { targetRotationSpeed = 0.004; }, 1000);
-
-        // 4. Update Badge & Lore Banner
-        activeArtifactBadge.querySelector('i').className = config.badgeIcon;
-        badgeArtifactName.textContent = config.badgeTitle;
-
-        relicLoreBanner.style.opacity = '0';
-        setTimeout(() => {
-          relicLoreBanner.textContent = config.lore;
-          relicLoreBanner.style.opacity = '1';
-        }, 180);
-
-        // 5. Sound synthesized chime
-        triggerSound(config.soundFreq);
-      });
-    });
-
-    const dialogueForm = document.getElementById('dialogueForm');
-    const dialogueInput = document.getElementById('dialogueInput');
-    const chatScrollStream = document.getElementById('chatScrollStream');
-    const btnClearChat = document.getElementById('btnClearChat');
-    const incantationPills = document.querySelectorAll('.incantation-pill');
-
-    // ── LIVE: Merlin brain via Cloudflare Worker (real model, server-side key) ──
-    const MERLIN_API = "https://merlin-keeper.epinoiahorizon.workers.dev/v1/chat/completions";
-
-    async function replyAsMerlin(promptText) {
-      const typing = addDialogue('Merlin', 'ᛝ Merlin conjuring…', true);
-      const bubbleEl = typing.querySelector('.entry-parchment-bubble, .dialogue-entry');
-      if (bubbleEl) bubbleEl.classList.add('typing');
-      try {
-        const ctrl = new AbortController();
-        const kill = setTimeout(() => ctrl.abort(), 20000);
-        const resp = await fetch(MERLIN_API, {
-          method: 'POST',
-          signal: ctrl.signal,
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            model: 'merlin', stream: false,
-            messages: [...(window.__hist || []).slice(-11), { role: 'user', content: promptText }]
-          })
-        });
-        clearTimeout(kill);
-        if (resp.status === 429) {
-          let jj = {}; try { jj = await resp.json(); } catch(e){}
-          if (jj.error && jj.error.code === 'free_quota_spent') {
-            typing.remove();
-            addDialogue('Merlin', 'ᛝ ' + jj.error.message, true);
-            return;
-          }
-          throw new Error(resp.status);
-        }
-        if (!resp.ok) throw new Error(resp.status);
-        const j = await resp.json();
-        const m = j.choices?.[0]?.message || {};
-        const answer = (m.content || '').trim();
-        typing.remove();
-        (window.__hist = window.__hist || []).push({role:'assistant', content:answer.slice(0,2000)});
-        addDialogue('Merlin', answer || 'ᛝ The tome is silent — ask once more.', true);
-        triggerSound(680);
-      } catch (e) {
-        typing.remove();
-        addDialogue('Merlin', 'ᛝ The mists interrupted — one more try.', true);
-      }
-    }
-
-    function addDialogue(author, text, isMerlin = false) {
-      const entry = document.createElement('div');
-      entry.className = `dialogue-entry ${isMerlin ? 'agent-entry' : 'user-entry'}`;
-
-      const icon = document.createElement('div');
-      icon.className = 'entry-sigil-icon font-angel';
-      icon.innerHTML = isMerlin ? 'ᚨ' : '<i class="fa-solid fa-crown" style="font-size:0.75rem;"></i>';
-
-      const bubble = document.createElement('div');
-      bubble.className = 'entry-parchment-bubble';
-
-      const authorTag = document.createElement('span');
-      authorTag.className = 'bubble-author font-angel';
-      authorTag.textContent = author;
-
-      const p = document.createElement('p');
-      p.className = 'bubble-text font-editorial';
-      p.textContent = text;
-
-      bubble.appendChild(authorTag);
-      bubble.appendChild(p);
-      entry.appendChild(icon);
-      entry.appendChild(bubble);
-
-      chatScrollStream.appendChild(entry);
-      chatScrollStream.scrollTop = chatScrollStream.scrollHeight;
-      return entry;   // typing-handoff needs the element (same contract as fixed earlier)
-    }
-
-    function generateMerlinReply(prompt) {
-      const p = prompt.toLowerCase();
-      
-      if (p.includes('scroll') || p.includes('facet') || p.includes('procedural')) {
-        return "By the Sacred Scroll Book: The procedural geometry formulas have been parsed. 128 crystalline facet coordinates registered along the 4-axis symmetry grid. The spatial mesh stands ready.";
-      } else if (p.includes('staff') || p.includes('kinetic') || p.includes('motion') || p.includes('rig')) {
-        return "Channeling through the Stave of Arcanum: Kinetic energy vector curves calculated. The skeletal armature blends organic weights with smooth 60fps dynamic interpolation.";
-      } else if (p.includes('orb') || p.includes('scrying') || p.includes('caustic') || p.includes('light')) {
-        return "Peering into the Scrying Orb: Solarized turquoise and ochre caustics mapped at 1.62 refractive index. Optical dispersion illuminates all frosted quartz edges.";
-      } else if (p.includes('ring') || p.includes('avalon') || p.includes('harmony') || p.includes('previs')) {
-        return "Bound by the Ring of Avalon: The autonomous director swarm converges. Camera orbit arcs, volumetric lighting passes, and kinetic models synchronize into flawless unity.";
-      } else {
-        return `“${prompt}” has been transcribed into the Grimoire. Merlin attunes the optical prisms and kinetic rigs to manifest your creative vision.`;
-      }
-    }
-
-    dialogueForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const val = dialogueInput.value.trim();
-      if (!val) return;
-
-      addDialogue('Director', val, false);
-      dialogueInput.value = '';
-      triggerSound(480);
-      (window.__hist = window.__hist || []).push({role:'user', content:val.slice(0,2000)});
-      replyAsMerlin(val);
-    });
-
-    incantationPills.forEach(pill => {
-      pill.addEventListener('click', function() {
-        const prompt = this.dataset.prompt;
-        addDialogue('Director', prompt, false);
-        triggerSound(500);
-        (window.__hist = window.__hist || []).push({role:'user', content:prompt.slice(0,2000)});
-        replyAsMerlin(prompt);
-      });
-    });
-
-    btnClearChat.addEventListener('click', () => {
-      chatScrollStream.innerHTML = `
-        <div class="dialogue-entry agent-entry">
-          <div class="entry-sigil-icon font-angel">ᚨ</div>
-          <div class="entry-parchment-bubble">
-            <span class="bubble-author font-angel">Merlin</span>
-            <p class="bubble-text">
-              "The parchment is restored. Speak your directorial intent or summon an incantation from the left folio to orchestrate your next spatial vision."
+    </section>
+
+    <section id="merlin" class="py-24 px-6 relative border-t border-solar-base02/50 bg-solar-base03/90">
+      <div class="max-w-7xl mx-auto space-y-16">
+        
+        <!-- Section Header -->
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-solar-violet/15 text-solar-violet font-monoTech text-xs uppercase tracking-widest mb-3 border border-solar-violet/30">
+              <i class="fa-solid fa-brain"></i> AUTONOMOUS COGNITIVE HARNESS
+            </div>
+            <h2 class="font-angel-wish text-3xl sm:text-5xl font-bold text-solar-base3 tracking-wide">
+              MERLIN AGENT HARNESS
+            </h2>
+            <p class="text-solar-base0 font-serifLuxury italic text-lg sm:text-xl mt-1">
+              Arcane Cybernetics & Autonomous Multi-Agent Previsualisation Engine
+            </p>
+          </div>
+          <p class="text-solar-base1 text-sm max-w-xl font-sans leading-relaxed">
+            Inspired by modular cognitive harness architectures, <strong>Merlin Agent</strong> executes recursive reasoning loops: deconstructing creative scripts into spatial DAG hierarchies, validating kinematic skeletal thresholds, and triggering real-time photometric rendering passes.
+          </p>
+        </div>
+
+        <!-- Merlin 4 Pillars — real shipped capabilities of the harness -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 font-monoTech">
+          <div class="acrylic-plaque prismatic-border p-6 rounded-2xl hover:border-solar-violet/60 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-solar-violet/20 text-solar-violet flex items-center justify-center text-lg mb-4">
+              <i class="fa-solid fa-brain"></i>
+            </div>
+            <h4 class="font-bold text-solar-base2 text-sm tracking-wider uppercase mb-2">01. Persistent Memory</h4>
+            <p class="font-sans text-xs text-solar-base0 leading-relaxed">
+              <code class="font-code text-solar-violet">MEMORY.md</code> holds world facts, <code class="font-code text-solar-violet">USER.md</code> holds who you are — FIFO-bounded so context never bloats. Every past session is FTS5-searchable from SQLite.
+            </p>
+          </div>
+
+          <div class="acrylic-plaque prismatic-border p-6 rounded-2xl hover:border-solar-cyan/60 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-solar-cyan/20 text-solar-cyan flex items-center justify-center text-lg mb-4">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <h4 class="font-bold text-solar-base2 text-sm tracking-wider uppercase mb-2">02. Skills It Writes Itself</h4>
+            <p class="font-sans text-xs text-solar-base0 leading-relaxed">
+              Finish a task once — <code class="font-code text-solar-cyan">/learn</code> distills the procedure into an executable <code class="font-code text-solar-cyan">SKILL.md</code> package that loads into every future session automatically.
+            </p>
+          </div>
+
+          <div class="acrylic-plaque prismatic-border p-6 rounded-2xl hover:border-solar-blue/60 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-solar-blue/20 text-solar-blue flex items-center justify-center text-lg mb-4">
+              <i class="fa-solid fa-terminal"></i>
+            </div>
+            <h4 class="font-bold text-solar-base2 text-sm tracking-wider uppercase mb-2">03. Full-Screen TUI Telemetry</h4>
+            <p class="font-sans text-xs text-solar-base0 leading-relaxed">
+              Terminal-native docked layout: scrollable transcript, tool-call cards, and a live telemetry bar — context gauge, stream health, latency, token flow.
+            </p>
+          </div>
+
+          <div class="acrylic-plaque prismatic-border p-6 rounded-2xl hover:border-solar-magenta/60 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-solar-magenta/20 text-solar-magenta flex items-center justify-center text-lg mb-4">
+              <i class="fa-solid fa-plug"></i>
+            </div>
+            <h4 class="font-bold text-solar-base2 text-sm tracking-wider uppercase mb-2">04. Any Provider + Gateway</h4>
+            <p class="font-sans text-xs text-solar-base0 leading-relaxed">
+              13 built-in providers plus <code class="font-code text-solar-magenta">custom</code> for any OpenAI-compatible endpoint. Gateway on :8642 bridges Telegram, Discord, Slack, cron &amp; subagents.
             </p>
           </div>
         </div>
-      `;
-      triggerSound(420);
+
+        <!-- Real Install & Run (adapted from the previous landing page) -->
+        <div class="acrylic-plaque prismatic-border rounded-3xl p-6 sm:p-8">
+          <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-solar-base01/20">
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-solar-green/15 text-solar-green font-monoTech text-xs uppercase tracking-widest mb-3 border border-solar-green/30">
+                <i class="fa-solid fa-download"></i> SHIPPED PRODUCT — 60 SECONDS TO A SOVEREIGN AGENT
+              </div>
+              <h3 class="font-angel-wish text-2xl sm:text-3xl font-bold text-solar-base3 tracking-wide">RUN THE REAL HARNESS</h3>
+              <p class="text-solar-base0 font-serifLuxury italic text-base mt-1">
+                Terminal-native &bull; MIT licensed &bull; no accounts, no telemetry, no lock-in
+              </p>
+            </div>
+            <p class="text-solar-base1 text-sm max-w-md font-sans leading-relaxed">
+              The cognitive console below is a live demo of the loop. The real harness installs in one line, runs entirely on your machine, and speaks OpenAI-compatible API on <code class="font-code text-solar-green">:8642</code>.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-8 items-start">
+            <!-- Install commands (real ones served by this site) -->
+            <div class="space-y-2.5 font-code text-[13px]">
+              <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 bg-solar-base03 border border-solar-base01/30 rounded-lg px-4 py-3">
+                <span><span class="text-solar-green font-bold">$</span> <span class="text-solar-base2">curl -fsSL https://merlin-agent.epinoiahorizon.com/install.sh | bash</span></span><button class="copy-btn" data-code="curl -fsSL https://merlin-agent.epinoiahorizon.com/install.sh | bash" title="Copy command" aria-label="Copy: curl -fsSL https://merlin-agent.epinoiahorizon.com/install.sh | bash">⧉</button>
+                <span class="text-solar-base01 text-[10px] uppercase tracking-wider">linux · macOS · WSL2</span>
+              </div>
+              <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 bg-solar-base03 border border-solar-base01/30 rounded-lg px-4 py-3">
+                <span><span class="text-solar-green font-bold">&gt;</span> <span class="text-solar-base2">iex (irm https://merlin-agent.epinoiahorizon.com/install.ps1)</span></span><button class="copy-btn" data-code="iex (irm https://merlin-agent.epinoiahorizon.com/install.ps1)" title="Copy command" aria-label="Copy powershell install">⧉</button>
+                <span class="text-solar-base01 text-[10px] uppercase tracking-wider">windows powershell</span>
+              </div>
+              <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 bg-solar-base03 border border-solar-base01/30 rounded-lg px-4 py-3">
+                <span><span class="text-solar-green font-bold">$</span> <span class="text-solar-base2">merlin setup</span></span><button class="copy-btn" data-code="merlin setup" title="Copy command" aria-label="Copy: merlin setup">⧉</button>
+                <span class="text-solar-base01 text-[10px] uppercase tracking-wider">provider · model · key — live-tested</span>
+              </div>
+              <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 bg-solar-base03 border border-solar-base01/30 rounded-lg px-4 py-3">
+                <span><span class="text-solar-green font-bold">$</span> <span class="text-solar-base2">merlin</span></span><button class="copy-btn" data-code="merlin" title="Copy command" aria-label="Copy: merlin">⧉</button>
+                <span class="text-solar-base01 text-[10px] uppercase tracking-wider">full-screen session</span>
+              </div>
+              <div class="text-solar-base01 text-[11px] font-monoTech pt-1">
+                bootstrap clones the repo &middot; heavy deps handled by <span class="text-solar-base0">merlin pm install</span> &middot; android/termux: signed apt repo
+              </div>
+            </div>
+
+            <!-- Home / data ownership facts -->
+            <div class="space-y-4 font-sans text-sm text-solar-base1 leading-relaxed">
+              <p>
+                The setup wizard runs a <span class="text-solar-green font-semibold">live connection test</span> against your real endpoint before saving anything.
+                API keys are masked on entry and stored in <code class="font-code text-solar-green">MERLIN_HOME/.env</code> — never in config.yaml.
+              </p>
+              <p>
+                Home lives at <code class="font-code text-solar-green">%LOCALAPPDATA%\merlin</code> (Windows native) or
+                <code class="font-code text-solar-green">~/.merlin</code> (Linux/macOS/WSL2) — memory, skills, sessions, and trajectories
+                in plain files you own. Stuck on PATH after install? <code class="font-code text-solar-green">merlin doctor</code> self-repairs.
+              </p>
+              <div class="flex flex-wrap items-center gap-3 pt-2 text-xs font-monoTech">
+                <a href="https://github.com/epinoiahorizon/Merlin-Agent" target="_blank" class="px-4 py-2 rounded-lg bg-solar-base03 border border-solar-base01/30 hover:border-solar-cyan hover:text-solar-cyan transition-all flex items-center gap-2 text-solar-base2">
+                  <i class="fa-brands fa-github"></i> SOURCE ↗
+                </a>
+                <a href="https://github.com/epinoiahorizon/Merlin-Agent/issues" target="_blank" class="px-4 py-2 rounded-lg bg-solar-base03 border border-solar-base01/30 hover:border-solar-yellow hover:text-solar-yellow transition-all text-solar-base2">
+                  ISSUES ↗
+                </a>
+                <a href="https://github.com/epinoiahorizon/Merlin-Agent/blob/main/README.md" target="_blank" class="px-4 py-2 rounded-lg bg-solar-base03 border border-solar-base01/30 hover:border-solar-violet hover:text-solar-violet transition-all text-solar-base2">
+                  DOCS ↗
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reference — real shell / slash / keys surface (generated from the shipped CLI) -->
+        <div>
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-solar-yellow/15 text-solar-yellow font-monoTech text-xs uppercase tracking-widest mb-3 border border-solar-yellow/30">
+                <i class="fa-solid fa-book"></i> REFERENCE
+              </div>
+              <h3 class="font-angel-wish text-2xl sm:text-3xl font-bold text-solar-base3 tracking-wide">EVERYTHING YOU CAN TYPE</h3>
+              <p class="text-solar-base0 font-serifLuxury italic text-base mt-1">Shell commands for daily driving, slash commands inside the chat, and keys that control the TUI.</p>
+            </div>
+            <p class="text-solar-base1 text-sm max-w-md font-sans">The three tables below mirror the shipped CLI surface — pull them fresh whenever the commands evolve.</p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- Shell commands -->
+            <div class="lg:col-span-6 acrylic-plaque rounded-2xl border border-solar-base01/30 overflow-hidden font-sans">
+              <div class="px-5 py-3 bg-solar-base02/70 text-[11px] font-monoTech text-solar-yellow uppercase tracking-widest border-b border-solar-base01/20">
+                Shell — merlin &lt;command&gt;
+              </div>
+              <div id="ref-shell">
+                <div class="grid grid-cols-1 sm:grid-cols-[minmax(190px,260px)_1fr] gap-x-5 gap-y-1 px-5 py-3 border-t border-solar-base01/15 first:border-t-0">
+                  <code class="font-code text-solar-yellow text-[13px]">merlin</code>
+                  <p class="text-solar-base0 text-[13px] leading-relaxed m-0">Launch the full-screen interactive TUI. First run guides you through setup automatically. This is where you'll live.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-[minmax(190px,260px)_1fr] gap-x-5 gap-y-1 px-5 py-3 border-t border-solar-base01/15">
+                  <code class="font-code text-solar-yellow text-[13px]">merlin chat [--classic]</code>
+                  <p class="text-solar-base0 text-[13px] leading-relaxed m-0">Same chat, choose your interface — full-screen TUI (default) or the classic inline terminal.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-[minmax(190px,260px)_1fr] gap-x-5 gap-y-1 px-5 py-3 border-t border-solar-base01/15">
+                  <code class="font-code text-solar-yellow text-[13px]">merlin setup</code>
+                  <p class="text-solar-base0 text-[13px] leading-relaxed m-0">Interactive wizard: provider, model, base URL, masked API key, live connection test. Safe to re-run any time.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-1 gap-y-1 px-5 py-3 border-t border-solar-base01/15">
+                  <code class="font-code text-solar-yellow text-[13px]">merlin doctor</code>
+                  <p class="text-solar-base0 text-[13px] leading-relaxed m-0">One command, full health check: repairs the <code class="font-code text-solar-yellow">merlin</code> command (Windows non-admin PATH), then live-tests your provider connection and tells you exactly what to fix.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-1 gap-y-1 px-5 py-3 border-t border-solar-base01/15">
+                  <code class="font-code text-solar-yellow text-[13px]">merlin model [name] [-p provider]</code>
+                  <p class="text-solar-base0 text-[13px] leading-relaxed m-0">View or switch the active model/provider without opening a chat.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-[minmax(190px,260px)_1fr] gap-x-5 gap-y-1 px-5 py-3 border-t border-solar-base01/15">
+                  <code class="font-code text-solar-yellow text-[13px]">merlin memory</code>
+                  <p class="text-solar-base0 text-[13px] leading-relaxed m-0">Inspect the persistent <code class="font-code text-solar-yellow">MEMORY.md</code> and <code class="font-code text-solar-yellow">USER.md</code> files and their character budgets.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-[minmax(190px,260px)_1fr] gap-x-5 gap-y-1 px-5 py-3 border-t border-solar-base01/15">
+                  <code class="font-code text-solar-yellow text-[13px]">merlin skills</code>
+                  <p class="text-solar-base0 text-[13px] leading-relaxed m-0">List every loaded skill — bundled ones plus the ones the agent taught itself.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-1 gap-y-1 px-5 py-3 border-t border-solar-base01/15">
+                  <code class="font-code text-solar-yellow text-[13px]">merlin gateway [--port 8642]</code>
+                  <p class="text-solar-base0 text-[13px] leading-relaxed m-0">Start the OpenAI-compatible API server + cron scheduler. Point any client at <code class="font-code text-solar-yellow">http://localhost:8642/v1</code>.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-[minmax(190px,260px)_1fr] gap-x-5 gap-y-1 px-5 py-3 border-t border-solar-base01/15">
+                  <code class="font-code text-solar-yellow text-[13px]">merlin cron</code>
+                  <p class="text-solar-base0 text-[13px] leading-relaxed m-0">List scheduled background automations.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-[minmax(190px,260px)_1fr] gap-x-5 gap-y-1 px-5 py-3 border-t border-solar-base01/15">
+                  <code class="font-code text-solar-yellow text-[13px]">merlin tools</code>
+                  <p class="text-solar-base0 text-[13px] leading-relaxed m-0">Show the registered toolsets (terminal, file, web, memory, skills, code execution&hellip;).</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slash commands + Keys -->
+            <div class="lg:col-span-6 space-y-6">
+              <div class="acrylic-plaque rounded-2xl border border-solar-base01/30 overflow-hidden font-sans">
+                <div class="px-5 py-3 bg-solar-base02/70 text-[11px] font-monoTech text-solar-cyan uppercase tracking-widest border-b border-solar-base01/20">
+                  Inside the chat — slash commands
+                </div>
+                <div id="ref-slash">
+                  <div class="grid grid-cols-1 sm:grid-cols-1 gap-y-1 px-5 py-3 border-t border-solar-base01/15 first:border-t-0">
+                    <code class="font-code text-solar-cyan text-[13px]">/help</code>
+                    <p class="text-solar-base0 text-[13px] leading-relaxed m-0">List every command below — you never have to memorize this page.</p>
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-1 gap-y-1 px-5 py-3 border-t border-solar-base01/15">
+                    <code class="font-code text-solar-cyan text-[13px]">/model [name] · /provider [name]</code>
+                    <p class="text-solar-base0 text-[13px] leading-relaxed m-0">Switch model or provider mid-conversation, on the fly.</p>
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-[minmax(190px,260px)_1fr] gap-x-5 gap-y-1 px-5 py-3 border-t border-solar-base01/15">
+                    <code class="font-code text-solar-cyan text-[13px]">/memory</code>
+                    <p class="text-solar-base0 text-[13px] leading-relaxed m-0">See what the agent remembers about the world and about you.</p>
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-1 gap-y-1 px-5 py-3 border-t border-solar-base01/15">
+                    <code class="font-code text-solar-cyan text-[13px]">/skills · /learn name description</code>
+                    <p class="text-solar-base0 text-[13px] leading-relaxed m-0">Browse loaded skills, or have the agent author a new one from the current session.</p>
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-1 gap-y-1 px-5 py-3 border-t border-solar-base01/15">
+                    <code class="font-code text-solar-cyan text-[13px]">/sessions · /search query</code>
+                    <p class="text-solar-base0 text-[13px] leading-relaxed m-0">List past sessions and full-text search every message you've ever exchanged (SQLite FTS5).</p>
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-[minmax(190px,260px)_1fr] gap-x-5 gap-y-1 px-5 py-3 border-t border-solar-base01/15">
+                    <code class="font-code text-solar-cyan text-[13px]">/tools</code>
+                    <p class="text-solar-base0 text-[13px] leading-relaxed m-0">Inspect the active toolsets available to the agent.</p>
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-1 gap-y-1 px-5 py-3 border-t border-solar-base01/15">
+                    <code class="font-code text-solar-cyan text-[13px]">/copy [n] · /export</code>
+                    <p class="text-solar-base0 text-[13px] leading-relaxed m-0">Copy the last reply to clipboard, or export the session trajectory (ShareGPT format) for training.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="acrylic-plaque rounded-2xl border border-solar-base01/30 overflow-hidden font-sans">
+                <div class="px-5 py-3 bg-solar-base02/70 text-[11px] font-monoTech text-solar-violet uppercase tracking-widest border-b border-solar-base01/20">
+                  Keys
+                </div>
+                <div id="ref-keys">
+                  <div class="grid grid-cols-1 sm:grid-cols-[minmax(120px,160px)_1fr] gap-x-5 gap-y-1 px-5 py-3 border-t border-solar-base01/15 first:border-t-0">
+                    <code class="font-code text-solar-violet text-[13px]">Enter</code>
+                    <p class="text-solar-base0 text-[13px] leading-relaxed m-0">Send the message.</p>
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-[minmax(120px,160px)_1fr] gap-x-5 gap-y-1 px-5 py-3 border-t border-solar-base01/15">
+                    <code class="font-code text-solar-violet text-[13px]">Esc</code>
+                    <p class="text-solar-base0 text-[13px] leading-relaxed m-0">Cancel the running turn.</p>
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-[minmax(120px,160px)_1fr] gap-x-5 gap-y-1 px-5 py-3 border-t border-solar-base01/15">
+                    <code class="font-code text-solar-violet text-[13px]">Ctrl+C</code>
+                    <p class="text-solar-base0 text-[13px] leading-relaxed m-0">Quit the session (memory is preserved automatically).</p>
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-[minmax(120px,160px)_1fr] gap-x-5 gap-y-1 px-5 py-3 border-t border-solar-base01/15">
+                    <code class="font-code text-solar-violet text-[13px]">Ctrl+L</code>
+                    <p class="text-solar-base0 text-[13px] leading-relaxed m-0">Clear the transcript view.</p>
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-1 gap-y-1 px-5 py-3 border-t border-solar-base01/15">
+                    <code class="font-code text-solar-violet text-[13px]">Ctrl+Y / Ctrl+P</code>
+                    <p class="text-solar-base0 text-[13px] leading-relaxed m-0">Copy the last reply / copy the input line to the clipboard.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Interactive Merlin Agent Terminal Console & Synchronized Neural Mesh -->
+        <div class="acrylic-plaque prismatic-border rounded-3xl p-6 sm:p-8 lg:p-10">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between pb-6 border-b border-solar-base01/20 gap-4">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-solar-green animate-pulse"></span>
+                <h3 class="font-angel-wish text-xl sm:text-2xl text-solar-base2 tracking-wider">
+                  MERLIN AGENT HARNESS TERMINAL
+                </h3>
+              </div>
+              <p class="text-xs font-monoTech text-solar-base0 mt-1">
+                Autonomous Loop: Thought &rarr; Action &rarr; Spatial Observation &rarr; Synthesis
+              </p>
+            </div>
+
+            <!-- Telemetry Badges -->
+            <div class="flex flex-wrap items-center gap-3 text-xs font-monoTech">
+              <div class="px-3 py-1.5 rounded-lg bg-solar-base03 border border-solar-base01/30">
+                <span class="text-solar-base01">HARNESS:</span> <span class="text-solar-violet font-bold">MERLIN-AGY v6.4</span>
+              </div>
+              <div class="px-3 py-1.5 rounded-lg bg-solar-base03 border border-solar-base01/30">
+                <span class="text-solar-base01">ACTIVE TOKENS:</span> <span id="token-counter" class="text-solar-yellow font-bold">594,220</span>
+              </div>
+              <div class="px-3 py-1.5 rounded-lg bg-solar-base03 border border-solar-base01/30">
+                <span class="text-solar-base01">AGENTS:</span> <span id="active-agents-badge" class="text-solar-cyan font-bold">8 CONCURRENT</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Merlin Command Preset Directives -->
+          <div class="py-6">
+            <label class="block text-xs font-monoTech text-solar-cyan tracking-wider uppercase mb-3">
+              Trigger Merlin Autonomous Directives (Synchronized with Neural Mesh):
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 font-monoTech text-xs">
+              
+              <!-- Directive 1 -->
+              <button class="merlin-task-btn px-4 py-3 rounded-xl bg-solar-base03 hover:bg-solar-base02 border border-solar-base01/30 hover:border-solar-cyan text-left text-solar-base2 transition-all flex items-center justify-between group" data-task="geometry">
+                <div>
+                  <div class="text-solar-cyan font-semibold">Spatial Geometry Synthesis</div>
+                  <div class="text-[10px] text-solar-base01">3D topology & camera frustums</div>
+                </div>
+                <i class="fa-solid fa-play text-xs text-solar-base01 group-hover:text-solar-cyan transition-colors"></i>
+              </button>
+
+              <!-- Directive 2 -->
+              <button class="merlin-task-btn px-4 py-3 rounded-xl bg-solar-base03 hover:bg-solar-base02 border border-solar-base01/30 hover:border-solar-violet text-left text-solar-base2 transition-all flex items-center justify-between group" data-task="kinematics">
+                <div>
+                  <div class="text-solar-violet font-semibold">Kinematic Rig Deconstruction</div>
+                  <div class="text-[10px] text-solar-base01">Skeletal hierarchies & IK joints</div>
+                </div>
+                <i class="fa-solid fa-play text-xs text-solar-base01 group-hover:text-solar-violet transition-colors"></i>
+              </button>
+
+              <!-- Directive 3 -->
+              <button class="merlin-task-btn px-4 py-3 rounded-xl bg-solar-base03 hover:bg-solar-base02 border border-solar-base01/30 hover:border-solar-magenta text-left text-solar-base2 transition-all flex items-center justify-between group" data-task="photometric">
+                <div>
+                  <div class="text-solar-magenta font-semibold">Photometric Raytrace Bake</div>
+                  <div class="text-[10px] text-solar-base01">Optical caustics & dispersion</div>
+                </div>
+                <i class="fa-solid fa-play text-xs text-solar-base01 group-hover:text-solar-magenta transition-colors"></i>
+              </button>
+
+              <!-- Directive 4 -->
+              <button class="merlin-task-btn px-4 py-3 rounded-xl bg-solar-base03 hover:bg-solar-base02 border border-solar-base01/30 hover:border-solar-yellow text-left text-solar-base2 transition-all flex items-center justify-between group" data-task="consensus">
+                <div>
+                  <div class="text-solar-yellow font-semibold">Swarm Consensus Audit</div>
+                  <div class="text-[10px] text-solar-base01">Multi-agent verification pass</div>
+                </div>
+                <i class="fa-solid fa-play text-xs text-solar-base01 group-hover:text-solar-yellow transition-colors"></i>
+              </button>
+
+            </div>
+          </div>
+
+          <!-- Split Console: Live Reasoning Logs & Dynamic Synchronized Neural Mesh -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- Terminal Log Feed -->
+            <div class="lg:col-span-7 bg-solar-base03 rounded-2xl border border-solar-base01/30 p-4 font-code text-xs flex flex-col justify-between shadow-inner">
+              <div class="flex items-center justify-between pb-3 border-b border-solar-base02 text-[11px] text-solar-base01 font-monoTech">
+                <span class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-solar-red inline-block"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-solar-yellow inline-block"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-solar-green inline-block"></span>
+                  <span class="text-solar-base1 ml-2">merlin-agent@epinoia-harness:~$</span>
+                </span>
+                <span id="merlin-status-badge" class="text-solar-green">MERLIN_IDLE</span>
+              </div>
+
+              <!-- Log Container -->
+              <div id="merlin-terminal-feed" class="h-64 sm:h-72 overflow-y-auto space-y-2.5 py-3 pr-2 text-solar-base1 text-[11px] sm:text-xs">
+                <div class="text-solar-base01">[00:00:01] Merlin Agent Harness v6.4 initialized.</div>
+                <div class="text-solar-base01">[00:00:02] Connected to Epinoia Horizon 3D Art & Animation Pipeline.</div>
+                <div class="text-solar-violet">[00:00:03] Merlin Cognitive Loop stand-by. Select an autonomous directive or enter a custom prompt.</div>
+              </div>
+
+              <!-- Terminal Input Field -->
+              <div class="pt-3 border-t border-solar-base02 flex items-center gap-2 font-monoTech text-xs">
+                <span class="text-solar-violet font-bold">&gt;</span>
+                <input id="merlin-input" type="text" placeholder="Enter custom directive (e.g. 'Synthesize holographic prism dissolution')..." class="w-full bg-transparent text-solar-base2 placeholder-solar-base01/60 focus:outline-none text-xs">
+                <button id="merlin-run-btn" class="px-3.5 py-1.5 rounded bg-solar-violet/20 border border-solar-violet text-solar-violet hover:bg-solar-violet hover:text-solar-base3 text-xs uppercase font-bold transition-all">Invoke</button>
+              </div>
+            </div>
+
+            <!-- Merlin Synchronized Neural Mesh Visualizer -->
+            <div class="lg:col-span-5 bg-solar-base03 rounded-2xl border border-solar-base01/30 p-4 flex flex-col justify-between">
+              <div class="flex items-center justify-between text-[11px] font-monoTech text-solar-base01 pb-2 border-b border-solar-base02">
+                <span class="text-solar-violet font-semibold flex items-center gap-1.5">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> MERLIN NEURAL MESH
+                </span>
+                <span class="text-solar-base0">ACTIVE WORKER: <span id="merlin-worker-tag" class="text-solar-cyan font-bold">[STANDBY]</span></span>
+              </div>
+
+              <!-- Interactive Mesh Canvas -->
+              <div class="py-2 flex items-center justify-center relative">
+                <canvas id="merlin-graph-canvas" class="w-full h-56 sm:h-64 block rounded-lg"></canvas>
+                <div id="neural-mesh-overlay-badge" class="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-solar-base02/90 border border-solar-base01/40 text-[9px] font-monoTech text-solar-base1 pointer-events-none">
+                  STATE: <span id="mesh-state-label" class="text-solar-cyan">HARMONIC_IDLE</span>
+                </div>
+              </div>
+
+              <!-- Telemetry Metrics Bar -->
+              <div class="grid grid-cols-3 gap-2 text-center font-monoTech text-[10px] pt-2 border-t border-solar-base02 text-solar-base01">
+                <div>ORCHESTRATOR: <span id="meta-orch" class="text-solar-violet">ACTIVE</span></div>
+                <div>KINEMATICS: <span id="meta-kin" class="text-solar-cyan">LOCKED</span></div>
+                <div>CONVERGENCE: <span id="meta-conv" class="text-solar-green">&gt;99.98%</span></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="gallery" class="py-24 px-6 relative border-t border-solar-base02/50">
+      <div class="max-w-7xl mx-auto space-y-16">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <div class="text-xs font-monoTech text-solar-cyan tracking-widest uppercase mb-2">// 3D ART & ANIMATION PORTFOLIO</div>
+            <h2 class="font-angel-wish text-3xl md:text-5xl font-bold text-solar-base3 tracking-wide">
+              PREVIS & CREATIVE ARCHIVES
+            </h2>
+          </div>
+          <p class="text-solar-base0 text-sm max-w-md font-sans">
+            Curated archive of speculative spatial prototypes, high-refraction optical plaques, and cinematic motion tests engineered by Epinoia Horizon.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <!-- Card 1: Kinematic Motion -->
+          <div class="acrylic-plaque prismatic-border rounded-2xl p-7 hover:-translate-y-2 transition-all duration-300 group flex flex-col justify-between">
+            <div>
+              <div class="h-48 rounded-xl bg-solar-base02/80 relative overflow-hidden mb-6 flex items-center justify-center border border-solar-base01/20">
+                <div class="absolute inset-0 bg-gradient-to-tr from-solar-cyan/20 to-solar-blue/20 opacity-50 group-hover:scale-105 transition-transform duration-500"></div>
+                <i class="fa-solid fa-person-running text-5xl text-solar-cyan drop-shadow-[0_0_20px_rgba(42,161,152,0.8)]"></i>
+                <div class="absolute bottom-2 left-3 text-[10px] font-monoTech text-solar-base0 tracking-widest">
+                  ANIM-01 // PROCEDURAL KINEMATICS
+                </div>
+              </div>
+              <span class="text-xs font-monoTech text-solar-cyan uppercase tracking-wider">3D Animation Design</span>
+              <h3 class="font-angel-wish text-xl font-bold text-solar-base2 mt-1 mb-3">Bionic Gait & Motion Rigging</h3>
+              <p class="text-sm text-solar-base0 leading-relaxed font-sans">
+                Dynamic skeletal rigging for biomechanical characters with adaptive muscle deformation optimized for LED volume virtual production.
+              </p>
+            </div>
+            <div class="pt-6 mt-6 border-t border-solar-base02 flex items-center justify-between font-monoTech text-xs">
+              <span class="text-solar-green"><i class="fa-solid fa-circle-check text-[10px] mr-1"></i> Production Ready</span>
+              <button onclick="triggerInspect('Bionic Gait Motion Rig')" class="text-solar-base1 hover:text-solar-cyan transition-colors">Inspect Rig <i class="fa-solid fa-chevron-right ml-1 text-[10px]"></i></button>
+            </div>
+          </div>
+
+          <!-- Card 2: Fused Quartz Hologram -->
+          <div class="acrylic-plaque prismatic-border rounded-2xl p-7 hover:-translate-y-2 transition-all duration-300 group flex flex-col justify-between">
+            <div>
+              <div class="h-48 rounded-xl bg-solar-base02/80 relative overflow-hidden mb-6 flex items-center justify-center border border-solar-base01/20">
+                <div class="absolute inset-0 bg-gradient-to-tr from-solar-violet/20 to-solar-magenta/20 opacity-50 group-hover:scale-105 transition-transform duration-500"></div>
+                <i class="fa-solid fa-gem text-5xl text-solar-magenta drop-shadow-[0_0_20px_rgba(211,54,130,0.8)]"></i>
+                <div class="absolute bottom-2 left-3 text-[10px] font-monoTech text-solar-base0 tracking-widest">
+                  HOLO-04 // FUSED QUARTZ
+                </div>
+              </div>
+              <span class="text-xs font-monoTech text-solar-magenta uppercase tracking-wider">Holographic 3D Art</span>
+              <h3 class="font-angel-wish text-xl font-bold text-solar-base2 mt-1 mb-3">Subsurface Circuit Lithography</h3>
+              <p class="text-sm text-solar-base0 leading-relaxed font-sans">
+                Nanometer 3D PCB routing etched inside synthetic optical quartz crystal pyramids for glasses-free volumetric projection plaques.
+              </p>
+            </div>
+            <div class="pt-6 mt-6 border-t border-solar-base02 flex items-center justify-between font-monoTech text-xs">
+              <span class="text-solar-yellow"><i class="fa-solid fa-flask text-[10px] mr-1"></i> Experimental Spec</span>
+              <button onclick="triggerInspect('Fused Quartz Lithography')" class="text-solar-base1 hover:text-solar-magenta transition-colors">Schematics <i class="fa-solid fa-chevron-right ml-1 text-[10px]"></i></button>
+            </div>
+          </div>
+
+          <!-- Card 3: Camera Frustum Engine -->
+          <div class="acrylic-plaque prismatic-border rounded-2xl p-7 hover:-translate-y-2 transition-all duration-300 group flex flex-col justify-between">
+            <div>
+              <div class="h-48 rounded-xl bg-solar-base02/80 relative overflow-hidden mb-6 flex items-center justify-center border border-solar-base01/20">
+                <div class="absolute inset-0 bg-gradient-to-tr from-solar-yellow/20 to-solar-cyan/20 opacity-50 group-hover:scale-105 transition-transform duration-500"></div>
+                <i class="fa-solid fa-clapperboard text-5xl text-solar-yellow drop-shadow-[0_0_20px_rgba(181,137,0,0.8)]"></i>
+                <div class="absolute bottom-2 left-3 text-[10px] font-monoTech text-solar-base0 tracking-widest">
+                  PREVIS-09 // CAMERA FRUSTUM
+                </div>
+              </div>
+              <span class="text-xs font-monoTech text-solar-yellow uppercase tracking-wider">Cinematic Previs</span>
+              <h3 class="font-angel-wish text-xl font-bold text-solar-base2 mt-1 mb-3">Virtual Cinematography Engine</h3>
+              <p class="text-sm text-solar-base0 leading-relaxed font-sans">
+                Real-time lighting continuity solver, anamorphic optical aberration simulation, and autonomous drone camera paths driven by Merlin.
+              </p>
+            </div>
+            <div class="pt-6 mt-6 border-t border-solar-base02 flex items-center justify-between font-monoTech text-xs">
+              <span class="text-solar-cyan"><i class="fa-solid fa-bolt text-[10px] mr-1"></i> OpenUSD Pipeline</span>
+              <button onclick="triggerInspect('Virtual Frustum Engine')" class="text-solar-base1 hover:text-solar-yellow transition-colors">Launch View <i class="fa-solid fa-chevron-right ml-1 text-[10px]"></i></button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="analyzer" class="py-20 px-6 bg-solar-base02/30 relative">
+      <div class="max-w-6xl mx-auto acrylic-plaque prismatic-border rounded-3xl p-8 md:p-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          <div class="lg:col-span-5 space-y-4">
+            <span class="text-xs font-monoTech text-solar-cyan tracking-widest uppercase">// OPTICAL CIRCUIT TELEMETRY</span>
+            <h2 class="font-angel-wish text-2xl md:text-4xl font-bold text-solar-base3">
+              CIRCUIT WAVEFORM ANALYZER
+            </h2>
+            <p class="text-sm text-solar-base0 leading-relaxed font-sans">
+              Real-time oscilloscope monitoring quartz optic bus frequency and harmonic crystal dispersion feeding into Merlin Agent Harness.
+            </p>
+
+            <div class="space-y-3 pt-3 font-monoTech text-xs">
+              <div>
+                <div class="flex justify-between mb-1 text-solar-base1">
+                  <span>CARRIER FREQUENCY (GHz)</span>
+                  <span id="freq-val" class="text-solar-cyan">5.20</span>
+                </div>
+                <input id="freq-slider" type="range" min="1" max="10" step="0.1" value="5.20" class="w-full accent-solar-cyan cursor-pointer">
+              </div>
+
+              <div>
+                <div class="flex justify-between mb-1 text-solar-base1">
+                  <span>SOLAR HARMONIC DISPERSION</span>
+                  <span id="harm-val" class="text-solar-violet">3.60</span>
+                </div>
+                <input id="harm-slider" type="range" min="0.5" max="6" step="0.1" value="3.6" class="w-full accent-solar-violet cursor-pointer">
+              </div>
+            </div>
+
+            <div class="flex gap-3 pt-4">
+              <button id="pulse-btn" class="px-4 py-2.5 rounded-xl bg-solar-cyan/20 border border-solar-cyan text-solar-cyan hover:bg-solar-cyan hover:text-solar-base03 font-monoTech text-xs font-semibold uppercase tracking-wider transition-all">
+                Inject Pulse
+              </button>
+              <button id="reset-wave-btn" class="px-4 py-2.5 rounded-xl border border-solar-base01/30 text-solar-base1 hover:text-solar-base3 font-monoTech text-xs tracking-wider transition-all">
+                Reset Wave
+              </button>
+            </div>
+          </div>
+
+          <!-- Waveform Oscilloscope Display Canvas -->
+          <div class="lg:col-span-7 bg-solar-base03 rounded-2xl p-4 border border-solar-base01/30 shadow-inner relative overflow-hidden">
+            <div class="flex items-center justify-between text-[11px] font-monoTech text-solar-base01 border-b border-solar-base02 pb-2 mb-2">
+              <span class="text-solar-cyan"><i class="fa-solid fa-wave-square mr-1"></i> OPTIC SPECTRUM FLUCTUATION</span>
+              <span class="text-solar-green">MERLIN LOCKED</span>
+            </div>
+            
+            <canvas id="waveform-canvas" class="w-full h-64 block rounded-lg"></canvas>
+
+            <div class="mt-3 grid grid-cols-4 gap-2 text-center font-monoTech text-[10px] text-solar-base01 border-t border-solar-base02 pt-2">
+              <div>CHANNEL: <span class="text-solar-cyan">OPT-1</span></div>
+              <div>SPECT: <span class="text-solar-yellow">SOLARIZED</span></div>
+              <div>THD: <span class="text-solar-magenta">0.003%</span></div>
+              <div>PHASE: <span class="text-solar-green">0.2ms</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="py-24 px-6 border-t border-solar-base02/40 relative">
+      <div class="max-w-4xl mx-auto acrylic-plaque prismatic-border rounded-3xl p-8 md:p-14 relative overflow-hidden">
+        
+        <div class="text-center max-w-xl mx-auto mb-10">
+          <span class="text-xs font-monoTech text-solar-cyan tracking-widest uppercase">// INITIATE ENGAGEMENT</span>
+          <h2 class="font-angel-wish text-3xl md:text-4xl font-bold text-solar-base3 mt-2 mb-3">
+            COMMISSION 3D ART & PREVIS
+          </h2>
+          <p class="text-xs md:text-sm text-solar-base0 font-sans">
+            Submit your previsualisation specifications, 3D character briefs, or custom Merlin Agent pipeline integrations.
+          </p>
+        </div>
+
+        <form id="contact-form" class="space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-xs font-monoTech text-solar-base1 uppercase tracking-wider mb-2">Project Name / Studio</label>
+              <input type="text" required placeholder="e.g. Apex Horizon Previs" class="w-full px-4 py-3 rounded-xl bg-solar-base03 border border-solar-base01/30 text-solar-base2 placeholder-solar-base01/50 focus:outline-none focus:border-solar-cyan transition-colors text-sm font-sans">
+            </div>
+            <div>
+              <label class="block text-xs font-monoTech text-solar-base1 uppercase tracking-wider mb-2">Direct Contact Email</label>
+              <input type="email" required placeholder="director@studio.vision" class="w-full px-4 py-3 rounded-xl bg-solar-base03 border border-solar-base01/30 text-solar-base2 placeholder-solar-base01/50 focus:outline-none focus:border-solar-cyan transition-colors text-sm font-sans">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-monoTech text-solar-base1 uppercase tracking-wider mb-2">Primary Domain</label>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-monoTech">
+              <label class="flex items-center gap-2 p-3 rounded-lg bg-solar-base03 border border-solar-base01/20 cursor-pointer hover:border-solar-cyan">
+                <input type="radio" name="domain" checked class="accent-solar-cyan">
+                <span>3D Art & Animation</span>
+              </label>
+              <label class="flex items-center gap-2 p-3 rounded-lg bg-solar-base03 border border-solar-base01/20 cursor-pointer hover:border-solar-cyan">
+                <input type="radio" name="domain" class="accent-solar-cyan">
+                <span>Merlin Harness</span>
+              </label>
+              <label class="flex items-center gap-2 p-3 rounded-lg bg-solar-base03 border border-solar-base01/20 cursor-pointer hover:border-solar-cyan">
+                <input type="radio" name="domain" class="accent-solar-cyan">
+                <span>Virtual Previs</span>
+              </label>
+              <label class="flex items-center gap-2 p-3 rounded-lg bg-solar-base03 border border-solar-base01/20 cursor-pointer hover:border-solar-cyan">
+                <input type="radio" name="domain" class="accent-solar-cyan">
+                <span>Optic Trophy</span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-monoTech text-solar-base1 uppercase tracking-wider mb-2">Directive Details</label>
+            <textarea rows="4" placeholder="Detail your previs timeline, character counts, skeletal complexity, or custom autonomous agent directives..." class="w-full px-4 py-3 rounded-xl bg-solar-base03 border border-solar-base01/30 text-solar-base2 placeholder-solar-base01/50 focus:outline-none focus:border-solar-cyan transition-colors text-sm font-sans"></textarea>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+            <div class="text-xs font-monoTech text-solar-base01">
+              <i class="fa-solid fa-lock text-solar-green mr-1"></i> ENCRYPTED PIPELINE DIRECTIVE
+            </div>
+            <button type="submit" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-solar-cyan text-solar-base03 font-monoTech text-xs font-bold uppercase tracking-widest hover:bg-solar-blue hover:text-white transition-all shadow-lg flex items-center justify-center gap-2">
+              <i class="fa-solid fa-paper-plane"></i>
+              <span>Transmit Directive</span>
+            </button>
+          </div>
+        </form>
+
+        <div id="form-msg" class="hidden mt-6 p-4 rounded-xl bg-solar-base02 border border-solar-cyan text-solar-cyan font-monoTech text-xs text-center">
+          <i class="fa-solid fa-circle-check mr-2"></i> Directive registered in Merlin Agent Harness queue. Our studio directors will contact you shortly.
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-12 px-6 border-t border-solar-base02 text-solar-base01 text-xs font-monoTech">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <span class="font-angel-wish text-lg font-bold text-solar-base2">EPINOIA HORIZON</span>
+        <span class="text-solar-base01">|</span>
+        <span class="text-[11px] text-solar-base0">A PREVISUALISATION AND PROTOTYPING GROUP</span>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <span class="text-solar-violet">MERLIN AGENT HARNESS OPERATIONAL</span>
+        <a href="https://github.com/epinoiahorizon/Merlin-Agent" target="_blank" class="hover:text-solar-cyan transition-colors flex items-center gap-1.5">
+          <i class="fa-brands fa-github"></i> GitHub
+        </a>
+        <a href="#merlin" class="hover:text-solar-cyan transition-colors flex items-center gap-1">
+          Merlin Harness <i class="fa-solid fa-arrow-up text-[10px]"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Toast Notification Box -->
+  <div id="toast-modal" class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="acrylic-plaque prismatic-border p-4 rounded-xl shadow-2xl flex items-center gap-3 text-xs font-monoTech text-solar-base2">
+      <i class="fa-solid fa-wand-magic-sparkles text-solar-violet text-base"></i>
+      <span id="toast-text">Specimen loaded.</span>
+    </div>
+  </div>
+
+  <script>
+    /* ----------------------------------------------------
+       1. HERO 3D TROPHY PYRAMID (Three.js)
+    ---------------------------------------------------- */
+    let heroScene, heroCamera, heroRenderer, heroPyramidGroup, heroParticles;
+    let heroDragging = false;
+    let heroPrevMouse = { x: 0, y: 0 };
+    const heroContainer = document.getElementById('three-pyramid-container');
+
+    function initHeroPyramid() {
+      const w = heroContainer.clientWidth || 360;
+      const h = heroContainer.clientHeight || 360;
+
+      heroScene = new THREE.Scene();
+      heroCamera = new THREE.PerspectiveCamera(45, w / h, 0.1, 100);
+      heroCamera.position.set(0, 0.35, 3.8);
+
+      heroRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      heroRenderer.setSize(w, h);
+      heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      heroRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+      heroContainer.appendChild(heroRenderer.domElement);
+
+      heroPyramidGroup = new THREE.Group();
+      heroScene.add(heroPyramidGroup);
+
+      // Procedural Circuit Pattern Texture
+      const circuitCanvas = document.createElement('canvas');
+      circuitCanvas.width = 512;
+      circuitCanvas.height = 512;
+      const cctx = circuitCanvas.getContext('2d');
+      cctx.fillStyle = '#073642';
+      cctx.fillRect(0, 0, 512, 512);
+
+      cctx.strokeStyle = '#2aa198';
+      cctx.lineWidth = 3;
+      cctx.shadowBlur = 9;
+      cctx.shadowColor = '#2aa198';
+      
+      const traces = [
+        [[50, 80], [120, 80], [180, 160], [180, 340], [250, 420]],
+        [[460, 80], [390, 80], [330, 160], [330, 340], [260, 420]],
+        [[256, 30], [256, 210], [190, 260], [190, 470]],
+        [[256, 210], [322, 260], [322, 470]],
+        [[90, 450], [170, 450], [220, 400]],
+        [[422, 450], [342, 450], [292, 400]]
+      ];
+
+      traces.forEach(pts => {
+        cctx.beginPath();
+        cctx.moveTo(pts[0][0], pts[0][1]);
+        for (let i = 1; i < pts.length; i++) cctx.lineTo(pts[i][0], pts[i][1]);
+        cctx.stroke();
+        pts.forEach(p => {
+          cctx.fillStyle = '#eee8d5';
+          cctx.beginPath();
+          cctx.arc(p[0], p[1], 4, 0, Math.PI * 2);
+          cctx.fill();
+        });
+      });
+
+      // Merlin Agent Microcode Core on Texture
+      cctx.fillStyle = '#002b36';
+      cctx.strokeStyle = '#6c71c4';
+      cctx.lineWidth = 4;
+      cctx.strokeRect(206, 206, 100, 100);
+      cctx.fillRect(206, 206, 100, 100);
+
+      cctx.fillStyle = '#2aa198';
+      cctx.font = 'bold 12px monospace';
+      cctx.fillText('MERLIN-AGY', 216, 260);
+
+      const circuitTexture = new THREE.CanvasTexture(circuitCanvas);
+
+      // Glass Pyramid Cone
+      const pyramidGeo = new THREE.ConeGeometry(1.28, 1.75, 4, 1, false);
+      const crystalMaterial = new THREE.MeshPhysicalMaterial({
+        color: 0x93a1a1,
+        emissive: 0x073642,
+        roughness: 0.08,
+        metalness: 0.25,
+        transmission: 0.88,
+        ior: 1.88,
+        reflectivity: 0.98,
+        clearcoat: 1.0,
+        map: circuitTexture,
+        transparent: true,
+        opacity: 0.92,
+      });
+
+      const pyramidMesh = new THREE.Mesh(pyramidGeo, crystalMaterial);
+      pyramidMesh.rotation.y = Math.PI / 4;
+      heroPyramidGroup.add(pyramidMesh);
+
+      // Wireframe
+      const wireframeGeo = new THREE.EdgesGeometry(pyramidGeo);
+      const wireframeMat = new THREE.LineBasicMaterial({ color: 0x2aa198, transparent: true, opacity: 0.85 });
+      const wireframeLines = new THREE.LineSegments(wireframeGeo, wireframeMat);
+      wireframeLines.rotation.y = Math.PI / 4;
+      heroPyramidGroup.add(wireframeLines);
+
+      // Inverted Inner Core (Pulsing Merlin Node)
+      const innerGeo = new THREE.ConeGeometry(0.68, 0.95, 4, 1);
+      const innerMat = new THREE.MeshStandardMaterial({
+        color: 0x6c71c4,
+        emissive: 0xd33682,
+        emissiveIntensity: 0.85,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.75
+      });
+      const innerMesh = new THREE.Mesh(innerGeo, innerMat);
+      innerMesh.rotation.x = Math.PI;
+      innerMesh.rotation.y = Math.PI / 4;
+      heroPyramidGroup.add(innerMesh);
+
+      // Quantum Floating Sparkles
+      const pCount = 140;
+      const pGeo = new THREE.BufferGeometry();
+      const pPos = new Float32Array(pCount * 3);
+      for (let i = 0; i < pCount; i++) {
+        const theta = Math.random() * Math.PI * 2;
+        const rad = 0.85 + Math.random() * 1.5;
+        pPos[i * 3] = Math.cos(theta) * rad;
+        pPos[i * 3 + 1] = (Math.random() - 0.5) * 2.3;
+        pPos[i * 3 + 2] = Math.sin(theta) * rad;
+      }
+      pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+      const pMat = new THREE.PointsMaterial({ size: 0.045, color: 0x2aa198, transparent: true, opacity: 0.8 });
+      heroParticles = new THREE.Points(pGeo, pMat);
+      heroPyramidGroup.add(heroParticles);
+
+      // Directional & Ambient Lights
+      heroScene.add(new THREE.AmbientLight(0x073642, 3.0));
+      const kLight = new THREE.DirectionalLight(0x2aa198, 3.2);
+      kLight.position.set(3, 4, 3);
+      heroScene.add(kLight);
+      const rLight = new THREE.DirectionalLight(0x6c71c4, 3.5);
+      rLight.position.set(-3, -2, -3);
+      heroScene.add(rLight);
+
+      setupHeroEvents();
+    }
+
+    function setupHeroEvents() {
+      const dom = heroRenderer.domElement;
+      dom.addEventListener('mousedown', (e) => {
+        heroDragging = true;
+        heroPrevMouse = { x: e.clientX, y: e.clientY };
+      });
+      window.addEventListener('mouseup', () => { heroDragging = false; });
+      window.addEventListener('mousemove', (e) => {
+        if (!heroDragging) {
+          const rect = heroContainer.getBoundingClientRect();
+          const cx = rect.left + rect.width / 2;
+          heroPyramidGroup.rotation.y += (e.clientX - cx) * 0.00002;
+          return;
+        }
+        const dx = e.clientX - heroPrevMouse.x;
+        const dy = e.clientY - heroPrevMouse.y;
+        heroPyramidGroup.rotation.y += dx * 0.009;
+        heroPyramidGroup.rotation.x += dy * 0.009;
+        heroPrevMouse = { x: e.clientX, y: e.clientY };
+      });
+
+      dom.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          heroDragging = true;
+          heroPrevMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
+      }, { passive: true });
+      window.addEventListener('touchend', () => { heroDragging = false; });
+      window.addEventListener('touchmove', (e) => {
+        if (!heroDragging || e.touches.length !== 1) return;
+        const dx = e.touches[0].clientX - heroPrevMouse.x;
+        const dy = e.touches[0].clientY - heroPrevMouse.y;
+        heroPyramidGroup.rotation.y += dx * 0.012;
+        heroPyramidGroup.rotation.x += dy * 0.012;
+        heroPrevMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }, { passive: true });
+    }
+
+    /* ----------------------------------------------------
+       2. 3D ART & ANIMATION STUDIO (Three.js Sandbox)
+    ---------------------------------------------------- */
+    let studioScene, studioCamera, studioRenderer, studioActiveMesh, studioRigLight;
+    let studioWireframeLines = null;
+    let isStudioAnimActive = true;
+    let studioAnimSpeed = 1.0;
+    let currentModelType = 'polyhedron';
+    const studioContainer = document.getElementById('three-studio-viewport');
+
+    function initStudioScene() {
+      const w = studioContainer.clientWidth || 600;
+      const h = studioContainer.clientHeight || 400;
+
+      studioScene = new THREE.Scene();
+      studioCamera = new THREE.PerspectiveCamera(50, w / h, 0.1, 100);
+      studioCamera.position.set(0, 0, 4.2);
+
+      studioRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      studioRenderer.setSize(w, h);
+      studioRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      studioContainer.appendChild(studioRenderer.domElement);
+
+      studioRigLight = new THREE.DirectionalLight(0x2aa198, 3.5);
+      studioRigLight.position.set(3, 4, 3);
+      studioScene.add(studioRigLight);
+
+      const amb = new THREE.AmbientLight(0x073642, 2.5);
+      studioScene.add(amb);
+
+      loadStudioModel('polyhedron');
+      setupStudioInteraction();
+    }
+
+    function loadStudioModel(type) {
+      if (studioActiveMesh) studioScene.remove(studioActiveMesh);
+      if (studioWireframeLines) studioScene.remove(studioWireframeLines);
+
+      currentModelType = type;
+      let geo, mat;
+
+      if (type === 'polyhedron') {
+        geo = new THREE.IcosahedronGeometry(1.4, 1);
+        mat = new THREE.MeshPhysicalMaterial({
+          color: 0x2aa198,
+          emissive: 0x073642,
+          roughness: 0.15,
+          metalness: 0.4,
+          transmission: 0.7,
+          ior: 1.6
+        });
+        document.getElementById('active-viewport-label').textContent = 'KINEMATIC POLYHEDRON';
+      } else if (type === 'torus') {
+        geo = new THREE.TorusKnotGeometry(1.0, 0.35, 128, 32);
+        mat = new THREE.MeshStandardMaterial({
+          color: 0x6c71c4,
+          roughness: 0.2,
+          metalness: 0.8
+        });
+        document.getElementById('active-viewport-label').textContent = 'QUANTUM TORUS MESH';
+      } else if (type === 'skeleton') {
+        const group = new THREE.Group();
+        for (let i = 0; i < 7; i++) {
+          const segGeo = new THREE.CylinderGeometry(0.12 - i * 0.012, 0.12 - i * 0.012, 0.5, 8);
+          const segMat = new THREE.MeshStandardMaterial({ color: 0x2aa198, metalness: 0.9, roughness: 0.2 });
+          const seg = new THREE.Mesh(segGeo, segMat);
+          seg.position.y = (i - 3) * 0.48;
+          group.add(seg);
+        }
+        studioActiveMesh = group;
+        studioScene.add(studioActiveMesh);
+        document.getElementById('active-viewport-label').textContent = 'KINEMATIC SKELETAL RIG';
+        return;
+      }
+
+      studioActiveMesh = new THREE.Mesh(geo, mat);
+      studioScene.add(studioActiveMesh);
+
+      const wireGeo = new THREE.WireframeGeometry(geo);
+      studioWireframeLines = new THREE.LineSegments(wireGeo, new THREE.LineBasicMaterial({ color: 0xeee8d5, transparent: true, opacity: 0.3 }));
+      studioScene.add(studioWireframeLines);
+    }
+
+    function setupStudioInteraction() {
+      let isDragging = false;
+      let prevMouse = { x: 0, y: 0 };
+      const dom = studioRenderer.domElement;
+
+      dom.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        prevMouse = { x: e.clientX, y: e.clientY };
+      });
+      window.addEventListener('mouseup', () => isDragging = false);
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging || !studioActiveMesh) return;
+        const dx = e.clientX - prevMouse.x;
+        const dy = e.clientY - prevMouse.y;
+        studioActiveMesh.rotation.y += dx * 0.01;
+        studioActiveMesh.rotation.x += dy * 0.01;
+        if (studioWireframeLines) {
+          studioWireframeLines.rotation.y += dx * 0.01;
+          studioWireframeLines.rotation.x += dy * 0.01;
+        }
+        prevMouse = { x: e.clientX, y: e.clientY };
+      });
+
+      // Switcher handlers
+      document.getElementById('model-polyhedron').addEventListener('click', () => {
+        loadStudioModel('polyhedron');
+        updateModelButtons('model-polyhedron');
+        playSynthChirp(480);
+      });
+      document.getElementById('model-torus').addEventListener('click', () => {
+        loadStudioModel('torus');
+        updateModelButtons('model-torus');
+        playSynthChirp(560);
+      });
+      document.getElementById('model-skeleton').addEventListener('click', () => {
+        loadStudioModel('skeleton');
+        updateModelButtons('model-skeleton');
+        playSynthChirp(640);
+      });
+
+      // Toggle Wireframe
+      document.getElementById('toggle-wireframe').addEventListener('click', () => {
+        if (studioWireframeLines) {
+          studioWireframeLines.visible = !studioWireframeLines.visible;
+          playSynthChirp(700);
+        }
+      });
+
+      // Toggle Play/Pause
+      const toggleAnimBtn = document.getElementById('toggle-anim');
+      const animIcon = document.getElementById('anim-icon');
+      const animText = document.getElementById('anim-state-text');
+      toggleAnimBtn.addEventListener('click', () => {
+        isStudioAnimActive = !isStudioAnimActive;
+        animIcon.className = isStudioAnimActive ? 'fa-solid fa-pause' : 'fa-solid fa-play';
+        animText.textContent = isStudioAnimActive ? 'Pause Anim' : 'Play Anim';
+        playSynthChirp(isStudioAnimActive ? 600 : 350);
+      });
+
+      // Speed control slider
+      const speedSlider = document.getElementById('speed-slider');
+      const speedVal = document.getElementById('speed-val');
+      speedSlider.addEventListener('input', (e) => {
+        studioAnimSpeed = parseFloat(e.target.value);
+        speedVal.textContent = studioAnimSpeed.toFixed(1) + 'x';
+      });
+
+      // Lighting Presets
+      document.getElementById('light-cyan').addEventListener('click', () => {
+        studioRigLight.color.setHex(0x2aa198);
+        playSynthChirp(520);
+      });
+      document.getElementById('light-arcane').addEventListener('click', () => {
+        studioRigLight.color.setHex(0x6c71c4);
+        playSynthChirp(680);
+      });
+      document.getElementById('light-solar').addEventListener('click', () => {
+        studioRigLight.color.setHex(0xcb4b16);
+        playSynthChirp(440);
+      });
+    }
+
+    function updateModelButtons(activeId) {
+      ['model-polyhedron', 'model-torus', 'model-skeleton'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (id === activeId) {
+          btn.className = 'studio-model-btn px-2.5 py-1 rounded bg-solar-cyan text-solar-base03 font-bold text-[11px]';
+        } else {
+          btn.className = 'studio-model-btn px-2.5 py-1 rounded bg-solar-base02 text-solar-base1 hover:text-solar-cyan text-[11px]';
+        }
+      });
+    }
+
+    /* ----------------------------------------------------
+       3. MERLIN AGENT HARNESS & SYNCHRONIZED NEURAL MESH
+    ---------------------------------------------------- */
+    const merlinFeed = document.getElementById('merlin-terminal-feed');
+    const merlinStatusBadge = document.getElementById('merlin-status-badge');
+    const tokenCounter = document.getElementById('token-counter');
+    const merlinTaskButtons = document.querySelectorAll('.merlin-task-btn');
+    const merlinInput = document.getElementById('merlin-input');
+    const merlinRunBtn = document.getElementById('merlin-run-btn');
+    const merlinWorkerTag = document.getElementById('merlin-worker-tag');
+    const meshStateLabel = document.getElementById('mesh-state-label');
+    const merlinQuickMorph = document.getElementById('merlin-quick-morph');
+
+    let isMerlinRunning = false;
+    let merlinTokens = 594220;
+
+    // DIRECTIVE SCENARIOS WITH EXPLICIT NEURAL PATHWAYS & SUB-AGENTS
+    const merlinScenarios = {
+      geometry: {
+        worker: '[MERLIN-GEOM-1]',
+        directiveName: 'Spatial Geometry Synthesis',
+        activeEdges: [[0, 1], [1, 2], [2, 5]], // Inception -> Spatial DAG -> Silicon Spec
+        activeNodes: [0, 1, 2, 5],
+        pulseColor: '#2aa198',
+        steps: [
+          { type: 'THOUGHT', text: 'Analyzing volumetric 3D camera frustums & Nanite polygonal distribution.' },
+          { type: 'ACTION', text: 'Merlin Tool [spatial_dag_compiler] -> Partitioning 48,000 sub-d facet vertices.' },
+          { type: 'OBSERVATION', text: 'Mesh topology validated: Zero non-manifold edges detected in viewport.' },
+          { type: 'SYNTHESIS', text: 'Geometric manifold synthesized. Broadcasting buffers to 3D Art Studio.' }
+        ]
+      },
+      kinematics: {
+        worker: '[MERLIN-RIG-ALPHA]',
+        directiveName: 'Kinematic Rig Deconstruction',
+        activeEdges: [[0, 2], [2, 3], [3, 4], [4, 5]], // Inception -> Spatial -> Kinematics -> Critic -> Output
+        activeNodes: [0, 2, 3, 4, 5],
+        pulseColor: '#6c71c4',
+        steps: [
+          { type: 'THOUGHT', text: 'Deconstructing skeletal joints into 6-DOF inverse kinematic chains.' },
+          { type: 'ACTION', text: 'Merlin Tool [kinematics_engine] -> Solving Euler rotational velocity & damping curves.' },
+          { type: 'OBSERVATION', text: 'Biphasic joint stabilization achieved at 120 FPS target render rate.' },
+          { type: 'SYNTHESIS', text: 'Kinematic hierarchy bound. Triggering bone deformation cycle.' }
+        ]
+      },
+      photometric: {
+        worker: '[MERLIN-PHOTON-4]',
+        directiveName: 'Photometric Raytrace Bake',
+        activeEdges: [[0, 1], [1, 4], [4, 5]], // Inception -> Spatial -> Critic -> Output
+        activeNodes: [0, 1, 4, 5],
+        pulseColor: '#d33682',
+        steps: [
+          { type: 'THOUGHT', text: 'Calculating Snell law refraction across synthetic quartz crystal (IOR 1.88).' },
+          { type: 'ACTION', text: 'Merlin Tool [caustic_tracer] -> Simulating dual chromatic dispersion angles.' },
+          { type: 'OBSERVATION', text: 'Energy convergence threshold 99.98% verified across 16 photon bounces.' },
+          { type: 'SYNTHESIS', text: 'Photometric map baked. Injecting iridescent prism shaders to materials.' }
+        ]
+      },
+      consensus: {
+        worker: '[MERLIN-SWARM-AUDIT]',
+        directiveName: 'Swarm Consensus Audit',
+        activeEdges: [[0, 1], [0, 2], [1, 3], [2, 4], [3, 5], [4, 5], [3, 4]], // All mesh connections firing!
+        activeNodes: [0, 1, 2, 3, 4, 5],
+        pulseColor: '#b58900',
+        steps: [
+          { type: 'THOUGHT', text: 'Spinning up 8 concurrent verification agents for cross-pipeline parity check.' },
+          { type: 'ACTION', text: 'Merlin Tool [byzantine_consensus] -> Comparing UV boundaries against OpenUSD specs.' },
+          { type: 'OBSERVATION', text: 'All sub-agents concur on mesh fidelity. Zero latency spikes reported.' },
+          { type: 'SYNTHESIS', text: 'Swarm audit concluded. Entire pipeline locked in gold master state.' }
+        ]
+      }
+    };
+
+    function appendMerlinLog(type, msg) {
+      const timeStr = new Date().toTimeString().split(' ')[0];
+      const row = document.createElement('div');
+      
+      let badgeStyle = 'text-solar-cyan';
+      if (type === 'THOUGHT') badgeStyle = 'text-solar-yellow';
+      else if (type === 'ACTION') badgeStyle = 'text-solar-blue';
+      else if (type === 'OBSERVATION') badgeStyle = 'text-solar-magenta';
+      else if (type === 'SYNTHESIS') badgeStyle = 'text-solar-green font-semibold';
+      else if (type === 'DIRECTIVE') badgeStyle = 'text-solar-base2 font-bold';
+
+      row.innerHTML = `<span class="text-solar-base01">[${timeStr}]</span> <span class="${badgeStyle}">[${type}]</span> ${msg}`;
+      merlinFeed.appendChild(row);
+      merlinFeed.scrollTop = merlinFeed.scrollHeight;
+
+      merlinTokens += Math.floor(Math.random() * 450 + 200);
+      tokenCounter.textContent = merlinTokens.toLocaleString();
+    }
+
+    async function executeMerlinDirective(directiveKey, customPrompt = null) {
+      if (isMerlinRunning) return;
+      isMerlinRunning = true;
+
+      const config = merlinScenarios[directiveKey] || {
+        worker: '[MERLIN-CUSTOM-COG]',
+        directiveName: customPrompt || 'Custom Creative Directive',
+        activeEdges: [[0, 1], [1, 3], [3, 5]],
+        activeNodes: [0, 1, 3, 5],
+        pulseColor: '#2aa198',
+        steps: [
+          { type: 'THOUGHT', text: `Deconstructing prompt: "${customPrompt}". Initializing cognitive sub-graphs.` },
+          { type: 'ACTION', text: 'Merlin Tool [epinoia_procedural_orchestrator] -> Allocating tensor worker threads.' },
+          { type: 'OBSERVATION', text: 'Real-time spatial output evaluated: Satisfies structural constraints.' },
+          { type: 'SYNTHESIS', text: 'Execution successful. Pipeline synchronization established.' }
+        ]
+      };
+
+      // Set Telemetry & Neural Mesh State
+      activeDirectiveConfig = config;
+      merlinWorkerTag.textContent = config.worker;
+      merlinWorkerTag.style.color = config.pulseColor;
+      meshStateLabel.textContent = directiveKey.toUpperCase() + '_ACTIVE';
+      meshStateLabel.style.color = config.pulseColor;
+
+      merlinStatusBadge.textContent = 'MERLIN_REASONING...';
+      merlinStatusBadge.className = 'text-solar-violet animate-pulse font-bold';
+      playSynthChirp(720);
+
+      // Trigger 3D Viewport micro-reaction (slight shockwave)
+      if (studioActiveMesh) {
+        studioActiveMesh.scale.set(1.1, 1.1, 1.1);
+        setTimeout(() => { if (studioActiveMesh) studioActiveMesh.scale.set(1, 1, 1); }, 350);
+      }
+
+      for (let i = 0; i < config.steps.length; i++) {
+        await new Promise(r => setTimeout(r, 680));
+        appendMerlinLog(config.steps[i].type, config.steps[i].text);
+        playSynthChirp(520 + i * 90);
+      }
+
+      await new Promise(r => setTimeout(r, 450));
+      merlinStatusBadge.textContent = 'MERLIN_IDLE';
+      merlinStatusBadge.className = 'text-solar-green';
+      meshStateLabel.textContent = 'HARMONIC_IDLE';
+      meshStateLabel.style.color = '#2aa198';
+      isMerlinRunning = false;
+      playSynthChirp(940);
+    }
+
+    merlinTaskButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const task = btn.getAttribute('data-task');
+        if (merlinScenarios[task]) {
+          appendMerlinLog('DIRECTIVE', `Triggering Directive: ${merlinScenarios[task].directiveName}`);
+          executeMerlinDirective(task);
+        }
+      });
     });
 
-    // Subtle Cursor Sparkle
-    let lastSparkle = 0;
-    window.addEventListener('mousemove', (e) => {
-      const now = Date.now();
-      if (now - lastSparkle > 80) {
-        const s = document.createElement('div');
-        s.className = 'cursor-sparkle';
-        const sz = Math.random() * 7 + 4;
-        s.style.width = sz + 'px';
-        s.style.height = sz + 'px';
-        s.style.left = e.clientX + 'px';
-        s.style.top = e.clientY + 'px';
-        document.body.appendChild(s);
-        setTimeout(() => {
-          s.style.opacity = '0';
-          s.style.transform = 'translate(-50%, -50%) scale(2)';
-        }, 30);
-        setTimeout(() => s.remove(), 400);
-        lastSparkle = now;
+    merlinRunBtn.addEventListener('click', () => {
+      const txt = merlinInput.value.trim();
+      if (!txt) return;
+      appendMerlinLog('DIRECTIVE', `User Prompt: "${txt}"`);
+      merlinInput.value = '';
+      executeMerlinDirective('custom', txt);
+    });
+
+    merlinInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') merlinRunBtn.click();
+    });
+
+    merlinQuickMorph.addEventListener('click', () => {
+      appendMerlinLog('DIRECTIVE', 'Triggered Studio Topology Morph Directive');
+      executeMerlinDirective('geometry');
+      if (currentModelType === 'polyhedron') loadStudioModel('torus');
+      else loadStudioModel('polyhedron');
+    });
+
+    const merlinGraphCanvas = document.getElementById('merlin-graph-canvas');
+    const mCtx = merlinGraphCanvas.getContext('2d');
+
+    function resizeMerlinGraph() {
+      const rect = merlinGraphCanvas.getBoundingClientRect();
+      merlinGraphCanvas.width = rect.width * (window.devicePixelRatio || 1);
+      merlinGraphCanvas.height = rect.height * (window.devicePixelRatio || 1);
+    }
+    window.addEventListener('resize', resizeMerlinGraph);
+    setTimeout(resizeMerlinGraph, 100);
+
+    const mNodes = [
+      { id: 'core', label: 'Merlin Agy', x: 0.15, y: 0.5, color: '#6c71c4' },
+      { id: 'inception', label: 'Inception', x: 0.4, y: 0.25, color: '#b58900' },
+      { id: 'spatial', label: 'Spatial DAG', x: 0.4, y: 0.75, color: '#268bd2' },
+      { id: 'rig', label: '3D Kinematics', x: 0.68, y: 0.25, color: '#2aa198' },
+      { id: 'critic', label: 'Critic Pass', x: 0.68, y: 0.75, color: '#d33682' },
+      { id: 'render', label: 'Silicon Spec', x: 0.88, y: 0.5, color: '#859900' },
+    ];
+    const mAllEdges = [[0, 1], [0, 2], [1, 3], [2, 4], [3, 5], [4, 5], [3, 4]];
+    let activeDirectiveConfig = null;
+
+    function drawMerlinGraph() {
+      const w = merlinGraphCanvas.width;
+      const h = merlinGraphCanvas.height;
+      if (!w || !h) {
+        requestAnimationFrame(drawMerlinGraph);
+        return;
+      }
+      mCtx.clearRect(0, 0, w, h);
+
+      // Subtle Background Grid
+      mCtx.strokeStyle = 'rgba(7, 54, 66, 0.45)';
+      mCtx.lineWidth = 1;
+      for (let x = 0; x < w; x += 30) {
+        mCtx.beginPath(); mCtx.moveTo(x, 0); mCtx.lineTo(x, h); mCtx.stroke();
+      }
+      for (let y = 0; y < h; y += 30) {
+        mCtx.beginPath(); mCtx.moveTo(0, y); mCtx.lineTo(w, y); mCtx.stroke();
+      }
+
+      const t = Date.now() * 0.003;
+
+      // Draw Edges
+      mAllEdges.forEach(edge => {
+        const n1 = mNodes[edge[0]];
+        const n2 = mNodes[edge[1]];
+        const x1 = n1.x * w;
+        const y1 = n1.y * h;
+        const x2 = n2.x * w;
+        const y2 = n2.y * h;
+
+        // Check if edge is active in currently running directive
+        const isCurrentActive = isMerlinRunning && activeDirectiveConfig &&
+          activeDirectiveConfig.activeEdges.some(e => (e[0] === edge[0] && e[1] === edge[1]) || (e[0] === edge[1] && e[1] === edge[0]));
+
+        mCtx.beginPath();
+        if (isCurrentActive) {
+          mCtx.strokeStyle = activeDirectiveConfig.pulseColor;
+          mCtx.lineWidth = 3.0;
+        } else {
+          mCtx.strokeStyle = 'rgba(88, 110, 117, 0.35)';
+          mCtx.lineWidth = 1.5;
+        }
+        mCtx.moveTo(x1, y1);
+        mCtx.lineTo(x2, y2);
+        mCtx.stroke();
+
+        // High-velocity Photonic Pulses Along Active Connection
+        if (isCurrentActive) {
+          const speedFactor = 2.5;
+          const progress = (t * speedFactor + edge[0] * 0.25) % 1;
+          const px = x1 + (x2 - x1) * progress;
+          const py = y1 + (y2 - y1) * progress;
+
+          mCtx.fillStyle = '#fdf6e3';
+          mCtx.shadowColor = activeDirectiveConfig.pulseColor;
+          mCtx.shadowBlur = 10;
+          mCtx.beginPath();
+          mCtx.arc(px, py, 4, 0, Math.PI * 2);
+          mCtx.fill();
+          mCtx.shadowBlur = 0;
+        }
+      });
+
+      // Draw Nodes
+      mNodes.forEach((node, i) => {
+        const nx = node.x * w;
+        const ny = node.y * h;
+        const isNodeActive = isMerlinRunning && activeDirectiveConfig && activeDirectiveConfig.activeNodes.includes(i);
+
+        const pulse = isNodeActive ? Math.sin(t * 5 + i) * 4 : 0;
+        const r = 9 + pulse;
+
+        // Outer Glow Ring
+        if (isNodeActive) {
+          mCtx.strokeStyle = activeDirectiveConfig.pulseColor;
+          mCtx.lineWidth = 2;
+          mCtx.beginPath();
+          mCtx.arc(nx, ny, r + 4, 0, Math.PI * 2);
+          mCtx.stroke();
+        }
+
+        mCtx.beginPath();
+        mCtx.fillStyle = isNodeActive ? activeDirectiveConfig.pulseColor : node.color;
+        mCtx.arc(nx, ny, Math.max(4, r), 0, Math.PI * 2);
+        mCtx.fill();
+
+        // Node Title
+        mCtx.fillStyle = '#eee8d5';
+        mCtx.font = '10px "Space Grotesk", sans-serif';
+        mCtx.textAlign = 'center';
+        mCtx.fillText(node.label, nx, ny - 13);
+      });
+
+      requestAnimationFrame(drawMerlinGraph);
+    }
+    requestAnimationFrame(drawMerlinGraph);
+
+    /* ----------------------------------------------------
+       4. WAVEFORM OSCILLOSCOPE ANALYZER
+    ---------------------------------------------------- */
+    const waveCanvas = document.getElementById('waveform-canvas');
+    const wCtx = waveCanvas.getContext('2d');
+    const freqSlider = document.getElementById('freq-slider');
+    const harmSlider = document.getElementById('harm-slider');
+    const freqVal = document.getElementById('freq-val');
+    const harmVal = document.getElementById('harm-val');
+    const pulseBtn = document.getElementById('pulse-btn');
+    const resetWaveBtn = document.getElementById('reset-wave-btn');
+
+    let waveOffset = 0;
+    let wavePulseIntensity = 0;
+
+    function resizeWaveCanvas() {
+      const rect = waveCanvas.getBoundingClientRect();
+      waveCanvas.width = rect.width * (window.devicePixelRatio || 1);
+      waveCanvas.height = rect.height * (window.devicePixelRatio || 1);
+    }
+    window.addEventListener('resize', resizeWaveCanvas);
+    setTimeout(resizeWaveCanvas, 100);
+
+    freqSlider.addEventListener('input', (e) => {
+      freqVal.textContent = parseFloat(e.target.value).toFixed(2);
+      playSynthChirp(320 + parseFloat(e.target.value) * 50);
+    });
+    harmSlider.addEventListener('input', (e) => {
+      harmVal.textContent = parseFloat(e.target.value).toFixed(2);
+      playSynthChirp(400 + parseFloat(e.target.value) * 60);
+    });
+    pulseBtn.addEventListener('click', () => {
+      wavePulseIntensity = 1.0;
+      playSynthChirp(840);
+    });
+    resetWaveBtn.addEventListener('click', () => {
+      freqSlider.value = 5.20;
+      harmSlider.value = 3.6;
+      freqVal.textContent = '5.20';
+      harmVal.textContent = '3.60';
+      wavePulseIntensity = 0;
+      playSynthChirp(440);
+    });
+
+    function drawWaveform() {
+      const w = waveCanvas.width;
+      const h = waveCanvas.height;
+      if (!w || !h) {
+        requestAnimationFrame(drawWaveform);
+        return;
+      }
+      wCtx.clearRect(0, 0, w, h);
+
+      // Oscilloscope Grid Lines
+      wCtx.strokeStyle = 'rgba(7, 54, 66, 0.7)';
+      wCtx.lineWidth = 1;
+      const step = 28;
+      for (let x = 0; x < w; x += step) {
+        wCtx.beginPath(); wCtx.moveTo(x, 0); wCtx.lineTo(x, h); wCtx.stroke();
+      }
+      for (let y = 0; y < h; y += step) {
+        wCtx.beginPath(); wCtx.moveTo(0, y); wCtx.lineTo(w, y); wCtx.stroke();
+      }
+
+      // Wave 1: Cyan
+      const freq = parseFloat(freqSlider.value) * 0.015;
+      const harm = parseFloat(harmSlider.value);
+      const midY = h / 2;
+
+      wCtx.beginPath();
+      wCtx.strokeStyle = '#2aa198';
+      wCtx.lineWidth = 2.5;
+
+      for (let x = 0; x < w; x++) {
+        const angle = x * freq + waveOffset;
+        const pulseEffect = wavePulseIntensity * Math.sin(x * 0.08 - waveOffset * 3) * 35;
+        const y = midY + Math.sin(angle) * (36 + pulseEffect) + Math.cos(angle * harm) * 16;
+        if (x === 0) wCtx.moveTo(x, y);
+        else wCtx.lineTo(x, y);
+      }
+      wCtx.stroke();
+
+      // Wave 2: Violet
+      wCtx.beginPath();
+      wCtx.strokeStyle = 'rgba(108, 113, 196, 0.6)';
+      wCtx.lineWidth = 1.5;
+      for (let x = 0; x < w; x++) {
+        const angle = x * (freq * 0.8) - waveOffset * 0.7;
+        const y = midY + Math.sin(angle * 1.5) * 22;
+        if (x === 0) wCtx.moveTo(x, y);
+        else wCtx.lineTo(x, y);
+      }
+      wCtx.stroke();
+
+      if (wavePulseIntensity > 0) {
+        wavePulseIntensity *= 0.94;
+        if (wavePulseIntensity < 0.01) wavePulseIntensity = 0;
+      }
+
+      waveOffset += 0.045;
+      requestAnimationFrame(drawWaveform);
+    }
+    requestAnimationFrame(drawWaveform);
+
+    /* ----------------------------------------------------
+       5. AUDIO SYNTHESIZER ENGINE (Web Audio API)
+    ---------------------------------------------------- */
+    let audioCtx = null;
+    let audioEnabled = false;
+    const audioToggleBtn = document.getElementById('audio-toggle');
+    const audioIcon = document.getElementById('audio-icon');
+
+    function playSynthChirp(freq = 520) {
+      if (!audioEnabled) return;
+      try {
+        if (!audioCtx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          audioCtx = new AudioContextClass();
+        }
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.35, audioCtx.currentTime + 0.08);
+
+        gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.08);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.09);
+      } catch (e) {}
+    }
+
+    audioToggleBtn.addEventListener('click', () => {
+      audioEnabled = !audioEnabled;
+      if (audioEnabled) {
+        audioIcon.className = 'fa-solid fa-volume-high text-solar-cyan';
+        playSynthChirp(660);
+      } else {
+        audioIcon.className = 'fa-solid fa-volume-xmark text-solar-base0';
       }
     });
 
-    // Boot Three.js studio on DOM ready
-    window.addEventListener('DOMContentLoaded', () => {
-      initThreeStudio();
+    /* ----------------------------------------------------
+       6. THEME TOGGLE & INTERACTIVE CURSOR TRAIL
+    ---------------------------------------------------- */
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    let isDark = true;
+
+    themeToggleBtn.addEventListener('click', () => {
+      isDark = !isDark;
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+        document.body.classList.remove('bg-solar-base3', 'text-solar-base00');
+        document.body.classList.add('bg-solar-base03', 'text-solar-base1');
+        themeIcon.className = 'fa-solid fa-sun text-solar-yellow';
+      } else {
+        document.documentElement.classList.add('light');
+        document.documentElement.classList.remove('dark');
+        document.body.classList.remove('bg-solar-base03', 'text-solar-base1');
+        document.body.classList.add('bg-solar-base3', 'text-solar-base00');
+        themeIcon.className = 'fa-solid fa-moon text-solar-blue';
+      }
+      playSynthChirp(520);
+    });
+
+    // Particle Cursor Trail
+    const cursorCanvas = document.getElementById('cursor-canvas');
+    const cCtx = cursorCanvas.getContext('2d');
+    let cursorParticles = [];
+    const trailPalette = ['#2aa198', '#6c71c4', '#268bd2', '#d33682', '#eee8d5'];
+
+    function resizeCursorCanvas() {
+      cursorCanvas.width = window.innerWidth;
+      cursorCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCursorCanvas);
+    resizeCursorCanvas();
+
+    window.addEventListener('mousemove', (e) => {
+      for (let i = 0; i < 2; i++) {
+        cursorParticles.push({
+          x: e.clientX,
+          y: e.clientY,
+          vx: (Math.random() - 0.5) * 1.5,
+          vy: (Math.random() - 0.5) * 1.5 - 0.2,
+          radius: Math.random() * 2.5 + 1,
+          color: trailPalette[Math.floor(Math.random() * trailPalette.length)],
+          alpha: 0.9,
+          decay: 0.025
+        });
+      }
+    });
+
+    function renderCursorTrail() {
+      cCtx.clearRect(0, 0, cursorCanvas.width, cursorCanvas.height);
+      for (let i = cursorParticles.length - 1; i >= 0; i--) {
+        const p = cursorParticles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha -= p.decay;
+
+        if (p.alpha <= 0) {
+          cursorParticles.splice(i, 1);
+          continue;
+        }
+
+        cCtx.save();
+        cCtx.globalAlpha = p.alpha;
+        cCtx.fillStyle = p.color;
+        cCtx.beginPath();
+        cCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        cCtx.fill();
+        cCtx.restore();
+      }
+      requestAnimationFrame(renderCursorTrail);
+    }
+    renderCursorTrail();
+
+    // Mobile Navigation & Forms
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+    const contactForm = document.getElementById('contact-form');
+    const formMsg = document.getElementById('form-msg');
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      formMsg.classList.remove('hidden');
+      playSynthChirp(880);
+      contactForm.reset();
+      setTimeout(() => formMsg.classList.add('hidden'), 6000);
+    });
+
+    function triggerInspect(name) {
+      playSynthChirp(680);
+      const toast = document.getElementById('toast-modal');
+      const text = document.getElementById('toast-text');
+      text.textContent = `Specimen loaded to Merlin Cache: [${name}]`;
+      toast.classList.remove('translate-y-32', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-32', 'opacity-0');
+      }, 3500);
+    }
+
+    /* ----------------------------------------------------
+       7. MAIN THREE.JS ANIMATION LOOP
+    ---------------------------------------------------- */
+    let clock = new THREE.Clock();
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const delta = clock.getDelta();
+      const elapsed = clock.getElapsedTime();
+
+      // Hero Pyramid Auto-rotation
+      if (!heroDragging && heroPyramidGroup) {
+        heroPyramidGroup.rotation.y += 0.005;
+      }
+      if (heroParticles) {
+        heroParticles.rotation.y -= 0.003;
+      }
+
+      // Studio 3D Mesh Animation
+      if (studioActiveMesh && isStudioAnimActive) {
+        const factor = studioAnimSpeed;
+        studioActiveMesh.rotation.y += 0.008 * factor;
+        studioActiveMesh.rotation.x = Math.sin(elapsed * 0.8 * factor) * 0.2;
+
+        if (studioWireframeLines) {
+          studioWireframeLines.rotation.y = studioActiveMesh.rotation.y;
+          studioWireframeLines.rotation.x = studioActiveMesh.rotation.x;
+        }
+
+        // Deform children if skeletal rig
+        if (currentModelType === 'skeleton' && studioActiveMesh.children) {
+          studioActiveMesh.children.forEach((child, idx) => {
+            child.rotation.z = Math.sin(elapsed * 2 * factor + idx * 0.6) * 0.25;
+          });
+        }
+      }
+
+      if (heroRenderer && heroScene && heroCamera) {
+        heroRenderer.render(heroScene, heroCamera);
+      }
+      if (studioRenderer && studioScene && studioCamera) {
+        studioRenderer.render(studioScene, studioCamera);
+      }
+    }
+
+    // Window Load Trigger
+    window.onload = function() {
+      initHeroPyramid();
+      initStudioScene();
+      animate();
+    };
+
+    window.addEventListener('resize', () => {
+      if (heroContainer && heroRenderer && heroCamera) {
+        const w = heroContainer.clientWidth;
+        const h = heroContainer.clientHeight;
+        heroCamera.aspect = w / h;
+        heroCamera.updateProjectionMatrix();
+        heroRenderer.setSize(w, h);
+      }
+      if (studioContainer && studioRenderer && studioCamera) {
+        const sw = studioContainer.clientWidth;
+        const sh = studioContainer.clientHeight;
+        studioCamera.aspect = sw / sh;
+        studioCamera.updateProjectionMatrix();
+        studioRenderer.setSize(sw, sh);
+      }
     });
   </script>
+
+<script>
+// copy-to-clipboard for command rows (delegated; works in inline context)
+(function(){
+  document.addEventListener('click', async function(ev){
+    var btn = ev.target.closest('.copy-btn');
+    if(!btn) return;
+    var code = btn.getAttribute('data-code') || '';
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(code);
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = code; ta.style.cssText='position:fixed;opacity:0;top:0;left:0';
+        document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); document.body.removeChild(ta);
+      }
+      btn.classList.add('ok'); btn.textContent='✓';
+      setTimeout(function(){ btn.classList.remove('ok'); btn.textContent='⧉'; }, 1400);
+    } catch(e) {
+      btn.textContent='✕'; setTimeout(function(){ btn.textContent='⧉'; }, 1400);
+    }
+  });
+})();
+</script>
+
 
 <!-- ── Merlin live chat launcher ── -->
 <div class="merlin-frame" id="merlinFrame">
@@ -1991,5 +2139,18 @@ body.light-mode .merlin-bubble{box-shadow:0 4px 18px rgba(101,123,131,.4)}
   })();
 </script>
 
+<script>
+  // Landing focus: when the site is opened at the bare root, glide the visitor to the
+  // Merlin section (the same target as epinoiahorizon.com/main-site/#merlin).
+  (function () {
+    if (location.hash) return;                    // explicit anchor or #merlin already set — respect it
+    var scroll = function () {
+      var el = document.getElementById('merlin');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+    if (document.readyState === 'complete') setTimeout(scroll, 350);
+    else window.addEventListener('load', function () { setTimeout(scroll, 350); });
+  })();
+</script>
 </body>
 </html>
