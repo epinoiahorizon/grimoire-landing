@@ -1,0 +1,73 @@
+{
+ "convention": "wishing_tree v1: leaf=sha256(0x00||canonical_json), node=sha256(0x01||l||r); facets who/what/when/why/where/how",
+ "generated": "2026-10-24",
+ "note": "roots are recomputable from the facets + model sha256 below; 'when' is absent from every product record, so every seed is 5/6",
+ "roots": {
+  "merlin-harness": {
+   "root": "0xabdd47ae77c024f648d8e2c124894de314dc657f69e2b7d6bdb08a951b84960f",
+   "missing": [
+    "when"
+   ],
+   "model": {
+    "url": "/assets/models/wizard.glb",
+    "sha256": "f9db621ff95ada82236c62a84cfadee86da1879e434915597b45a79475c3afcc",
+    "bytes": 984272
+   }
+  },
+  "solstice-pendant": {
+   "root": "0x60cd55d19a2d3133d63edc57725ceaf0367f00e8430e4b0315e6af2de2587ef5",
+   "missing": [
+    "when"
+   ],
+   "model": {
+    "url": "/assets/models/crystal.glb",
+    "sha256": "1229e8e24ed4e3cc011bdf2e1750765ec282743b09f12a10f170e175eb04ed74",
+    "bytes": 35600
+   }
+  },
+  "aetherial-lantern": {
+   "root": "0x6220e9ca74313fd977a631adaf1ae07305fcb3bd49b58a0415b3507d5dcedc21",
+   "missing": [
+    "when"
+   ],
+   "model": {
+    "url": "/assets/models/lantern.glb",
+    "sha256": "7e85a7265542f682bd1b954ec7e525b3edf473edb7f40303e315c93cc39bcf61",
+    "bytes": 36684
+   }
+  },
+  "gold-ingot-pendant": {
+   "root": "0x63c79573746784de37a72f4baf16f9d08443ad59887502827b45befe210fa104",
+   "missing": [
+    "when"
+   ],
+   "model": {
+    "url": "/assets/models/gold-ingots.glb",
+    "sha256": "fea904965ac800dde95a79dc5de4c5c4bf8f6532f21ea515e6d87c76cb3e4bb4",
+    "bytes": 36696
+   }
+  },
+  "previs-pack": {
+   "root": "0x8f431ca660237e96fdbb469e2659520e9a4d3ab65d61b9d3755d2e9f2564fe0f",
+   "missing": [
+    "when"
+   ],
+   "model": {
+    "url": "/assets/models/chest.glb",
+    "sha256": "57031e1b6102dd9bec3e27e966655588d18c3fdede34232a6b6497ce57030a85",
+    "bytes": 35776
+   }
+  },
+  "arcanum-sdk": {
+   "root": "0x33f28765bb0ed68d243c0965dc9c1dee0051a351e8f79bda86a586f8cebc09ac",
+   "missing": [
+    "when"
+   ],
+   "model": {
+    "url": "/assets/models/open-book.glb",
+    "sha256": "015d6c9254f8046182474903554faca8d27cd646b3fde6326aa08f5243ec0d3b",
+    "bytes": 27080
+   }
+  }
+ }
+}

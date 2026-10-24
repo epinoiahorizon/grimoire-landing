@@ -4,121 +4,247 @@
 
   // Default Seed Catalog (Merlin Sovereign Pass + Artisan Handmade Pendants + 3D Animation & CAD Studio)
   const DEFAULT_PRODUCTS = [
-    {
-      id: 'merlin-harness',
-      title: 'Merlin Sovereign High Pass',
-      category: 'sovereign',
-      categoryLabel: 'AI Workspace',
-      price: 29,
-      badge: 'HIGH PLAN · FULL FLEET',
-      shortDesc: 'Full-tier Sanctum Workspace access unlocking Merlin (Claude Opus 5), Nxelle Codex (GLM 5.3), and Jie with 1,000 msgs/day and 10 file uploads.',
-      fullDesc: 'Merlin Sovereign High Pass delivers unrestricted access to our flagship frontier engines inside the Epinoia Sanctum Workspace (/app/). Unlock Merlin on Claude Opus 5 for deep architectural synthesis, Nxelle Codex on GLM 5.3 Sovereign for surgical code generation, and Jie for rapid multi-disciplinary operations—backed by 1,000 messages per day (including 100 frontier Opus/GLM messages) and 10 document/code file attachments up to 1 MB each.',
-      modelUrl: '/assets/models/wizard.glb',
-      has3D: true,
-      specs: {
-        'Primary Personas': 'Merlin (Claude Opus 5), Nxelle Codex (GLM 5.3), Jie',
-        'Daily Message Quota': '1,000 Total Msgs/Day (100 Frontier Opus 5 / GLM 5.3)',
-        'File Attachments': 'Up to 10 Files per Prompt (Max 1 MB per file)',
-        'Workspace Features': 'Cloud Auth, Persistent Chat History & Full Markdown HUD',
-        'Billing & Activation': '$29 USD / Month (Rp 465.000) · Instant License Key'
-      }
+  {
+    "id": "merlin-harness",
+    "title": "Merlin Sovereign High Pass",
+    "category": "sovereign",
+    "categoryLabel": "AI Workspace",
+    "price": 29,
+    "badge": "HIGH PLAN · FULL FLEET",
+    "shortDesc": "Full-tier Sanctum Workspace access unlocking Merlin (Claude Opus 5), Nxelle Codex (GLM 5.3), and Jie with 1,000 msgs/day and 10 file uploads.",
+    "fullDesc": "Merlin Sovereign High Pass delivers unrestricted access to our flagship frontier engines inside the Epinoia Sanctum Workspace (/app/). Unlock Merlin on Claude Opus 5 for deep architectural synthesis, Nxelle Codex on GLM 5.3 Sovereign for surgical code generation, and Jie for rapid multi-disciplinary operations—backed by 1,000 messages per day (including 100 frontier Opus/GLM messages) and 10 document/code file attachments up to 1 MB each.",
+    "modelUrl": "/assets/models/wizard.glb",
+    "has3D": true,
+    "specs": {
+      "Primary Personas": "Merlin (Claude Opus 5), Nxelle Codex (GLM 5.3), Jie",
+      "Daily Message Quota": "1,000 Total Msgs/Day (100 Frontier Opus 5 / GLM 5.3)",
+      "File Attachments": "Up to 10 Files per Prompt (Max 1 MB per file)",
+      "Workspace Features": "Cloud Auth, Persistent Chat History & Full Markdown HUD",
+      "Billing & Activation": "$29 USD / Month (Rp 465.000) · Instant License Key"
     },
-    {
-      id: 'solstice-pendant',
-      title: 'Solstice Crystal Talisman Pendant',
-      category: 'jewelry',
-      categoryLabel: 'Handmade Pendant',
-      price: 45,
-      badge: 'HANDMADE · 925 SILVER',
-      shortDesc: 'Hand-forged 925 sterling silver pendant featuring a natural raw double-terminated quartz crystal core and hand-engraved bindrunes.',
-      fullDesc: 'Artisan handcrafted talisman created using traditional lost-wax casting and hand-finishing techniques by Epinoia Horizon Atelier. The centerpiece holds a high-clarity natural raw quartz crystal nestled in organic 925 sterling silver rootwork. Each bindrune is engraved by hand with cold chisel tools.',
-      modelUrl: '/assets/models/crystal.glb',
-      has3D: true,
-      specs: {
-        'Metal': 'Solid Sterling Silver 925 (Oxidized Antique Finish)',
-        'Stone': 'Natural Raw Double-Terminated Quartz Crystal',
-        'Pendant Size': '48mm x 22mm x 16mm',
-        'Chain': '60cm Handcrafted Wheat Chain (925 Silver) Included',
-        'Crafted By': 'Epinoia Horizon Artisan Jewelry Atelier'
-      }
-    },
-    {
-      id: 'aetherial-lantern',
-      title: 'Aetherial Relic Cage Pendant',
-      category: 'jewelry',
-      categoryLabel: 'Artisan Jewelry',
-      price: 55,
-      badge: 'HANDMADE · 18K VERMEIL',
-      shortDesc: 'Handcrafted filigree lantern cage pendant in 18K gold vermeil over 925 silver encapsulating natural tourmaline crystal shards.',
-      fullDesc: 'Constructed from layered filigree wirework and 3D lost-wax precision casting, this relic lantern cage captures ambient light through raw multi-color tourmaline crystal shards. Features a screw-lock vault bale with custom celestial inscriptions along the circumference.',
-      modelUrl: '/assets/models/lantern.glb',
-      has3D: true,
-      specs: {
-        'Metal': '18K Gold Vermeil over Solid 925 Sterling Silver',
-        'Gemstone': 'Untreated Bi-Color Tourmaline Shards',
-        'Mechanism': 'Threaded Miniature Vault Bale Lock',
-        'Dimensions': '38mm x 18mm',
-        'Edition': 'Signed & Numbered Artisan Run'
-      }
-    },
-    {
-      id: 'gold-ingot-pendant',
-      title: 'Alchemist Pure Ingot Bar Pendant',
-      category: 'jewelry',
-      categoryLabel: 'Handmade Pendant',
-      price: 38,
-      badge: 'HANDMADE · SIGNATURE',
-      shortDesc: 'Heavy tactile hand-poured solid silver/bronze fusion bar pendant stamped with arcane alchemy weights and Epinoia eye hallmark.',
-      fullDesc: 'Poured directly into hand-carved soapstone molds to create authentic organic surface ripples. Each ingot bar pendant is hand-stamped with the Epinoia all-seeing eye hallmark, alchemical weight sigils, and 925 purity insignia.',
-      modelUrl: '/assets/models/gold-ingots.glb',
-      has3D: true,
-      specs: {
-        'Material': 'Hand-Poured Heavy Silver 925 / Bronze Fusion',
-        'Weight': '36.5 grams',
-        'Hallmark': 'Epinoia All-Seeing Eye + Alchemical Sigils',
-        'Bale': 'Heavy Duty 5mm Round Rope Bale',
-        'Packaging': 'Wax-Sealed Leather Grimoire Box'
-      }
-    },
-    {
-      id: 'previs-pack',
-      title: '3D Character & Cinematic Animation',
-      category: 'studio3d',
-      categoryLabel: '3D Animation Studio',
-      price: 150,
-      badge: '3D ANIMATOR · CUSTOM RIG',
-      shortDesc: 'Bespoke 3D character sculpting, kinematic skeletal rigging, and 120 FPS cinematic animation sequences by Epinoia 3D Studio.',
-      fullDesc: 'Commission the Epinoia Horizon 3D Animation Studio for custom 3D character modeling, biomechanical & organic skeletal rigging (IK/FK + facial blendshapes), and high-framerate cinematic animation sequences ready for Blender, Unreal Engine 5, Unity, or WebGL.',
-      modelUrl: '/assets/models/chest.glb',
-      has3D: true,
-      specs: {
-        'Deliverables': 'Rigged 3D Mesh + Keyframe/Motion Animation Sequence',
-        'Formats': '.BLEND, .FBX, .GLTF / .GLB, Unreal & Unity Ready',
-        'Rigging': 'Full IK/FK Skeletal Hierarchy + Weight Painting',
-        'Textures': '4K PBR Texture Maps (Albedo, Normal, Roughness, Metallic)',
-        'Revisions': 'Includes 3 Interactive 3D Previs Review Rounds'
-      }
-    },
-    {
-      id: 'arcanum-sdk',
-      title: 'Custom 3D Jewelry CAD & Wax Sculpt',
-      category: 'studio3d',
-      categoryLabel: '3D Jewelry Design',
-      price: 85,
-      badge: '3D CAD · LOST-WAX READY',
-      shortDesc: 'Custom 3D ZBrush/MatrixGold jewelry sculpting and print-ready STL/OBJ files engineered for lost-wax metal casting.',
-      fullDesc: 'Turn your custom pendant, signet ring, or talisman concept into a production-ready 3D sculpt. Engineered with precise wall thickness, stone-setting prongs, and sprue tolerances for high-resolution resin 3D printing and direct lost-wax casting in silver or gold.',
-      modelUrl: '/assets/models/open-book.glb',
-      has3D: true,
-      specs: {
-        'Sculpting': 'High-Detail Organic & Geometric 3D Jewelry Sculpt',
-        'Print Readiness': 'Manifold Watertight .STL & .OBJ for Wax 3D Printing',
-        'Gemstone Seats': 'Calibrated Prong / Bezel / Channel Cutouts',
-        'Visuals': 'Includes 4K Photorealistic Raytraced Turntable Render',
-        'Option': 'Can be cast directly in 925 Silver by Epinoia Atelier'
-      }
+    "provenance": {
+      "schemaVersion": 1,
+      "facets": {
+        "who": "Epinoia Horizon Atelier",
+        "what": "Merlin Sovereign High Pass — HIGH PLAN · FULL FLEET",
+        "when": "",
+        "why": "Full-tier Sanctum Workspace access unlocking Merlin (Claude Opus 5), Nxelle Codex (GLM 5.3), and Jie with 1,000 msgs/day and 10 file uploads.",
+        "where": "Epinoia Horizon Vault",
+        "how": "Billing & Activation: $29 USD / Month (Rp 465.000) · Instant License Key; Daily Message Quota: 1,000 Total Msgs/Day (100 Frontier Opus 5 / GLM 5.3); File Attachments: Up to 10 Files per Prompt (Max 1 MB per file); Primary Personas: Merlin (Claude Opus 5), Nxelle Codex (GLM 5.3), Jie; Workspace Features: Cloud Auth, Persistent Chat History & Full Markdown HUD"
+      },
+      "missing": [
+        "when"
+      ],
+      "root": "0xabdd47ae77c024f648d8e2c124894de314dc657f69e2b7d6bdb08a951b84960f",
+      "model": {
+        "url": "/assets/models/wizard.glb",
+        "sha256": "f9db621ff95ada82236c62a84cfadee86da1879e434915597b45a79475c3afcc",
+        "bytes": 984272
+      },
+      "convention": "wishing_tree v1: leaf=sha256(0x00||canonical_json), node=sha256(0x01||l||r); facets who/what/when/why/where/how"
     }
-  ];
+  },
+  {
+    "id": "solstice-pendant",
+    "title": "Solstice Crystal Talisman Pendant",
+    "category": "jewelry",
+    "categoryLabel": "Handmade Pendant",
+    "price": 45,
+    "badge": "HANDMADE · 925 SILVER",
+    "shortDesc": "Hand-forged 925 sterling silver pendant featuring a natural raw double-terminated quartz crystal core and hand-engraved bindrunes.",
+    "fullDesc": "Artisan handcrafted talisman created using traditional lost-wax casting and hand-finishing techniques by Epinoia Horizon Atelier. The centerpiece holds a high-clarity natural raw quartz crystal nestled in organic 925 sterling silver rootwork. Each bindrune is engraved by hand with cold chisel tools.",
+    "modelUrl": "/assets/models/crystal.glb",
+    "has3D": true,
+    "specs": {
+      "Metal": "Solid Sterling Silver 925 (Oxidized Antique Finish)",
+      "Stone": "Natural Raw Double-Terminated Quartz Crystal",
+      "Pendant Size": "48mm x 22mm x 16mm",
+      "Chain": "60cm Handcrafted Wheat Chain (925 Silver) Included",
+      "Crafted By": "Epinoia Horizon Artisan Jewelry Atelier"
+    },
+    "provenance": {
+      "schemaVersion": 1,
+      "facets": {
+        "who": "Epinoia Horizon Atelier",
+        "what": "Solstice Crystal Talisman Pendant — HANDMADE · 925 SILVER",
+        "when": "",
+        "why": "Hand-forged 925 sterling silver pendant featuring a natural raw double-terminated quartz crystal core and hand-engraved bindrunes.",
+        "where": "Epinoia Horizon Vault",
+        "how": "Chain: 60cm Handcrafted Wheat Chain (925 Silver) Included; Crafted By: Epinoia Horizon Artisan Jewelry Atelier; Metal: Solid Sterling Silver 925 (Oxidized Antique Finish); Pendant Size: 48mm x 22mm x 16mm; Stone: Natural Raw Double-Terminated Quartz Crystal"
+      },
+      "missing": [
+        "when"
+      ],
+      "root": "0x60cd55d19a2d3133d63edc57725ceaf0367f00e8430e4b0315e6af2de2587ef5",
+      "model": {
+        "url": "/assets/models/crystal.glb",
+        "sha256": "1229e8e24ed4e3cc011bdf2e1750765ec282743b09f12a10f170e175eb04ed74",
+        "bytes": 35600
+      },
+      "convention": "wishing_tree v1: leaf=sha256(0x00||canonical_json), node=sha256(0x01||l||r); facets who/what/when/why/where/how"
+    }
+  },
+  {
+    "id": "aetherial-lantern",
+    "title": "Aetherial Relic Cage Pendant",
+    "category": "jewelry",
+    "categoryLabel": "Artisan Jewelry",
+    "price": 55,
+    "badge": "HANDMADE · 18K VERMEIL",
+    "shortDesc": "Handcrafted filigree lantern cage pendant in 18K gold vermeil over 925 silver encapsulating natural tourmaline crystal shards.",
+    "fullDesc": "Constructed from layered filigree wirework and 3D lost-wax precision casting, this relic lantern cage captures ambient light through raw multi-color tourmaline crystal shards. Features a screw-lock vault bale with custom celestial inscriptions along the circumference.",
+    "modelUrl": "/assets/models/lantern.glb",
+    "has3D": true,
+    "specs": {
+      "Metal": "18K Gold Vermeil over Solid 925 Sterling Silver",
+      "Gemstone": "Untreated Bi-Color Tourmaline Shards",
+      "Mechanism": "Threaded Miniature Vault Bale Lock",
+      "Dimensions": "38mm x 18mm",
+      "Edition": "Signed & Numbered Artisan Run"
+    },
+    "provenance": {
+      "schemaVersion": 1,
+      "facets": {
+        "who": "Epinoia Horizon Atelier",
+        "what": "Aetherial Relic Cage Pendant — HANDMADE · 18K VERMEIL",
+        "when": "",
+        "why": "Handcrafted filigree lantern cage pendant in 18K gold vermeil over 925 silver encapsulating natural tourmaline crystal shards.",
+        "where": "Epinoia Horizon Vault",
+        "how": "Dimensions: 38mm x 18mm; Edition: Signed & Numbered Artisan Run; Gemstone: Untreated Bi-Color Tourmaline Shards; Mechanism: Threaded Miniature Vault Bale Lock; Metal: 18K Gold Vermeil over Solid 925 Sterling Silver"
+      },
+      "missing": [
+        "when"
+      ],
+      "root": "0x6220e9ca74313fd977a631adaf1ae07305fcb3bd49b58a0415b3507d5dcedc21",
+      "model": {
+        "url": "/assets/models/lantern.glb",
+        "sha256": "7e85a7265542f682bd1b954ec7e525b3edf473edb7f40303e315c93cc39bcf61",
+        "bytes": 36684
+      },
+      "convention": "wishing_tree v1: leaf=sha256(0x00||canonical_json), node=sha256(0x01||l||r); facets who/what/when/why/where/how"
+    }
+  },
+  {
+    "id": "gold-ingot-pendant",
+    "title": "Alchemist Pure Ingot Bar Pendant",
+    "category": "jewelry",
+    "categoryLabel": "Handmade Pendant",
+    "price": 38,
+    "badge": "HANDMADE · SIGNATURE",
+    "shortDesc": "Heavy tactile hand-poured solid silver/bronze fusion bar pendant stamped with arcane alchemy weights and Epinoia eye hallmark.",
+    "fullDesc": "Poured directly into hand-carved soapstone molds to create authentic organic surface ripples. Each ingot bar pendant is hand-stamped with the Epinoia all-seeing eye hallmark, alchemical weight sigils, and 925 purity insignia.",
+    "modelUrl": "/assets/models/gold-ingots.glb",
+    "has3D": true,
+    "specs": {
+      "Material": "Hand-Poured Heavy Silver 925 / Bronze Fusion",
+      "Weight": "36.5 grams",
+      "Hallmark": "Epinoia All-Seeing Eye + Alchemical Sigils",
+      "Bale": "Heavy Duty 5mm Round Rope Bale",
+      "Packaging": "Wax-Sealed Leather Grimoire Box"
+    },
+    "provenance": {
+      "schemaVersion": 1,
+      "facets": {
+        "who": "Epinoia Horizon Atelier",
+        "what": "Alchemist Pure Ingot Bar Pendant — HANDMADE · SIGNATURE",
+        "when": "",
+        "why": "Heavy tactile hand-poured solid silver/bronze fusion bar pendant stamped with arcane alchemy weights and Epinoia eye hallmark.",
+        "where": "Epinoia Horizon Vault",
+        "how": "Bale: Heavy Duty 5mm Round Rope Bale; Hallmark: Epinoia All-Seeing Eye + Alchemical Sigils; Material: Hand-Poured Heavy Silver 925 / Bronze Fusion; Packaging: Wax-Sealed Leather Grimoire Box; Weight: 36.5 grams"
+      },
+      "missing": [
+        "when"
+      ],
+      "root": "0x63c79573746784de37a72f4baf16f9d08443ad59887502827b45befe210fa104",
+      "model": {
+        "url": "/assets/models/gold-ingots.glb",
+        "sha256": "fea904965ac800dde95a79dc5de4c5c4bf8f6532f21ea515e6d87c76cb3e4bb4",
+        "bytes": 36696
+      },
+      "convention": "wishing_tree v1: leaf=sha256(0x00||canonical_json), node=sha256(0x01||l||r); facets who/what/when/why/where/how"
+    }
+  },
+  {
+    "id": "previs-pack",
+    "title": "3D Character & Cinematic Animation",
+    "category": "studio3d",
+    "categoryLabel": "3D Animation Studio",
+    "price": 150,
+    "badge": "3D ANIMATOR · CUSTOM RIG",
+    "shortDesc": "Bespoke 3D character sculpting, kinematic skeletal rigging, and 120 FPS cinematic animation sequences by Epinoia 3D Studio.",
+    "fullDesc": "Commission the Epinoia Horizon 3D Animation Studio for custom 3D character modeling, biomechanical & organic skeletal rigging (IK/FK + facial blendshapes), and high-framerate cinematic animation sequences ready for Blender, Unreal Engine 5, Unity, or WebGL.",
+    "modelUrl": "/assets/models/chest.glb",
+    "has3D": true,
+    "specs": {
+      "Deliverables": "Rigged 3D Mesh + Keyframe/Motion Animation Sequence",
+      "Formats": ".BLEND, .FBX, .GLTF / .GLB, Unreal & Unity Ready",
+      "Rigging": "Full IK/FK Skeletal Hierarchy + Weight Painting",
+      "Textures": "4K PBR Texture Maps (Albedo, Normal, Roughness, Metallic)",
+      "Revisions": "Includes 3 Interactive 3D Previs Review Rounds"
+    },
+    "provenance": {
+      "schemaVersion": 1,
+      "facets": {
+        "who": "Epinoia Horizon Atelier",
+        "what": "3D Character & Cinematic Animation — 3D ANIMATOR · CUSTOM RIG",
+        "when": "",
+        "why": "Bespoke 3D character sculpting, kinematic skeletal rigging, and 120 FPS cinematic animation sequences by Epinoia 3D Studio.",
+        "where": "Epinoia Horizon Vault",
+        "how": "Deliverables: Rigged 3D Mesh + Keyframe/Motion Animation Sequence; Formats: .BLEND, .FBX, .GLTF / .GLB, Unreal & Unity Ready; Revisions: Includes 3 Interactive 3D Previs Review Rounds; Rigging: Full IK/FK Skeletal Hierarchy + Weight Painting; Textures: 4K PBR Texture Maps (Albedo, Normal, Roughness, Metallic)"
+      },
+      "missing": [
+        "when"
+      ],
+      "root": "0x8f431ca660237e96fdbb469e2659520e9a4d3ab65d61b9d3755d2e9f2564fe0f",
+      "model": {
+        "url": "/assets/models/chest.glb",
+        "sha256": "57031e1b6102dd9bec3e27e966655588d18c3fdede34232a6b6497ce57030a85",
+        "bytes": 35776
+      },
+      "convention": "wishing_tree v1: leaf=sha256(0x00||canonical_json), node=sha256(0x01||l||r); facets who/what/when/why/where/how"
+    }
+  },
+  {
+    "id": "arcanum-sdk",
+    "title": "Custom 3D Jewelry CAD & Wax Sculpt",
+    "category": "studio3d",
+    "categoryLabel": "3D Jewelry Design",
+    "price": 85,
+    "badge": "3D CAD · LOST-WAX READY",
+    "shortDesc": "Custom 3D ZBrush/MatrixGold jewelry sculpting and print-ready STL/OBJ files engineered for lost-wax metal casting.",
+    "fullDesc": "Turn your custom pendant, signet ring, or talisman concept into a production-ready 3D sculpt. Engineered with precise wall thickness, stone-setting prongs, and sprue tolerances for high-resolution resin 3D printing and direct lost-wax casting in silver or gold.",
+    "modelUrl": "/assets/models/open-book.glb",
+    "has3D": true,
+    "specs": {
+      "Sculpting": "High-Detail Organic & Geometric 3D Jewelry Sculpt",
+      "Print Readiness": "Manifold Watertight .STL & .OBJ for Wax 3D Printing",
+      "Gemstone Seats": "Calibrated Prong / Bezel / Channel Cutouts",
+      "Visuals": "Includes 4K Photorealistic Raytraced Turntable Render",
+      "Option": "Can be cast directly in 925 Silver by Epinoia Atelier"
+    },
+    "provenance": {
+      "schemaVersion": 1,
+      "facets": {
+        "who": "Epinoia Horizon Atelier",
+        "what": "Custom 3D Jewelry CAD & Wax Sculpt — 3D CAD · LOST-WAX READY",
+        "when": "",
+        "why": "Custom 3D ZBrush/MatrixGold jewelry sculpting and print-ready STL/OBJ files engineered for lost-wax metal casting.",
+        "where": "Epinoia Horizon Vault",
+        "how": "Gemstone Seats: Calibrated Prong / Bezel / Channel Cutouts; Option: Can be cast directly in 925 Silver by Epinoia Atelier; Print Readiness: Manifold Watertight .STL & .OBJ for Wax 3D Printing; Sculpting: High-Detail Organic & Geometric 3D Jewelry Sculpt; Visuals: Includes 4K Photorealistic Raytraced Turntable Render"
+      },
+      "missing": [
+        "when"
+      ],
+      "root": "0x33f28765bb0ed68d243c0965dc9c1dee0051a351e8f79bda86a586f8cebc09ac",
+      "model": {
+        "url": "/assets/models/open-book.glb",
+        "sha256": "015d6c9254f8046182474903554faca8d27cd646b3fde6326aa08f5243ec0d3b",
+        "bytes": 27080
+      },
+      "convention": "wishing_tree v1: leaf=sha256(0x00||canonical_json), node=sha256(0x01||l||r); facets who/what/when/why/where/how"
+    }
+  }
+];
 
   // Database / LocalStorage Sync
   window.EpinoiaStore = {
