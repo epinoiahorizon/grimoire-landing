@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vault Composer — Epinoia Horizon</title>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+<style>
+  :root{--gold:#facc15;--gold-dim:#a16207;--cyan:#22d3ee;--ink:#e8e6f0;--dim:#8a87a0;--bg:#07050f;--panel:rgba(15,11,32,.72);--line:rgba(250,204,21,.18)}
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(900px 500px at 50% -10%,#160f33 0%,#07050f 62%);color:var(--ink);font-family:Inter,system-ui,sans-serif;min-height:100vh}
+  header{display:flex;align-items:baseline;gap:1rem;padding:1.6rem 2rem .6rem;border-bottom:1px solid var(--line)}
+  header h1{font-family:'Cinzel Decorative',serif;font-size:1.35rem;margin:0;color:var(--gold);letter-spacing:.02em}
+  header p{margin:0;color:var(--dim);font-size:.78rem}
+  header a{margin-left:auto;color:var(--cyan);text-decoration:none;font-size:.72rem;text-transform:uppercase;letter-spacing:.12em}
+  .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(340px,.9fr);gap:1.4rem;padding:1.4rem 2rem 4rem;max-width:1320px;margin:0 auto}
+  @media(max-width:900px){.wrap{grid-template-columns:1fr}}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.1rem}
+  .panel h2{font-family:Cinzel,serif;font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin:0 0 .9rem}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+  .f{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.8rem}
+  .f.wide{grid-column:1/-1}
+  .f label{font-size:.62rem;text-transform:uppercase;letter-spacing:.14em;color:var(--dim)}
+  .f input,.f textarea,.f select{background:#0b0918;border:1px solid #241d3d;border-radius:8px;padding:.5rem .6rem;color:var(--ink);font:inherit;font-size:.8rem}
+  .f textarea{resize:vertical;min-height:2.6rem}
+  .f input:focus,.f textarea:focus,.f select:focus{outline:none;border-color:var(--cyan)}
+  .hint{color:#5b5675;font-size:.6rem;letter-spacing:.02em}
+  .drop{border:1px dashed #2d2550;border-radius:10px;padding:.7rem;background:#0a0818;margin-bottom:.7rem}
+  .drop b{display:block;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-weight:500;margin-bottom:.35rem}
+  .drop input{font-size:.68rem;color:var(--dim);width:100%}
+  .drop input[type=file]::file-selector-button{background:rgba(34,211,238,.10);color:var(--cyan);border:1px solid rgba(34,211,238,.35);border-radius:7px;padding:.28rem .6rem;margin-right:.6rem;font-family:Cinzel,serif;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+  .drop input[type=file]::file-selector-button:hover{background:rgba(34,211,238,.18)}
+  .drop em{font-style:normal;color:#4d4870;font-size:.6rem}
+  model-viewer{width:100%;height:230px;background:radial-gradient(circle at 50% 40%,#12102a,#07050f);border-radius:10px;border:1px solid #1d1836}
+  .prov{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--dim);display:flex;flex-direction:column;gap:.3rem;margin-top:.7rem}
+  .prov .row{display:flex;gap:.5rem;justify-content:space-between;border-bottom:1px dotted #1d1836;padding-bottom:.25rem}
+  .prov .k{color:#5b5675;text-transform:uppercase;letter-spacing:.08em}
+  .prov .v{color:var(--cyan);word-break:break-all;text-align:right}
+  .prov .v.root{color:var(--gold)}
+  .acts{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:1rem}
+  button{cursor:pointer;font-family:Cinzel,serif;font-weight:700;font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;border-radius:9px;padding:.62rem 1rem;border:1px solid var(--line);background:rgba(250,204,21,.08);color:var(--gold)}
+  button.primary{background:linear-gradient(180deg,#facc15,#ca9a12);color:#1a1405;border-color:#facc15}
+  button:disabled{opacity:.4;cursor:not-allowed}
+  button.primary:disabled{background:#191527;color:#4d4870;border-color:#241d3d;opacity:1}
+  .state{font-family:'JetBrains Mono',monospace;font-size:.62rem;margin-top:.7rem;min-height:1em}
+  .state.ok{color:#4ade80}.state.bad{color:#f87171}
+  .count{float:right;font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--cyan);letter-spacing:0}
+  dialog{background:#0b0918;border:1px solid var(--line);border-radius:12px;color:var(--ink);max-width:760px;width:92%}
+  dialog::backdrop{background:rgba(3,2,8,.8)}
+  pre{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:#b9b3d4;background:#070510;padding:.8rem;border-radius:8px;overflow:auto;max-height:52vh}
+  .note{font-size:.68rem;color:var(--dim);line-height:1.5;margin:.6rem 0 0}
+  .note b{color:var(--gold);font-weight:600}
+</style>
+</head>
+<body>
+<header>
+  <h1>Vault Composer</h1>
+  <p>compose a relic · six tributaries · root computed in your browser</p>
+  <a href="/store/">← vault</a>
+</header>
+
+<div class="wrap">
+  <section class="panel">
+    <h2>The Object <span class="count" id="facetCount">0/6</span></h2>
+    <div class="grid2">
+      <div class="f wide"><label for="title">Title</label><input id="title" placeholder="Solstice Crystal Talisman Pendant"></div>
+      <div class="f"><label for="price">Price (USD)</label><input id="price" type="number" min="0" step="1" value="45"></div>
+      <div class="f"><label for="category">Category</label>
+        <select id="category">
+          <option value="jewelry">Handmade Pendant</option>
+          <option value="studio3d">3D Studio</option>
+          <option value="sovereign">Merlin Pass</option>
+        </select>
+      </div>
+      <div class="f wide"><label for="shortDesc">Short description <span class="hint">— one line, shown on the card</span></label><textarea id="shortDesc" rows="2"></textarea></div>
+    </div>
+
+    <h2 style="margin-top:1.2rem">Six Tributaries</h2>
+    <div class="grid2">
+      <div class="f"><label for="who">Who <span class="hint">the maker</span></label><textarea id="who" rows="2"></textarea></div>
+      <div class="f"><label for="what">What <span class="hint">the object</span></label><textarea id="what" rows="2"></textarea></div>
+      <div class="f"><label for="when">When <span class="hint">the made date</span></label><textarea id="when" rows="2" placeholder="2026-10-24"></textarea></div>
+      <div class="f"><label for="why">Why <span class="hint">the reason</span></label><textarea id="why" rows="2"></textarea></div>
+      <div class="f"><label for="where">Where <span class="hint">the place</span></label><textarea id="where" rows="2"></textarea></div>
+      <div class="f"><label for="how">How <span class="hint">the method</span></label><textarea id="how" rows="2"></textarea></div>
+    </div>
+  </section>
+
+  <aside class="panel">
+    <h2>Media &amp; Provenance</h2>
+    <div class="drop"><b>Vessel — .glb</b><input id="vessel" type="file" accept=".glb,.gltf,model/gltf-binary"><em id="vesselMeta">drop or choose the exported model</em></div>
+    <div class="drop"><b>Poster — image</b><input id="poster" type="file" accept="image/*"><em id="posterMeta">thumbnail for the vault grid</em></div>
+
+    <model-viewer id="mv" alt="model preview" camera-controls auto-rotate exposure="1.1" shadow-intensity="0.6" style="display:none"></model-viewer>
+
+    <div class="prov" id="prov">
+      <div class="row"><span class="k">root</span><span class="v root" id="root">—</span></div>
+      <div class="row"><span class="k">tributaries</span><span class="v" id="trib">0/6</span></div>
+      <div class="row"><span class="k">vessel cid</span><span class="v" id="vcid">—</span></div>
+      <div class="row"><span class="k">vessel sha256</span><span class="v" id="vsha">—</span></div>
+    </div>
+
+    <div class="acts">
+      <button class="primary" id="btnJson" disabled>Download product JSON</button>
+      <button id="btnPayload" disabled>Copy bazaar payload</button>
+    </div>
+    <div class="state" id="state"></div>
+    <p class="note"><b>Nothing leaves this page.</b> The root is computed locally with WebCrypto, so the
+    maker can see the identity of the object before anyone else does. Upload the .glb to the Bazaar
+    Studio to host it, then paste the returned URL — or commit it to <code>assets/models/</code>.</p>
+  </aside>
+</div>
+
+<dialog id="dlg"><h3 style="font-family:Cinzel,serif;color:var(--gold);margin:.2rem 0 .6rem;font-size:.9rem" id="dlgTitle"></h3><pre id="dlgBody"></pre><div style="display:flex;gap:.5rem;margin-top:.6rem"><button id="dlgCopy">Copy</button><button id="dlgClose">Close</button></div></dialog>
+
+<script type="module" src="/assets/studio.js"></script>
+</body>
+</html>
