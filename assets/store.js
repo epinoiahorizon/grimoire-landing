@@ -117,8 +117,53 @@
         'Visuals': 'Includes 4K Photorealistic Raytraced Turntable Render',
         'Option': 'Can be cast directly in 925 Silver by Epinoia Atelier'
       }
+    },
+  {
+    "id": "key-of-ae",
+    "title": "The Key of Ae",
+    "category": "jewelry",
+    "categoryLabel": "Artifact",
+    "price": 222,
+    "badge": "PLACED · 2026-10-25",
+    "shortDesc": "An ornate gold key with a winged globe head, placed on stone and rendered from the original Blender file. 9.72 cm tall, 23 separate pieces.",
+    "fullDesc": "The Key of Ae was modelled in key of ae.blend as a rigged assembly of 23 meshes, then placed — not photographed — on a stone plinth under a three-point rig and rendered in Cycles. The GLB you are looking at is the same geometry the render came from. Its provenance root covers all six tributaries, including the sha256 of the model itself, so the file cannot be swapped without the root changing.",
+    "modelUrl": "/assets/models/key-of-ae.glb",
+    "posterUrl": "/assets/models/key-of-ae.png",
+    "has3D": true,
+    "specs": {
+      "Height": "9.72 cm",
+      "Footprint": "4.35 × 2.65 cm",
+      "Pieces": "23 meshes",
+      "Render": "Cycles, 64 samples, AgX",
+      "Export": "glTF 2.0, 15.79 MB"
+    },
+    "provenance": {
+      "schemaVersion": 1,
+      "facets": {
+        "who": "Epinoia Horizon Atelier",
+        "what": "The Key of Ae — an ornate gold key with a winged globe head, 9.72 cm tall, 23 pieces",
+        "when": "2026-10-25",
+        "why": "a key that opens the vault, placed as the first artifact of the Vault",
+        "where": "Epinoia Horizon Vault",
+        "how": "modelled in key of ae.blend, KEY rig, placed on a plinth, rendered in Cycles, exported glTF 2.0"
+      },
+      "missing": [],
+      "root": "0xabfc46bc722da0b00ccff84979bcf91a1bbcaf536036e6d1e38300addb608301",
+      "model": {
+        "url": "/assets/models/key-of-ae.glb",
+        "sha256": "dde7607e51300e7f5a3f4a225595467dddea5154d4d60e7f56caec3c5a54096a",
+        "bytes": 16559444,
+        "cid": "bafkreig545qh4ujqbz7vup2kejkzkrt53xvfcvgu2yhh6vwk5q6fuvajni"
+      },
+      "poster": {
+        "url": "/assets/models/key-of-ae.png",
+        "sha256": "07d16d611652fa407b6df1ea561ccb26ec7ee7cdd75bb78d675f8e25a8b96a15",
+        "bytes": 2000444
+      },
+      "convention": "wishing_tree v1: leaf=sha256(0x00||canonical_json), node=sha256(0x01||l||r), pairwise fold with odd-node promotion"
     }
-  ];
+  }
+];
 
   // Database / LocalStorage Sync
   window.EpinoiaStore = {
