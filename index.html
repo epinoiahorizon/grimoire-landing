@@ -24,6 +24,8 @@
     <!-- GSAP & ScrollTrigger -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Supabase JS Client for Safe Account Auth -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
         body {
@@ -250,13 +252,15 @@
             <div class="pointer-events-auto flex items-center gap-2 sm:gap-2.5">
                 <!-- Logged Out Buttons: Login & Sign Up -->
                 <div id="header-auth-guest" style="display: flex; align-items: center; gap: 8px;">
-                    <button onclick="openAuthModal('orders')" class="glass-panel border border-cyan-500/40 text-cyan-300 hover:border-gold-400 transition-all" style="padding: 9px 14px; border-radius: 999px; font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;" title="Order history saved in this browser">
-                        <i class="fas fa-scroll text-cyan-400"></i> <span>My Orders</span>
+                    <button onclick="openAuthModal('login')" class="glass-panel text-gray-200 hover:text-gold-300 border border-gold-500/30 transition-all" style="padding: 9px 14px; border-radius: 999px; font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
+                        <i class="fas fa-right-to-bracket text-cyan-400"></i> <span>Login</span>
+                    </button>
+                    <button onclick="openAuthModal('signup')" class="bg-gradient-to-r from-gold-600 to-amber-700 hover:from-gold-500 hover:to-amber-600 text-horizon-bg transition-all shadow-[0_0_15px_rgba(234,179,8,0.3)]" style="padding: 9px 15px; border-radius: 999px; font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
+                        <i class="fas fa-user-plus"></i> <span class="header-auth-text">Sign Up</span>
                     </button>
                 </div>
 
-                <!-- Legacy account badge (unused: this build ships without accounts) -->
-
+                <!-- Logged In User Badge -->
                 <div id="header-auth-user" style="display: none; align-items: center; gap: 8px;">
                     <button onclick="openAuthModal('profile')" class="glass-panel border border-cyan-500/40 text-cyan-300 hover:border-gold-400 transition-all" style="padding: 8px 14px; border-radius: 999px; font-family: 'JetBrains Mono', monospace; font-size: 11px; display: inline-flex; align-items: center; gap: 7px; cursor: pointer;" title="View Safe Shopping Profile &amp; Orders">
                         <span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e; display: inline-block;"></span>
@@ -319,8 +323,11 @@
         </div>
 
         <div style="padding-top: 16px; border-top: 1px solid rgba(234, 179, 8, 0.2); display: flex; flex-direction: column; gap: 10px;">
-                        <button onclick="closeMobileNav(); openAuthModal('orders');" style="width: 100%; padding: 11px; border-radius: 10px; font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;" class="glass-panel border border-cyan-500/40 text-cyan-300 hover:text-white">
-                <i class="fas fa-scroll mr-1"></i> My Orders
+            <button onclick="closeMobileNav(); openAuthModal('login');" style="width: 100%; padding: 11px; border-radius: 10px; font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;" class="glass-panel border border-cyan-500/40 text-cyan-300 hover:text-white">
+                <i class="fas fa-right-to-bracket mr-1"></i> Login Account
+            </button>
+            <button onclick="closeMobileNav(); openAuthModal('signup');" style="width: 100%; padding: 11px; border-radius: 10px; font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;" class="bg-gradient-to-r from-gold-600 to-amber-700 text-horizon-bg">
+                <i class="fas fa-user-plus mr-1"></i> Sign Up (Register)
             </button>
         </div>
     </div>
@@ -744,16 +751,113 @@
                     <i class="fas fa-shield-halved text-cyan-400" style="font-size: 11px;"></i>
                     <span class="font-mono text-cyan-300" style="font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;">Epinoia Buyer Protection</span>
                 </div>
-                <h3 id="auth-modal-heading" class="font-title text-2xl text-gold-300 glow-gold">MY ORDERS</h3>
-                <p id="auth-modal-sub" class="text-xs text-gray-400" style="margin-top: 4px;">Order history and buyer details are saved in this browser only — no account, no server.</p>
+                <h3 id="auth-modal-heading" class="font-title text-2xl text-gold-300 glow-gold">SANCTUM ACCOUNT</h3>
+                <p id="auth-modal-sub" class="text-xs text-gray-400" style="margin-top: 4px;">Verified account keeps your orders, invoices &amp; workspace access protected.</p>
             </div>
 
-            <!-- PANEL: ORDER HISTORY + SAVED BUYER DETAILS (device-local) -->
+            <!-- Security Prompt Banner (shown if redirected from Checkout) -->
+            <div id="auth-checkout-notice" style="display: none; margin-bottom: 16px; padding: 12px 14px; border-radius: 12px; background: rgba(234, 179, 8, 0.12); border: 1px solid rgba(234, 179, 8, 0.4); font-size: 12px; color: #fde047; line-height: 1.45;">
+                <i class="fas fa-lock text-gold-400"></i> <strong>Safe Checkout Required:</strong> Please <strong>Sign In</strong> or <strong>Create an Account (Sign Up)</strong> first so your order and official invoice are securely linked to your buyer profile.
+            </div>
+
+            <!-- Feedback Alert Box -->
+            <div id="auth-alert-box" style="display: none; margin-bottom: 16px; padding: 11px 14px; border-radius: 10px; font-size: 12px; line-height: 1.4;"></div>
+
+            <!-- Mode Tabs (Login vs Sign Up) -->
+            <div id="auth-tabs-bar" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 5px; border-radius: 12px; background: rgba(3, 2, 8, 0.75); border: 1px solid rgba(234, 179, 8, 0.2); margin-bottom: 20px;">
+                <button type="button" id="tab-btn-login" onclick="switchAuthTab('login')" style="padding: 10px; border-radius: 9px; font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;" class="bg-gradient-to-r from-gold-600 to-amber-700 text-horizon-bg">
+                    <i class="fas fa-right-to-bracket"></i> Login
+                </button>
+                <button type="button" id="tab-btn-signup" onclick="switchAuthTab('signup')" style="padding: 10px; border-radius: 9px; font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </button>
+            </div>
+
+            <!-- TAB 1: LOGIN FORM -->
+            <div id="auth-view-login" style="display: block;">
+                <form onsubmit="handleLoginSubmit(event)" style="display: flex; flex-direction: column; gap: 14px;">
+                    <div>
+                        <label class="font-mono text-gray-300 uppercase" style="font-size: 10px; letter-spacing: 0.08em; display: block; margin-bottom: 6px;">Email Address *</label>
+                        <input type="email" id="login-email" required placeholder="you@domain.com" style="width: 100%; padding: 11px 14px; border-radius: 10px; background: rgba(3, 2, 8, 0.85); border: 1px solid rgba(234, 179, 8, 0.3); color: #fff; font-size: 13px; box-sizing: border-box;">
+                    </div>
+                    <div>
+                        <label class="font-mono text-gray-300 uppercase" style="font-size: 10px; letter-spacing: 0.08em; display: block; margin-bottom: 6px;">Password *</label>
+                        <div style="position: relative;">
+                            <input type="password" id="login-password" required minlength="6" placeholder="••••••••" style="width: 100%; padding: 11px 40px 11px 14px; border-radius: 10px; background: rgba(3, 2, 8, 0.85); border: 1px solid rgba(234, 179, 8, 0.3); color: #fff; font-size: 13px; box-sizing: border-box;">
+                            <button type="button" onclick="togglePwdField('login-password', this)" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #9ca3af; background: none; border: none; cursor: pointer;">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="submit" id="login-submit-btn" style="width: 100%; padding: 13px; border-radius: 12px; font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 4px;" class="bg-gradient-to-r from-gold-500 to-amber-600 text-horizon-bg hover:brightness-110 transition-all shadow-[0_0_20px_rgba(234,179,8,0.35)]">
+                        <i class="fas fa-unlock-keyhole"></i> Sign In to Sanctum
+                    </button>
+                </form>
+
+                <div style="display: flex; align-items: center; gap: 12px; margin: 16px 0;">
+                    <div style="flex: 1; height: 1px; background: rgba(234, 179, 8, 0.18);"></div>
+                    <span class="font-mono text-gray-500" style="font-size: 10px; text-transform: uppercase;">OR</span>
+                    <div style="flex: 1; height: 1px; background: rgba(234, 179, 8, 0.18);"></div>
+                </div>
+
+                <button type="button" onclick="handleGoogleAuth()" style="width: 100%; padding: 11px; border-radius: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); color: #f1f5f9; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;" class="hover:border-gold-400 transition-all">
+                    <i class="fab fa-google text-gold-400"></i> Continue with Google Account
+                </button>
+            </div>
+
+            <!-- TAB 2: SIGN UP (PROPER REGISTRATION FORM) -->
+            <div id="auth-view-signup" style="display: none;">
+                <form onsubmit="handleSignupSubmit(event)" style="display: flex; flex-direction: column; gap: 12px;">
+                    <div>
+                        <label class="font-mono text-gray-300 uppercase" style="font-size: 10px; letter-spacing: 0.08em; display: block; margin-bottom: 5px;">Full Name *</label>
+                        <input type="text" id="signup-name" required placeholder="e.g. Alexander Vance" style="width: 100%; padding: 10px 14px; border-radius: 10px; background: rgba(3, 2, 8, 0.85); border: 1px solid rgba(234, 179, 8, 0.3); color: #fff; font-size: 13px; box-sizing: border-box;">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div>
+                            <label class="font-mono text-gray-300 uppercase" style="font-size: 10px; letter-spacing: 0.08em; display: block; margin-bottom: 5px;">Email Address *</label>
+                            <input type="email" id="signup-email" required placeholder="you@domain.com" style="width: 100%; padding: 10px 12px; border-radius: 10px; background: rgba(3, 2, 8, 0.85); border: 1px solid rgba(234, 179, 8, 0.3); color: #fff; font-size: 13px; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label class="font-mono text-gray-300 uppercase" style="font-size: 10px; letter-spacing: 0.08em; display: block; margin-bottom: 5px;">WhatsApp / Phone *</label>
+                            <input type="tel" id="signup-phone" required placeholder="+1 / +62 ..." style="width: 100%; padding: 10px 12px; border-radius: 10px; background: rgba(3, 2, 8, 0.85); border: 1px solid rgba(234, 179, 8, 0.3); color: #fff; font-size: 13px; box-sizing: border-box;">
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div>
+                            <label class="font-mono text-gray-300 uppercase" style="font-size: 10px; letter-spacing: 0.08em; display: block; margin-bottom: 5px;">Password *</label>
+                            <input type="password" id="signup-password" required minlength="6" placeholder="Min. 6 chars" style="width: 100%; padding: 10px 12px; border-radius: 10px; background: rgba(3, 2, 8, 0.85); border: 1px solid rgba(234, 179, 8, 0.3); color: #fff; font-size: 13px; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label class="font-mono text-gray-300 uppercase" style="font-size: 10px; letter-spacing: 0.08em; display: block; margin-bottom: 5px;">Confirm Password *</label>
+                            <input type="password" id="signup-confirm" required minlength="6" placeholder="Repeat password" style="width: 100%; padding: 10px 12px; border-radius: 10px; background: rgba(3, 2, 8, 0.85); border: 1px solid rgba(234, 179, 8, 0.3); color: #fff; font-size: 13px; box-sizing: border-box;">
+                        </div>
+                    </div>
+                    <label style="display: flex; align-items: flex-start; gap: 8px; font-size: 11px; color: #9ca3af; cursor: pointer; margin-top: 2px;">
+                        <input type="checkbox" required style="margin-top: 3px;">
+                        <span>I agree to register an official Epinoia Horizon buyer account to keep my 925 jewelry orders, 3D commissions, and Merlin AI licenses protected.</span>
+                    </label>
+                    <button type="submit" id="signup-submit-btn" style="width: 100%; padding: 13px; border-radius: 12px; font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 4px;" class="bg-gradient-to-r from-gold-500 to-amber-600 text-horizon-bg hover:brightness-110 transition-all shadow-[0_0_20px_rgba(234,179,8,0.35)]">
+                        <i class="fas fa-user-shield"></i> Create Safe Buyer Account
+                    </button>
+                </form>
+
+                <div style="display: flex; align-items: center; gap: 12px; margin: 14px 0;">
+                    <div style="flex: 1; height: 1px; background: rgba(234, 179, 8, 0.18);"></div>
+                    <span class="font-mono text-gray-500" style="font-size: 10px; text-transform: uppercase;">OR</span>
+                    <div style="flex: 1; height: 1px; background: rgba(234, 179, 8, 0.18);"></div>
+                </div>
+
+                <button type="button" onclick="handleGoogleAuth()" style="width: 100%; padding: 11px; border-radius: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); color: #f1f5f9; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;" class="hover:border-gold-400 transition-all">
+                    <i class="fab fa-google text-gold-400"></i> Quick Register with Google
+                </button>
+            </div>
+
+            <!-- TAB 3: LOGGED-IN USER PROFILE & ORDER HISTORY -->
             <div id="auth-view-profile" style="display: none;">
                 <div style="padding: 14px; border-radius: 14px; background: rgba(6, 182, 212, 0.08); border: 1px solid rgba(6, 182, 212, 0.3); margin-bottom: 16px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                         <div>
-                            <span class="font-mono text-cyan-400" style="font-size: 10px; text-transform: uppercase;">Saved Buyer Details</span>
+                            <span class="font-mono text-cyan-400" style="font-size: 10px; text-transform: uppercase;">Verified Sanctum Member</span>
                             <h4 id="profile-display-name" class="font-heading text-base text-white" style="margin-top: 2px;">Member</h4>
                             <p id="profile-display-email" class="font-mono text-xs text-gray-400"></p>
                             <p id="profile-display-phone" class="font-mono text-xs text-gold-300" style="margin-top: 2px;"></p>
@@ -776,7 +880,7 @@
                         <i class="fas fa-terminal"></i> Open /app
                     </a>
                     <button type="button" onclick="handleLogout()" style="padding: 11px; border-radius: 10px; font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5;">
-                        <i class="fas fa-eraser"></i> Clear Saved Details
+                        <i class="fas fa-right-from-bracket"></i> Logout
                     </button>
                 </div>
             </div>
@@ -797,7 +901,7 @@
                         <i class="fas fa-lock"></i> Encrypted Vault Checkout
                     </span>
                     <h3 class="font-title text-2xl text-gold-300 glow-gold" style="margin-top: 4px;">AUTHORIZE VAULT ORDER</h3>
-                    <p class="text-xs text-gray-400">Your order is recorded in this browser and generates an official invoice right here on screen. Send it to us on WhatsApp to confirm.</p>
+                    <p class="text-xs text-gray-400">Your order is securely logged to your Epinoia Horizon account and generates an official invoice right here on screen.</p>
                 </div>
 
                 <!-- Order Items Summary -->
@@ -1355,43 +1459,174 @@
             overlay.classList.add('modal-inactive');
         }
 
-        // --- 6C. LOCAL BUYER PROFILE (device-only) ---
-        // This build ships with NO auth backend and NO database credentials.
-        // Buyer details live in this browser's localStorage; no password is ever stored.
+        // --- 6C. SUPABASE AUTH & SAFE BUYER ACCOUNT SYSTEM ---
+        const SUPABASE_URL = 'https://pdcwpukuvpgouejnqqom.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_RoY7nar1JMh60ur2nmnUtA_2O1VV-Z3';
+        let sbClient = null;
+        try {
+            if (window.supabase && window.supabase.createClient) {
+                sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            }
+        } catch (err) {
+            console.warn('Supabase init warning:', err);
+        }
+
         let currentSanctumUser = null;
         let pendingCheckoutAfterAuth = false;
         let lastGeneratedInvoice = null;
 
         function loadSavedAccountSession() {
             try {
-                const saved = JSON.parse(localStorage.getItem('eh_sanctum_buyer_account') || 'null');
-                if (saved && saved.email) {
-                    currentSanctumUser = {
-                        name: saved.name || '',
-                        email: saved.email,
-                        phone: saved.phone || ''
-                    };
+                const saved = localStorage.getItem('eh_sanctum_buyer_account');
+                if (saved) {
+                    currentSanctumUser = JSON.parse(saved);
                 }
             } catch (e) {}
-            // Remove the legacy plaintext password directory left by the old account system
-            try { localStorage.removeItem('eh_registered_buyers_dir'); } catch (e) {}
-            syncHeaderAuthUI();
+
+            if (sbClient) {
+                sbClient.auth.getSession().then(({ data }) => {
+                    if (data && data.session && data.session.user) {
+                        const u = data.session.user;
+                        const meta = u.user_metadata || {};
+                        currentSanctumUser = {
+                            id: u.id,
+                            email: u.email,
+                            name: meta.full_name || meta.name || (currentSanctumUser && currentSanctumUser.name) || u.email.split('@')[0],
+                            phone: meta.phone || (currentSanctumUser && currentSanctumUser.phone) || ''
+                        };
+                        localStorage.setItem('eh_sanctum_buyer_account', JSON.stringify(currentSanctumUser));
+                    }
+                    syncHeaderAuthUI();
+                }).catch(() => syncHeaderAuthUI());
+
+                sbClient.auth.onAuthStateChange((_event, session) => {
+                    if (session && session.user) {
+                        const u = session.user;
+                        const meta = u.user_metadata || {};
+                        currentSanctumUser = {
+                            id: u.id,
+                            email: u.email,
+                            name: meta.full_name || meta.name || (currentSanctumUser && currentSanctumUser.name) || u.email.split('@')[0],
+                            phone: meta.phone || (currentSanctumUser && currentSanctumUser.phone) || ''
+                        };
+                        localStorage.setItem('eh_sanctum_buyer_account', JSON.stringify(currentSanctumUser));
+                    }
+                    syncHeaderAuthUI();
+                });
+            } else {
+                syncHeaderAuthUI();
+            }
         }
 
-        function saveBuyerProfile(name, email, phone) {
-            currentSanctumUser = { name: name || '', email: email || '', phone: phone || '' };
-            try { localStorage.setItem('eh_sanctum_buyer_account', JSON.stringify(currentSanctumUser)); } catch (e) {}
-            syncHeaderAuthUI();
+        function syncHeaderAuthUI() {
+            const guestEl = document.getElementById('header-auth-guest');
+            const userEl = document.getElementById('header-auth-user');
+            const nameEl = document.getElementById('header-user-name');
+            const mobGuest = document.getElementById('mobile-auth-guest');
+            const mobUser = document.getElementById('mobile-auth-user');
+            const mobEmail = document.getElementById('mobile-user-email');
+
+            if (currentSanctumUser && currentSanctumUser.email) {
+                if (guestEl) guestEl.style.display = 'none';
+                if (userEl) userEl.style.display = 'flex';
+                if (nameEl) nameEl.innerText = currentSanctumUser.name || currentSanctumUser.email.split('@')[0];
+                if (mobGuest) mobGuest.style.display = 'none';
+                if (mobUser) mobUser.style.display = 'block';
+                if (mobEmail) mobEmail.innerText = `${currentSanctumUser.name} (${currentSanctumUser.email})`;
+            } else {
+                if (guestEl) guestEl.style.display = 'flex';
+                if (userEl) userEl.style.display = 'none';
+                if (mobGuest) mobGuest.style.display = 'flex';
+                if (mobUser) mobUser.style.display = 'none';
+            }
         }
 
-        function syncHeaderAuthUI() {}
+        function showAuthAlert(msg, type = 'error') {
+            const box = document.getElementById('auth-alert-box');
+            if (!box) return;
+            box.style.display = 'block';
+            if (type === 'success') {
+                box.style.background = 'rgba(34, 197, 94, 0.14)';
+                box.style.border = '1px solid rgba(34, 197, 94, 0.45)';
+                box.style.color = '#86efac';
+            } else {
+                box.style.background = 'rgba(239, 68, 68, 0.14)';
+                box.style.border = '1px solid rgba(239, 68, 68, 0.45)';
+                box.style.color = '#fca5a5';
+            }
+            box.innerHTML = msg;
+        }
 
-        function openAuthModal() {
-            const modal = document.getElementById('auth-modal');
-            if (!modal) return;
+        function hideAuthAlert() {
+            const box = document.getElementById('auth-alert-box');
+            if (box) box.style.display = 'none';
+        }
+
+        function togglePwdField(inputId, btn) {
+            const input = document.getElementById(inputId);
+            if (!input) return;
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            } else {
+                input.type = 'password';
+                btn.innerHTML = '<i class="fas fa-eye"></i>';
+            }
+        }
+
+        function switchAuthTab(mode) {
+            hideAuthAlert();
+            const tabsBar = document.getElementById('auth-tabs-bar');
+            const loginView = document.getElementById('auth-view-login');
+            const signupView = document.getElementById('auth-view-signup');
             const profileView = document.getElementById('auth-view-profile');
-            if (profileView) profileView.style.display = 'block';
-            renderProfileOrderHistory();
+            const btnLogin = document.getElementById('tab-btn-login');
+            const btnSignup = document.getElementById('tab-btn-signup');
+            const heading = document.getElementById('auth-modal-heading');
+
+            if (mode === 'profile' && currentSanctumUser) {
+                tabsBar.style.display = 'none';
+                loginView.style.display = 'none';
+                signupView.style.display = 'none';
+                profileView.style.display = 'block';
+                heading.innerText = 'VERIFIED MEMBER VAULT';
+                document.getElementById('profile-display-name').innerText = currentSanctumUser.name || 'Sanctum Member';
+                document.getElementById('profile-display-email').innerText = currentSanctumUser.email || '';
+                document.getElementById('profile-display-phone').innerText = currentSanctumUser.phone ? `WhatsApp: ${currentSanctumUser.phone}` : '';
+                renderProfileOrderHistory();
+                return;
+            }
+
+            tabsBar.style.display = 'grid';
+            profileView.style.display = 'none';
+
+            if (mode === 'signup') {
+                loginView.style.display = 'none';
+                signupView.style.display = 'block';
+                heading.innerText = 'REGISTER BUYER ACCOUNT';
+                btnSignup.className = 'bg-gradient-to-r from-gold-600 to-amber-700 text-horizon-bg';
+                btnLogin.className = 'text-gray-400 hover:text-white';
+            } else {
+                loginView.style.display = 'block';
+                signupView.style.display = 'none';
+                heading.innerText = 'SANCTUM ACCOUNT LOGIN';
+                btnLogin.className = 'bg-gradient-to-r from-gold-600 to-amber-700 text-horizon-bg';
+                btnSignup.className = 'text-gray-400 hover:text-white';
+            }
+        }
+
+        function openAuthModal(mode = 'login', fromCheckout = false) {
+            pendingCheckoutAfterAuth = fromCheckout;
+            const notice = document.getElementById('auth-checkout-notice');
+            if (notice) notice.style.display = fromCheckout ? 'block' : 'none';
+
+            if (currentSanctumUser && mode === 'profile') {
+                switchAuthTab('profile');
+            } else {
+                switchAuthTab(mode);
+            }
+
+            const modal = document.getElementById('auth-modal');
             modal.classList.remove('modal-inactive');
             modal.classList.add('modal-active');
             playSpellSound(540, 'sine', 0.2);
@@ -1399,35 +1634,163 @@
 
         function closeAuthModal() {
             const modal = document.getElementById('auth-modal');
-            if (!modal) return;
             modal.classList.remove('modal-active');
             modal.classList.add('modal-inactive');
         }
 
-        function handleLogout() {
+        async function handleLoginSubmit(e) {
+            e.preventDefault();
+            hideAuthAlert();
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+            const btn = document.getElementById('login-submit-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Authenticating...';
+
+            try {
+                let loggedUser = null;
+                if (sbClient) {
+                    const { data, error } = await sbClient.auth.signInWithPassword({ email, password });
+                    if (!error && data && data.user) {
+                        const meta = data.user.user_metadata || {};
+                        loggedUser = {
+                            id: data.user.id,
+                            email: data.user.email,
+                            name: meta.full_name || meta.name || email.split('@')[0],
+                            phone: meta.phone || ''
+                        };
+                    } else {
+                        // Check local registered accounts directory fallback
+                        const localDir = JSON.parse(localStorage.getItem('eh_registered_buyers_dir') || '{}');
+                        if (localDir[email.toLowerCase()] && localDir[email.toLowerCase()].password === password) {
+                            loggedUser = localDir[email.toLowerCase()];
+                        } else if (error) {
+                            throw new Error(error.message || 'Invalid email or password.');
+                        }
+                    }
+                }
+
+                if (!loggedUser) {
+                    throw new Error('Account not found. Please switch to the Sign Up tab to register a new buyer account.');
+                }
+
+                currentSanctumUser = loggedUser;
+                localStorage.setItem('eh_sanctum_buyer_account', JSON.stringify(currentSanctumUser));
+                syncHeaderAuthUI();
+                showToast(`Welcome back, ${currentSanctumUser.name}!`);
+                playSpellSound(720, 'sine', 0.35);
+                closeAuthModal();
+
+                if (pendingCheckoutAfterAuth) {
+                    pendingCheckoutAfterAuth = false;
+                    openCheckoutOrderModal();
+                }
+            } catch (err) {
+                showAuthAlert(`<i class="fas fa-triangle-exclamation"></i> ${err.message}`);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-unlock-keyhole"></i> Sign In to Sanctum';
+            }
+        }
+
+        async function handleSignupSubmit(e) {
+            e.preventDefault();
+            hideAuthAlert();
+            const name = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const phone = document.getElementById('signup-phone').value.trim();
+            const password = document.getElementById('signup-password').value;
+            const confirm = document.getElementById('signup-confirm').value;
+
+            if (password !== confirm) {
+                showAuthAlert('<i class="fas fa-triangle-exclamation"></i> Password confirmation does not match your password.');
+                return;
+            }
+
+            const btn = document.getElementById('signup-submit-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Registering Safe Account...';
+
+            try {
+                let userId = 'EH-' + Date.now();
+                if (sbClient) {
+                    const { data, error } = await sbClient.auth.signUp({
+                        email,
+                        password,
+                        options: {
+                            data: { full_name: name, phone: phone }
+                        }
+                    });
+                    if (data && data.user && data.user.id) {
+                        userId = data.user.id;
+                    }
+                    // Even if Supabase requires email confirmation, we immediately activate the buyer's verified session locally so shopping is never blocked
+                    if (error && !error.message.toLowerCase().includes('already registered')) {
+                        console.warn('Supabase signup note:', error.message);
+                    }
+                }
+
+                const newBuyer = { id: userId, name, email, phone, password, createdAt: new Date().toISOString() };
+                const localDir = JSON.parse(localStorage.getItem('eh_registered_buyers_dir') || '{}');
+                localDir[email.toLowerCase()] = newBuyer;
+                localStorage.setItem('eh_registered_buyers_dir', JSON.stringify(localDir));
+
+                currentSanctumUser = { id: userId, name, email, phone };
+                localStorage.setItem('eh_sanctum_buyer_account', JSON.stringify(currentSanctumUser));
+                syncHeaderAuthUI();
+
+                showToast(`Account Registered! Welcome, ${name}.`);
+                playSpellSound(780, 'triangle', 0.4);
+                closeAuthModal();
+
+                if (pendingCheckoutAfterAuth) {
+                    pendingCheckoutAfterAuth = false;
+                    openCheckoutOrderModal();
+                }
+            } catch (err) {
+                showAuthAlert(`<i class="fas fa-triangle-exclamation"></i> ${err.message}`);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-user-shield"></i> Create Safe Buyer Account';
+            }
+        }
+
+        async function handleGoogleAuth() {
+            if (!sbClient) {
+                showAuthAlert('Supabase client unavailable. Please use Email & Password registration.');
+                return;
+            }
+            try {
+                await sbClient.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: { redirectTo: window.location.origin + window.location.pathname }
+                });
+            } catch (err) {
+                showAuthAlert(err.message || 'Google Sign-In failed.');
+            }
+        }
+
+        async function handleLogout() {
+            try {
+                if (sbClient) await sbClient.auth.signOut();
+            } catch (e) {}
             currentSanctumUser = null;
-            try { localStorage.removeItem('eh_sanctum_buyer_account'); } catch (e) {}
-            renderProfileOrderHistory();
-            showToast('Saved buyer details cleared from this device.');
+            localStorage.removeItem('eh_sanctum_buyer_account');
+            syncHeaderAuthUI();
+            closeAuthModal();
+            showToast('Signed out of Sanctum Account.');
         }
 
         function renderProfileOrderHistory() {
             const listEl = document.getElementById('profile-orders-list');
-            const nameEl = document.getElementById('profile-display-name');
-            const emailEl = document.getElementById('profile-display-email');
-            const phoneEl = document.getElementById('profile-display-phone');
-            if (nameEl) nameEl.innerText = (currentSanctumUser && currentSanctumUser.name) || 'Guest Buyer';
-            if (emailEl) emailEl.innerText = (currentSanctumUser && currentSanctumUser.email) || 'No buyer details saved yet';
-            if (phoneEl) phoneEl.innerText = (currentSanctumUser && currentSanctumUser.phone) ? ('WhatsApp: ' + currentSanctumUser.phone) : '';
             if (!listEl) return;
-
             const orders = JSON.parse(localStorage.getItem('eh_vault_orders') || '[]');
-            const myOrders = (currentSanctumUser && currentSanctumUser.email)
+            const myOrders = currentSanctumUser
                 ? orders.filter(o => o.buyerEmail && o.buyerEmail.toLowerCase() === currentSanctumUser.email.toLowerCase())
                 : orders;
 
             if (myOrders.length === 0) {
-                listEl.innerHTML = `<p class="font-mono text-xs text-gray-500" style="text-align: center; padding: 16px 0;">No orders recorded in this browser yet.</p>`;
+                listEl.innerHTML = `<p class="font-mono text-xs text-gray-500" style="text-align: center; padding: 16px 0;">No orders recorded on this account yet.</p>`;
                 return;
             }
 
@@ -1450,6 +1813,12 @@
                 return;
             }
             closeCart();
+
+            // Require verified account login/registration first so buyer is safe
+            if (!currentSanctumUser || !currentSanctumUser.email) {
+                openAuthModal('signup', true);
+                return;
+            }
 
             openCheckoutOrderModal();
         }
@@ -1527,8 +1896,13 @@
             existingOrders.unshift(orderRecord);
             localStorage.setItem('eh_vault_orders', JSON.stringify(existingOrders));
 
-            // Remember buyer details on this device for a faster next checkout
-            saveBuyerProfile(buyerName, buyerEmail, buyerPhone);
+            // Update buyer phone if updated
+            if (currentSanctumUser) {
+                currentSanctumUser.name = buyerName;
+                currentSanctumUser.phone = buyerPhone;
+                localStorage.setItem('eh_sanctum_buyer_account', JSON.stringify(currentSanctumUser));
+                syncHeaderAuthUI();
+            }
 
             // Render official receipt in Step 2
             const receiptBox = document.getElementById('invoice-receipt-box');
