@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="/assets/store.css?v=4">
+  <link rel="stylesheet" href="/assets/store.css?v=5">
   <!-- Google model-viewer -->
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
     <meta name="robots" content="noindex, follow">
@@ -87,7 +87,8 @@
   <p>© 2026 EPINOIA HORIZON INC. ARTISAN ATELIER &amp; HARNESS VAULT.</p>
 </footer>
 
-<script src="/assets/store.js?v=6"></script>
+<script src="/assets/account.js"></script>
+<script src="/assets/store.js?v=7"></script>
 <script>
   let currentProduct = null;
 
@@ -154,6 +155,7 @@
           <h1 class="detail-title">${currentProduct.title}</h1>
           <div class="detail-price">$${currentProduct.price.toLocaleString()} <span style="font-size:13px;color:var(--dim);font-family:'Inter',sans-serif;font-weight:400;">USD</span></div>
           <p class="detail-desc">${currentProduct.fullDesc || currentProduct.shortDesc}</p>
+          <div id="prov-block"></div>
 
           <h3 style="font-family:'Cinzel',serif;font-size:14px;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;border-bottom:1px solid var(--line);padding-bottom:8px;">
             <i class="fas fa-list-check" style="color:var(--cyan);margin-right:6px;"></i> Technical &amp; Material Specifications
@@ -175,6 +177,60 @@
         </div>
       </div>
     `;
+    renderProvenance(currentProduct);
+  }
+
+  /**
+   * Provenance on the buyer's page: the root the maker computed, the six tributaries it covers, and
+   * — when the listing carries one — the maker's signature, re-checked here in this browser rather
+   * than trusted because the page says so.
+   */
+  async function renderProvenance(p) {
+    const host = document.getElementById('prov-block');
+    if (!host) return;
+    const prov = p && p.provenance;
+    const sig = p && p.signature;
+    if (!prov && !sig) return;
+
+    const facetRows = prov && prov.facets ? Object.entries(prov.facets).map(([k, v]) => `
+      <div class="kv"><dt>${k}</dt><dd>${String(v || '—')}</dd></div>`).join('') : '';
+    const missing = prov && prov.missing && prov.missing.length ? `<div class="warn">incomplete: ${prov.missing.join(', ')}</div>` : '';
+
+    host.innerHTML = `
+      <h3 style="font-family:'Cinzel',serif;font-size:13px;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin:22px 0 10px;border-bottom:1px solid var(--line);padding-bottom:8px;">
+        <i class="fas fa-fingerprint" style="color:var(--cyan);margin-right:6px;"></i> Provenance
+      </h3>
+      ${prov && prov.root ? `
+        <div class="kv"><dt>dreamball root</dt><dd class="mono" title="${prov.root}">${prov.root}</dd></div>
+        <div class="kv"><dt>tributaries</dt><dd>${6 - (prov.missing ? prov.missing.length : 0)}/6</dd></div>` : ''}
+      ${facetRows}
+      ${missing}
+      ${sig ? `
+        <div class="kv"><dt>signed by</dt><dd class="mono" title="${sig.did}">${sig.did}</dd></div>
+        <button id="btnVerifyProv" class="verify">Verify this listing in my browser</button>
+        <div id="verifyOut" class="verify-out"></div>` : `
+        <div class="dim" style="margin-top:8px;font-size:12px;color:var(--muted)">This listing is not signed by a maker key.</div>`}
+      <style>
+        #prov-block .kv{display:flex;gap:10px;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(148,163,184,.08);font-size:12px}
+        #prov-block dt{color:var(--dim);text-transform:uppercase;letter-spacing:.1em;font-size:10px;font-family:'JetBrains Mono',monospace}
+        #prov-block dd{margin:0;color:#e2e8f0;max-width:62%;text-align:right}
+        #prov-block .mono{font-family:'JetBrains Mono',monospace;font-size:10px;word-break:break-all;color:var(--muted)}
+        #prov-block .warn{margin-top:6px;font-size:11px;color:#fde047}
+        #prov-block .verify{margin-top:12px;padding:9px 14px;border-radius:999px;border:1px solid rgba(234,179,8,.45);background:transparent;color:var(--gold);font-family:Cinzel,serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+        #prov-block .verify-out{margin-top:8px;font-size:11px;font-family:'JetBrains Mono',monospace}
+      </style>`;
+
+    const btn = document.getElementById('btnVerifyProv');
+    if (!btn || !sig) return;
+    btn.onclick = async function () {
+      const out = document.getElementById('verifyOut');
+      if (!window.EpinoiaAccount) { out.textContent = 'verifier unavailable'; out.style.color = '#d99a2b'; return; }
+      out.textContent = 'checking…'; out.style.color = 'var(--muted)';
+      const { signature, ...unsigned } = p;
+      const ok = await window.EpinoiaAccount.verify(unsigned, signature);
+      out.textContent = ok ? 'signature valid — this is the listing the maker signed' : 'signature BROKEN — the listing was changed after signing';
+      out.style.color = ok ? '#86efac' : '#fca5a5';
+    };
   }
 
   function toggleAutoRotate() {

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>Atelier earnings self-test</title><meta name="robots" content="noindex">
+<style>body{background:#0a0812;color:#ededef;font-family:ui-monospace,monospace;padding:1.2rem;line-height:1.55;font-size:.76rem}
+h1{font-size:.85rem;color:#facc15;margin:0 0 .7rem}.pass{color:#86efac}.fail{color:#fca5a5}.dim{color:#8a8d94}
+iframe{width:1px;height:1px;opacity:0;border:0;position:absolute;left:-9999px}</style></head>
+<body>
+<h1>Atelier earnings self-test</h1>
+<div id="out">running…</div>
+<iframe id="atl"></iframe>
+
+<script>
+window.addEventListener('error', e => { const o=document.getElementById('out'); if(o) o.innerHTML='<div class="fail">ERROR '+(e.message||e.type)+'</div>'; document.body.dataset.result='ERROR'; });
+window.addEventListener('unhandledrejection', e => { const o=document.getElementById('out'); const m=(e.reason&&(e.reason.message||e.reason))||'rejected'; if(o) o.innerHTML='<div class="fail">REJECTED '+String(m).slice(0,200)+'</div>'; document.body.dataset.result='REJECTED'; });
+</script>
+<script src="/assets/account.js"></script>
+<script type="module">
+import { DEFAULT_SPLIT } from '/assets/split.js';
+
+const out=document.getElementById('out'), lines=[]; let pass=0, fail=0;
+const check=(l,c,d)=>{ if(c){pass++;lines.push('PASS  '+l+(d?'  '+d:''));} else {fail++;lines.push('FAIL  '+l+(d?'  '+d:''));} };
+
+if (!location.search.includes('run=1')) {
+  out.innerHTML='<div class="dim">inert — add ?run=1 (clears this browser account, listings and orders)</div>';
+  document.body.dataset.result='IDLE';
+} else {
+  ['eh_sanctum_buyer_account','eh_registered_buyers_dir','epinoia_custom_products_v3','eh_vault_orders'].forEach(k=>localStorage.removeItem(k));
+  const me={id:'EH-ATL-1',name:'Mark Test',email:'mark@test.local',phone:'+61 0',password:'x'};
+  localStorage.setItem('eh_registered_buyers_dir',JSON.stringify({'mark@test.local':me}));
+  localStorage.setItem('eh_sanctum_buyer_account',JSON.stringify(me));
+  const acc=await window.EpinoiaAccount.becomeCreator('mark-maker');
+
+  const mk=async (id,title,price)=>{ const l={id,title,price,split:DEFAULT_SPLIT,owner:acc.id,creatorHandle:'mark-maker',
+      provenance:{root:'0x'+id.replace(/[^a-f0-9]/g,'').padEnd(64,'0').slice(0,64),facets:{who:'M',what:title,when:'2026-10-25',why:'t',where:'h',how:'x'},missing:[]}};
+    const p=await window.EpinoiaAccount.sign(l); return {...l,signature:p}; };
+
+  const a=await mk('pendant-a','Pendant A',45);
+  const b=await mk('pendant-b','Pendant B',30);
+  localStorage.setItem('epinoia_custom_products_v3',JSON.stringify([a,b]));
+
+  const orders=[
+    {invoiceId:'INV-A',date:'2026-10-25',items:[{...a,qty:2}],total:90,proofs:[{id:a.id,title:a.title,root:a.provenance.root,signedBy:a.signature.did,listing:a}]},
+    {invoiceId:'INV-B',date:'2026-10-25',items:[{...b,qty:1}],total:30,proofs:[{id:b.id,title:b.title,root:b.provenance.root,signedBy:b.signature.did,listing:b}]},
+    {invoiceId:'INV-C',date:'2026-10-25',items:[{id:'foreign',title:'Not Mine',price:99,qty:1,owner:'EH-SOMEONE-ELSE'}],total:99,proofs:[]}
+  ];
+  localStorage.setItem('eh_vault_orders',JSON.stringify(orders));
+
+  const frame=document.getElementById('atl');
+  await new Promise(r=>{ frame.onload=r; frame.src='/store/creator.html'; setTimeout(r,9000); });
+  const d=frame.contentDocument, h=d?d.documentElement.innerHTML:'';
+
+  check('atelier rendered', h.includes('Your earnings'), '');
+  check('your share is maker-only: $96.00', h.includes('$96.00'), '80% of $120');
+  check('gross sales $120.00 (foreign order excluded)', h.includes('$120.00'), '');
+  check('units sold = 3', /<b>3<\/b>\s*<span>units sold/i.test(h) || h.includes('>3</b><span>units sold'), '');
+  check('per-listing rows present', h.includes('Pendant A') && h.includes('Pendant B'), '');
+  check('foreign listing excluded', !h.includes('Not Mine'), '');
+  check('listings show a price (price vs priceCents)', h.includes('$45.00') && h.includes('$30.00'), '');
+  check('honest about browser-local orders', /browser/i.test(h) && /server ledger/i.test(h), '');
+  check('catalogue value is the sum of listing prices ($75.00)', h.includes('$75.00'), '45 + 30');
+  check('order count is labelled as device-local', /orders on device/i.test(h), '');
+
+  out.innerHTML=lines.map(l=>'<div class="'+(l.startsWith('PASS')?'pass':'fail')+'">'+l.replace(/</g,'&lt;')+'</div>').join('')
+    +'<div class="'+(fail?'fail':'dim')+'" style="margin-top:.6rem">'+pass+' passed, '+fail+' failed</div>';
+  document.body.dataset.result=fail?'FAIL':'PASS';
+}
+</script>
+</body></html>

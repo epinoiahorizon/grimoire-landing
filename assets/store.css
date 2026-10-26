@@ -42,6 +42,9 @@ a { color: inherit; text-decoration: none; }
   display: flex; align-items: center; justify-content: space-between; gap: 20px;
 }
 .brand { display: flex; align-items: center; gap: 12px; }
+/* the two spans inside the brand were inline, so "EPINOIA HORIZON" and its subtitle collided
+   on one baseline wherever the shell was reused */
+.brand-text { display: flex; flex-direction: column; line-height: 1.15; }
 .brand-icon {
   width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center;
   background: rgba(17, 12, 36, 0.92); border: 1px solid rgba(234, 179, 8, 0.5);

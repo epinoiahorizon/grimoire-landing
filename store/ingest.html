@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ingest — any 3D file to GLB · Epinoia Horizon</title>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+  }
+}
+</script>
+<style>
+  :root{--gold:#facc15;--cyan:#22d3ee;--ink:#e8e6f0;--dim:#8a87a0;--ok:#4ade80;--bad:#f87171}
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(900px 480px at 50% -10%,#160f33,#07050f 65%);color:var(--ink);
+    font-family:Inter,system-ui,sans-serif;min-height:100vh}
+  header{display:flex;align-items:baseline;gap:1rem;padding:1.6rem 2rem .8rem;border-bottom:1px solid rgba(250,204,21,.18)}
+  header h1{font-family:'Cinzel Decorative',serif;font-size:1.3rem;margin:0;color:var(--gold)}
+  header p{margin:0;color:var(--dim);font-size:.76rem}
+  header a{margin-left:auto;color:var(--cyan);text-decoration:none;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase}
+  .wrap{max-width:900px;margin:0 auto;padding:1.6rem 1.4rem 4rem}
+  .card{background:rgba(16,12,32,.75);border:1px solid rgba(250,204,21,.16);border-radius:14px;padding:1.2rem;margin-bottom:1.1rem}
+  .card h2{font-family:Cinzel,serif;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin:0 0 .8rem}
+  .drop{border:1px dashed #2d2550;border-radius:10px;padding:1.1rem;background:#0a0818;text-align:center}
+  .drop input{width:100%;font-size:.72rem;color:var(--dim)}
+  .drop input[type=file]::file-selector-button{background:rgba(34,211,238,.1);color:var(--cyan);
+    border:1px solid rgba(34,211,238,.35);border-radius:7px;padding:.3rem .7rem;margin-right:.7rem;
+    font-family:Cinzel,serif;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+  .formats{font-size:.64rem;color:#5b5675;margin-top:.6rem}
+  .or{display:flex;align-items:center;gap:.7rem;color:#4d4870;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;margin:1rem 0}
+  .or::before,.or::after{content:'';flex:1;height:1px;background:#241d3d}
+  .row{display:flex;gap:.5rem}
+  .row input{flex:1;background:#0b0918;border:1px solid #241d3d;border-radius:8px;padding:.55rem .7rem;color:var(--ink);font:inherit;font-size:.78rem}
+  .row input:focus{outline:none;border-color:var(--cyan)}
+  button{cursor:pointer;font-family:Cinzel,serif;font-weight:600;font-size:.66rem;text-transform:uppercase;
+    letter-spacing:.1em;border-radius:9px;padding:.6rem 1rem;border:1px solid rgba(250,204,21,.3);
+    background:rgba(250,204,21,.08);color:var(--gold)}
+  button.primary{background:linear-gradient(180deg,#facc15,#ca9a12);color:#1a1405;border-color:#facc15}
+  #out{display:none}
+  table{width:100%;border-collapse:collapse;font-size:.78rem}
+  td{padding:.36rem 0;border-bottom:1px dotted #241d3d;vertical-align:top}
+  td:first-child{color:#5b5675;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;width:34%}
+  td.mono{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--cyan);word-break:break-all}
+  .state{font-family:'JetBrains Mono',monospace;font-size:.66rem;margin-top:.7rem;min-height:1em;color:var(--dim)}
+  .state.ok{color:var(--ok)}.state.bad{color:var(--bad)}
+  .acts{display:flex;gap:.5rem;margin-top:1rem;flex-wrap:wrap}
+  .note{font-size:.68rem;color:var(--dim);line-height:1.55;margin:.7rem 0 0}
+  .note b{color:var(--gold);font-weight:500}
+</style>
+</head>
+<body>
+<header>
+  <h1>Ingest</h1>
+  <p>glb · gltf · fbx · obj → one GLB, one identity</p>
+  <a href="/store/">← vault</a>
+</header>
+
+<div class="wrap">
+  <section class="card">
+    <h2>Drop a file</h2>
+    <div class="drop">
+      <input id="file" type="file" accept=".glb,.gltf,.fbx,.obj,model/gltf-binary,model/gltf+json">
+      <p class="formats">FBX and OBJ are converted to GLB in this browser — nothing is uploaded anywhere.</p>
+    </div>
+
+    <div class="or">or fetch a URL</div>
+    <div class="row">
+      <input id="url" type="url" placeholder="https://dreamballz.com/scenes/70253467/scene.glb">
+      <button id="go">Fetch</button>
+    </div>
+    <div class="state" id="state"></div>
+  </section>
+
+  <section class="card" id="out">
+    <h2>Result</h2>
+    <table>
+      <tr><td>Format</td><td id="fmt">—</td></tr>
+      <tr><td>Size</td><td id="size">—</td></tr>
+      <tr><td>Content</td><td id="mesh">—</td></tr>
+      <tr><td>Dimensions (m)</td><td id="dims">—</td></tr>
+      <tr><td>CID (v1, raw)</td><td class="mono" id="cid">—</td></tr>
+      <tr><td>sha256</td><td class="mono" id="sha">—</td></tr>
+    </table>
+    <div class="acts">
+      <button class="primary" id="save">Save GLB</button>
+      <button id="copy">Copy manifest</button>
+    </div>
+    <p class="note"><b>Why the browser:</b> the store is static and the server has no Blender, so the
+    conversion has to happen where the file already is. The CID is computed over the converted bytes,
+    so the identity you see is the identity the inventory will confirm.</p>
+  </section>
+</div>
+
+<script type="module" src="/assets/ingest.js"></script>
+</body>
+</html>

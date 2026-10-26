@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>Receipt self-test</title><meta name="robots" content="noindex">
+<style>body{background:#0a0812;color:#ededef;font-family:ui-monospace,monospace;padding:1.2rem;line-height:1.55;font-size:.76rem}
+h1{font-size:.85rem;color:#facc15;margin:0 0 .7rem}.pass{color:#86efac}.fail{color:#fca5a5}.dim{color:#8a8d94}
+iframe{width:1px;height:1px;opacity:0;border:0;position:absolute;left:-9999px}</style></head>
+<body>
+<h1>Receipt self-test</h1>
+<div id="out">running…</div>
+<iframe id="rcpt"></iframe>
+
+<script src="/assets/account.js"></script>
+<script>
+(async function () {
+  const out = document.getElementById('out');
+  const lines = []; let pass = 0, fail = 0;
+  const check = (l, c, d) => { if (c) { pass++; lines.push('PASS  ' + l + (d ? '  ' + d : '')); } else { fail++; lines.push('FAIL  ' + l + (d ? '  ' + d : '')); } };
+
+  if (!location.search.includes('run=1')) {
+    out.innerHTML = '<div class="dim">inert — add ?run=1 (clears this browser account, products and orders)</div>';
+    document.body.dataset.result = 'IDLE'; return;
+  }
+  ['eh_sanctum_buyer_account','eh_registered_buyers_dir','epinoia_custom_products_v3','eh_vault_orders'].forEach(k => localStorage.removeItem(k));
+  const buyer = { id: 'EH-RCPT-1', name: 'Mark Test', email: 'mark@test.local', phone: '+61 0', password: 'x' };
+  localStorage.setItem('eh_registered_buyers_dir', JSON.stringify({ 'mark@test.local': buyer }));
+  localStorage.setItem('eh_sanctum_buyer_account', JSON.stringify(buyer));
+  const acc = await window.EpinoiaAccount.becomeCreator('mark-maker');
+
+  // a signed listing, as the studio would produce
+  const listing = { id: 'test-pendant', title: 'Test Pendant', price: 45, category: 'jewelry',
+    provenance: { root: '0x' + 'ab'.repeat(32), facets: { who: 'M', what: 'pendant', when: '2026-10-25', why: 'test', where: 'here', how: 'hand' }, missing: [] },
+    owner: acc.id, creatorHandle: 'mark-maker' };
+  const proof = await window.EpinoiaAccount.sign(listing);
+  const signed = { ...listing, signature: proof };
+
+  const order = { invoiceId: 'INV-TEST-1', date: '2026-10-25', buyerName: 'Mark Test', buyerEmail: 'mark@test.local',
+    paymentMethod: 'bank', items: [{ ...signed, qty: 1 }], total: 45,
+    proofs: [{ id: signed.id, title: signed.title, root: signed.provenance.root, signedBy: proof.did, maker: 'mark-maker', listing: signed }] };
+  localStorage.setItem('eh_vault_orders', JSON.stringify([order]));
+
+  const frame = document.getElementById('rcpt');
+  await new Promise(r => { frame.onload = r; frame.src = '/store/receipt.html?id=INV-TEST-1'; setTimeout(r, 8000); });
+
+  const d = frame.contentDocument;
+  const html = d ? d.documentElement.innerHTML : '';
+  check('receipt rendered the invoice', html.includes('INV-TEST-1'));
+  check('line item shown', html.includes('Test Pendant'));
+  check('root printed on the receipt', html.includes('abababababab'));
+  check('signer did printed', html.includes(proof.did.slice(0, 20)));
+  check('verify button present', !!d.getElementById('btnProofs') && !!d.querySelector('[data-verify]'));
+
+  // click verify inside the receipt and read its verdict
+  const btn = d.querySelector('[data-verify]');
+  if (btn) {
+    btn.click();
+    await new Promise(r => setTimeout(r, 1200));
+    const res = d.getElementById('out-0');
+    check('receipt verifies the item in-browser', res && /signature valid/.test(res.textContent), res && res.textContent.slice(0, 60));
+  }
+
+  // tamper the stored snapshot: the receipt must notice
+  const tampered = JSON.parse(localStorage.getItem('eh_vault_orders'));
+  tampered[0].proofs[0].listing.price = 1;
+  tampered[0].proofs[0].listing.signature = proof;
+  localStorage.setItem('eh_vault_orders', JSON.stringify(tampered));
+  await new Promise(r => { frame.onload = r; frame.src = '/store/receipt.html?id=INV-TEST-1&x=' + Date.now(); setTimeout(r, 8000); });
+  const d2 = frame.contentDocument;
+  d2.querySelector('[data-verify]').click();
+  await new Promise(r => setTimeout(r, 1200));
+  const res2 = d2.getElementById('out-0');
+  check('altered receipt is caught', res2 && /BROKEN/.test(res2.textContent), res2 && res2.textContent.slice(0, 60));
+
+  out.innerHTML = lines.map(l => '<div class="' + (l.startsWith('PASS') ? 'pass' : 'fail') + '">' + l.replace(/</g,'&lt;') + '</div>').join('')
+    + '<div class="' + (fail ? 'fail' : 'dim') + '" style="margin-top:.6rem">' + pass + ' passed, ' + fail + ' failed</div>';
+  document.body.dataset.result = fail ? 'FAIL' : 'PASS';
+})();
+</script>
+</body></html>

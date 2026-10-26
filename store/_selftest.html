@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Account self-test</title>
+  <meta name="robots" content="noindex">
+  <style>
+    body{background:#0a0812;color:#ededef;font-family:ui-monospace,monospace;padding:1.4rem;line-height:1.6}
+    h1{font-size:.9rem;color:#facc15;margin:0 0 .8rem}
+    .pass{color:#86efac}.fail{color:#fca5a5}.dim{color:#8a8d94}
+    #out div{padding:.12rem 0;font-size:.76rem}
+  </style>
+</head>
+<body>
+<h1>Account self-test</h1>
+<div id="out">running…</div>
+
+<script>
+window.addEventListener('error', function (e) {
+  var o = document.getElementById('out');
+  if (o) o.innerHTML = '<div class="fail">ERROR ' + (e.message || e.type) + '</div>';
+  document.body.dataset.result = 'ERROR';
+});
+window.addEventListener('unhandledrejection', function (e) {
+  var o = document.getElementById('out');
+  var msg = (e.reason && (e.reason.message || e.reason)) || 'rejected';
+  if (o) o.innerHTML = '<div class="fail">REJECTED ' + String(msg).slice(0, 200) + '</div>';
+  document.body.dataset.result = 'REJECTED';
+});
+</script>
+<script src="/assets/account.js"></script>
+<script>
+(async function () {
+  const out = document.getElementById('out');
+  const lines = [];
+  let pass = 0, fail = 0;
+  function check(label, cond, detail) {
+    if (cond) { pass++; lines.push('PASS  ' + label + (detail ? '  ' + detail : '')); }
+    else { fail++; lines.push('FAIL  ' + label + (detail ? '  ' + detail : '')); }
+  }
+
+  // This page CLEARS local storage to make the test deterministic. It must never run for a
+  // casual visitor who happens to land on it, or their account disappears.
+  if (!location.search.includes('run=1')) {
+    out.innerHTML = '<div class="dim">Self-test is inert. Add <code>?run=1</code> to run it.</div>' +
+      '<div class="dim">Running it clears the store account, cart, products and orders held in this browser.</div>';
+    document.body.dataset.result = 'IDLE';
+    return;
+  }
+
+  ['eh_sanctum_buyer_account', 'eh_registered_buyers_dir', 'epinoia_custom_products_v3', 'eh_vault_orders'].forEach(function (k) {
+    localStorage.removeItem(k);
+  });
+
+  // 1. sign up as a buyer, exactly the shape store.js writes
+  const buyer = { id: 'EH-TEST-1', name: 'Duke Test', email: 'duke@test.local', phone: '+61 000', password: 'x' };
+  const dir = {}; dir[buyer.email] = buyer;
+  localStorage.setItem('eh_registered_buyers_dir', JSON.stringify(dir));
+  localStorage.setItem('eh_sanctum_buyer_account', JSON.stringify(buyer));
+
+  const u1 = window.EpinoiaAccount.current();
+  check('account reads back', u1 && u1.email === 'duke@test.local', u1 && u1.email);
+  check('defaults to buyer role', u1 && u1.roles.length === 1 && u1.roles[0] === 'buyer', u1 && u1.roles.join(','));
+  check('not a creator yet', u1 && u1.isCreator === false);
+
+  // 2. promote to creator — mints an Ed25519 did:key in this browser
+  const promo = await window.EpinoiaAccount.becomeCreator('duke-maker');
+  check('creator role added', promo.roles.includes('creator'), promo.roles.join(','));
+  check('did:key minted', /^did:key:z6Mk/.test(promo.did || ''), promo.did);
+  check('handle recorded', promo.handle === 'duke-maker', promo.handle);
+
+  const again = await window.EpinoiaAccount.becomeCreator('duke-maker');
+  check('promotion is idempotent (same did)', again.did === promo.did, again.did.slice(0, 24) + '…');
+
+  // 3. sign a listing and verify it
+  const listing = { id: 'p-test-1', name: 'Solstice Test Pendant', priceCents: 4500, category: 'jewelry', owner: promo.id };
+  const proof = await window.EpinoiaAccount.sign(listing);
+  check('signature produced', proof.signature && proof.signature.length > 40, proof.algorithm + ' ' + proof.digest.slice(0, 16) + '…');
+  check('proof carries the creator did', proof.did === promo.did);
+
+  const ok = await window.EpinoiaAccount.verify(listing, proof);
+  check('signature verifies', ok === true);
+
+  const tampered = { ...listing, priceCents: 4501 };
+  const bad = await window.EpinoiaAccount.verify(tampered, proof);
+  check('price change breaks the signature', bad === false);
+
+  const renamed = { ...listing, name: 'Something Else' };
+  check('renamed listing breaks the signature', (await window.EpinoiaAccount.verify(renamed, proof)) === false);
+
+  // 4. ownership scoping
+  const signed = { ...listing, signature: proof };
+  localStorage.setItem('epinoia_custom_products_v3', JSON.stringify([signed, { id: 'other', name: 'Not mine', owner: 'EH-OTHER' }]));
+  const mine = window.EpinoiaAccount.myProducts();
+  check('my products are scoped to my account', mine.length === 1 && mine[0].id === 'p-test-1', 'count=' + mine.length);
+
+  // 5. orders
+  localStorage.setItem('eh_vault_orders', JSON.stringify([
+    { id: 'ORD-1', email: 'duke@test.local', total: 4500, items: [{ name: 'Solstice Test Pendant', qty: 1 }] },
+    { id: 'ORD-2', email: 'someone@else.local', total: 2900, items: [{ name: 'other', qty: 1 }] }
+  ]));
+  const orders = window.EpinoiaAccount.myOrders();
+  check('orders scoped to my email', orders.length === 1 && orders[0].id === 'ORD-1', 'count=' + orders.length);
+
+  // 6. canonicalisation is stable (the whole scheme rests on it)
+  const a = window.EpinoiaAccount.canon({ b: 2, a: 1, c: [3, { z: 1, y: 2 }] });
+  const b = window.EpinoiaAccount.canon({ c: [3, { y: 2, z: 1 }], a: 1, b: 2 });
+  check('canonical json is key-order independent', a === b, a);
+
+  out.innerHTML = lines.map(function (l) {
+    const cls = l.startsWith('PASS') ? 'pass' : 'fail';
+    return '<div class="' + cls + '">' + l.replace(/</g, '&lt;') + '</div>';
+  }).join('') +
+    '<div class="' + (fail ? 'fail' : 'dim') + '" style="margin-top:.6rem">' + pass + ' passed, ' + fail + ' failed</div>';
+
+  document.body.dataset.result = fail ? 'FAIL' : 'PASS';
+  document.body.dataset.did = promo.did;
+})();
+</script>
+</body>
+</html>

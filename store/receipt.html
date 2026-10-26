@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Receipt | Epinoia Horizon</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/store.css?v=5">
+  <style>
+    .receipt{max-width:900px;margin:0 auto;padding:6.4rem 1.2rem 4rem;display:grid;gap:1.1rem}
+    .eyebrow{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:#22d3ee}
+    h1{font-family:'Cinzel Decorative',serif;font-size:1.5rem;color:#facc15;margin:.35rem 0 .1rem}
+    .panel{background:rgba(10,7,24,.72);border:1px solid rgba(234,179,8,.22);border-radius:18px;padding:1.25rem}
+    .panel h2{font-family:Cinzel,serif;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:#facc15;margin:0 0 .85rem}
+    table{width:100%;border-collapse:collapse}
+    th{text-align:left;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:#8a8d94;padding:.4rem;border-bottom:1px solid rgba(148,163,184,.16)}
+    td{padding:.55rem .4rem;border-bottom:1px solid rgba(148,163,184,.08);font-size:.84rem}
+    .money{text-align:right;font-variant-numeric:tabular-nums}
+    .total{display:flex;justify-content:space-between;padding-top:.7rem;font-family:Cinzel,serif;color:#fde047;font-size:.95rem}
+    .proof{border:1px solid rgba(148,163,184,.14);border-radius:12px;padding:.85rem .95rem;margin-bottom:.7rem;background:rgba(6,4,13,.55)}
+    .proof .head{display:flex;justify-content:space-between;gap:1rem;align-items:baseline;flex-wrap:wrap}
+    .proof .name{font-size:.86rem;color:#ededef}
+    .kv{display:flex;gap:1rem;justify-content:space-between;padding:.2rem 0;font-size:.7rem}
+    .kv dt{color:#8a8d94;text-transform:uppercase;letter-spacing:.1em;font-size:.56rem}
+    .kv dd{margin:0;font-family:'JetBrains Mono',monospace;font-size:.66rem;color:#c8c8d0;word-break:break-all;text-align:right;max-width:66%}
+    .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.5rem .9rem;border-radius:999px;border:1px solid rgba(234,179,8,.45);
+      background:transparent;color:#facc15;font-family:Cinzel,serif;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;margin-top:.55rem}
+    .out{font-family:'JetBrains Mono',monospace;font-size:.66rem;margin-top:.45rem}
+    .ok{color:#86efac}.bad{color:#fca5a5}.dim{color:#8a8d94}
+    .row{display:flex;gap:.6rem;flex-wrap:wrap}
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="brand">
+      <div class="brand-icon"><i class="fas fa-eye"></i></div>
+      <div class="brand-text"><span class="brand-name">EPINOIA HORIZON</span><span class="brand-sub">Receipt</span></div>
+    </a>
+    <nav class="nav-links">
+      <a href="/store/" class="nav-link">Store</a>
+      <a href="/store/account.html" class="nav-link">Account</a>
+    </nav>
+    <div class="header-actions"></div>
+  </div>
+</header>
+
+<main class="receipt">
+  <div>
+    <div class="eyebrow"><i class="fas fa-receipt"></i> Order record</div>
+    <h1 id="inv">Receipt</h1>
+  </div>
+  <div id="view"></div>
+</main>
+
+<script src="/assets/account.js"></script>
+<script src="/assets/store.js"></script>
+<script type="module">
+import { distribute, combine, DEFAULT_SPLIT, money as cents } from '/assets/split.js';
+
+(function () {
+  const view = document.getElementById('view');
+  const id = new URLSearchParams(location.search).get('id');
+  const money = (n) => '$' + Number(n || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  let orders = [];
+  try { orders = JSON.parse(localStorage.getItem('eh_vault_orders') || '[]'); } catch (e) { orders = []; }
+  const order = orders.find((o) => o.invoiceId === id) || (id ? null : orders[0]);
+
+  if (!order) {
+    document.getElementById('inv').textContent = 'Receipt not found';
+    view.innerHTML = '<div class="panel"><h2>No such order on this device</h2>' +
+      '<p class="dim">Receipts are stored in the browser that placed the order. If you are on a different ' +
+      'device or cleared site data, the record is gone — this store keeps no server copy.</p>' +
+      '<p style="margin-top:1rem"><a class="btn" href="/store/">Back to the store</a></p></div>';
+    return;
+  }
+
+  document.getElementById('inv').textContent = order.invoiceId || 'Receipt';
+
+  // per-line split, computed from the listing's own shares (or the default if it has none)
+  const sheets = [];
+  const splitFor = (item) => {
+    try {
+      const total = Math.round(Number(item.price || 0) * 100) * Number(item.qty || 1);
+      const sheet = distribute(total, (item.split && item.split.length ? item.split : DEFAULT_SPLIT));
+      sheets.push(sheet);
+      return sheet;
+    } catch (e) { return null; }
+  };
+
+  // compute the split for every line before rendering — defining the helper is not the same as
+  // calling it, which is exactly how the first version shipped an empty split panel
+  (order.items || []).forEach((i) => splitFor(i));
+
+  const lines = (order.items || []).map((i) => `
+    <tr><td>${i.title || i.name || 'item'}</td><td class="money">${i.qty || 1}</td>
+    <td class="money">${money(i.price)}</td><td class="money">${money((i.price || 0) * (i.qty || 1))}</td></tr>`).join('');
+
+  const proofs = (order.proofs || []).map((p, n) => `
+    <div class="proof" data-proof="${n}">
+      <div class="head"><span class="name">${p.title || p.id}</span>
+        <span class="dim" style="font-size:.6rem">${p.maker ? 'by ' + p.maker : ''}</span></div>
+      ${p.root ? `<dl class="kv"><dt>dreamball root</dt><dd>${p.root}</dd></dl>` : ''}
+      ${p.signedBy ? `<dl class="kv"><dt>signed by</dt><dd>${p.signedBy}</dd></dl>` : ''}
+      ${p.listing && p.listing.signature
+        ? `<button class="btn" data-verify="${n}">Verify this item in my browser</button><div class="out" id="out-${n}"></div>`
+        : '<div class="dim" style="margin-top:.4rem;font-size:.66rem">no maker signature on this item</div>'}
+    </div>`).join('');
+
+  const sheetRows = (() => {
+    try { return combine(sheets); } catch (e) { return null; }
+  })();
+
+  const splitRows = sheetRows ? sheetRows.rows.map((r) => {
+    const makerDid = (order.proofs || []).map((p) => p.signedBy).filter(Boolean)[0];
+    return `<dl class="kv"><dt>${(r.label || r.key)}${r.key === 'maker' && makerDid ? ' · ' + makerDid.slice(0, 22) + '…' : ''}</dt>
+      <dd>${cents(r.amount)} <span style="color:#565270">(${(r.bps / 100).toFixed(1)}%)</span></dd></dl>`;
+  }).join('') : '';
+
+  view.innerHTML = `
+    <div class="panel">
+      <h2>Order</h2>
+      <dl class="kv"><dt>placed</dt><dd>${order.date || '—'}</dd></dl>
+      <dl class="kv"><dt>buyer</dt><dd>${order.buyerName || '—'} · ${order.buyerEmail || '—'}</dd></dl>
+      <dl class="kv"><dt>payment</dt><dd>${order.paymentMethod || '—'}</dd></dl>
+      <table><thead><tr><th>item</th><th class="money">qty</th><th class="money">unit</th><th class="money">line</th></tr></thead>
+      <tbody>${lines || '<tr><td colspan="4" class="dim">no line items recorded</td></tr>'}</tbody></table>
+      <div class="total"><span>Total</span><span>${money(order.total)} USD</span></div>
+    </div>
+
+    <div class="panel">
+      <h2>Where the money goes</h2>
+      ${splitRows || '<p class="dim">No split recorded for these items.</p>'}
+      ${sheetRows ? `<div class="total"><span>Split total</span><span>${cents(sheetRows.total)}</span></div>` : ''}
+      <p class="dim" style="font-size:.68rem;margin:.8rem 0 0;line-height:1.6">
+        Shares are integer basis points that must sum to 100%. Rounding uses largest-remainder, so the
+        parts always add up to the line total — no cent is created or lost.
+      </p>
+    </div>
+
+    <div class="panel">
+      <h2>Proof carried by this receipt</h2>
+      ${proofs || '<p class="dim">None of the items on this order carried a provenance root or a maker signature.</p>'}
+      <div class="row" style="margin-top:.6rem">
+        <button class="btn" id="btnProofs">Download proof JSON</button>
+      </div>
+      <p class="dim" style="font-size:.68rem;margin:.8rem 0 0;line-height:1.6">
+        Each item above holds a snapshot of the listing as it was signed, not a link back to the
+        catalogue. If the shop changes the listing later, this receipt keeps the version you bought —
+        and the signature will no longer match the new one, which is the point.
+      </p>
+    </div>`;
+
+  view.querySelectorAll('[data-verify]').forEach((btn) => {
+    btn.onclick = async function () {
+      const n = Number(btn.dataset.verify);
+      const p = (order.proofs || [])[n];
+      const out = document.getElementById('out-' + n);
+      if (!window.EpinoiaAccount) { out.textContent = 'verifier unavailable'; out.className = 'out bad'; return; }
+      out.textContent = 'checking…'; out.className = 'out dim';
+      const { signature, ...unsigned } = p.listing;
+      const ok = await window.EpinoiaAccount.verify(unsigned, signature);
+      out.textContent = ok ? 'signature valid — this is the listing the maker signed' : 'signature BROKEN — the listing was altered after signing';
+      out.className = 'out ' + (ok ? 'ok' : 'bad');
+    };
+  });
+
+  const dl = document.getElementById('btnProofs');
+  if (dl) dl.onclick = function () {
+    const payload = {
+      invoiceId: order.invoiceId, date: order.date, total: order.total,
+      items: (order.items || []).map((i) => ({ id: i.id, title: i.title, qty: i.qty || 1, price: i.price })),
+      proofs: order.proofs || [],
+      note: 'Snapshot of the signed listings as purchased. Verify with the maker did:key and the dreamball root.'
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = (order.invoiceId || 'receipt') + '-proofs.json';
+    a.click();
+  };
+})();
+</script>
+</body>
+</html>
