@@ -2,48 +2,8 @@
 (function() {
   'use strict';
 
-  // Default Seed Catalog (Merlin Sovereign Pass + Artisan Handmade Pendants + 3D Animation & CAD Studio)
+  // Default Seed Catalog (handmade objects and creative studio work)
   const DEFAULT_PRODUCTS = [
-  {
-    "id": "merlin-harness",
-    "title": "Merlin Sovereign High Pass",
-    "category": "sovereign",
-    "categoryLabel": "AI Workspace",
-    "price": 29,
-    "badge": "HIGH PLAN · FULL FLEET",
-    "shortDesc": "Full-tier Sanctum Workspace access unlocking Merlin (Claude Opus 5), Nxelle Codex (GLM 5.3), and Jie with 1,000 msgs/day and 10 file uploads.",
-    "fullDesc": "Merlin Sovereign High Pass delivers unrestricted access to our flagship frontier engines inside the Epinoia Sanctum Workspace (/app/). Unlock Merlin on Claude Opus 5 for deep architectural synthesis, Nxelle Codex on GLM 5.3 Sovereign for surgical code generation, and Jie for rapid multi-disciplinary operations—backed by 1,000 messages per day (including 100 frontier Opus/GLM messages) and 10 document/code file attachments up to 1 MB each.",
-    "modelUrl": "/assets/models/wizard.glb",
-    "has3D": true,
-    "specs": {
-      "Primary Personas": "Merlin (Claude Opus 5), Nxelle Codex (GLM 5.3), Jie",
-      "Daily Message Quota": "1,000 Total Msgs/Day (100 Frontier Opus 5 / GLM 5.3)",
-      "File Attachments": "Up to 10 Files per Prompt (Max 1 MB per file)",
-      "Workspace Features": "Cloud Auth, Persistent Chat History & Full Markdown HUD",
-      "Billing & Activation": "$29 USD / Month (Rp 465.000) · Instant License Key"
-    },
-    "provenance": {
-      "schemaVersion": 1,
-      "facets": {
-        "who": "Epinoia Horizon Atelier",
-        "what": "Merlin Sovereign High Pass — HIGH PLAN · FULL FLEET",
-        "when": "",
-        "why": "Full-tier Sanctum Workspace access unlocking Merlin (Claude Opus 5), Nxelle Codex (GLM 5.3), and Jie with 1,000 msgs/day and 10 file uploads.",
-        "where": "Epinoia Horizon Vault",
-        "how": "Billing & Activation: $29 USD / Month (Rp 465.000) · Instant License Key; Daily Message Quota: 1,000 Total Msgs/Day (100 Frontier Opus 5 / GLM 5.3); File Attachments: Up to 10 Files per Prompt (Max 1 MB per file); Primary Personas: Merlin (Claude Opus 5), Nxelle Codex (GLM 5.3), Jie; Workspace Features: Cloud Auth, Persistent Chat History & Full Markdown HUD"
-      },
-      "missing": [
-        "when"
-      ],
-      "root": "0xabdd47ae77c024f648d8e2c124894de314dc657f69e2b7d6bdb08a951b84960f",
-      "model": {
-        "url": "/assets/models/wizard.glb",
-        "sha256": "f9db621ff95ada82236c62a84cfadee86da1879e434915597b45a79475c3afcc",
-        "bytes": 984272
-      },
-      "convention": "wishing_tree v1: leaf=sha256(0x00||canonical_json), node=sha256(0x01||l||r); facets who/what/when/why/where/how"
-    }
-  },
   {
     "id": "solstice-pendant",
     "title": "Solstice Crystal Talisman Pendant",
@@ -298,10 +258,10 @@
         const custom = localStorage.getItem('epinoia_custom_products_v3');
         if (custom) {
           const parsed = JSON.parse(custom);
-          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed.filter(product => product && product.id !== 'merlin-harness');
         }
       } catch(e) {}
-      return DEFAULT_PRODUCTS;
+      return DEFAULT_PRODUCTS.filter(product => product.id !== 'merlin-harness');
     },
 
     saveProducts: function(products) {
@@ -316,7 +276,7 @@
     // Cart Management
     getCart: function() {
       try {
-        return JSON.parse(localStorage.getItem('epinoia_cart') || '[]');
+        return JSON.parse(localStorage.getItem('epinoia_cart') || '[]').filter(item => item && item.id !== 'merlin-harness');
       } catch(e) { return []; }
     },
 
@@ -362,7 +322,7 @@
       if (!itemsContainer) return;
 
       if (cart.length === 0) {
-        itemsContainer.innerHTML = `<p style="color:var(--dim);text-align:center;padding:40px 0;font-family:'JetBrains Mono',monospace;font-size:12px;">Your vault selection is empty.</p>`;
+        itemsContainer.innerHTML = `<p style="color:var(--dim);text-align:center;padding:40px 0;font-family:'JetBrains Mono',monospace;font-size:12px;">Your cart is empty.</p>`;
         if (totalEl) totalEl.textContent = '$0';
         return;
       }
