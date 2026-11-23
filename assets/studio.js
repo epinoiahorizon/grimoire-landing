@@ -90,7 +90,7 @@ async function onPoster(e) {
 function productRecord(root) {
 	const facets = facetsNow();
 	const cat = $('category').value;
-	const labels = { jewelry: 'Handmade Pendant', studio3d: '3D Studio', sovereign: 'Merlin Pass' };
+	const labels = { jewelry: 'Handmade Pendant', studio3d: '3D Studio', digital: 'Digital Project' };
 	return {
 		id: slug($('title').value),
 		title: $('title').value.trim(),

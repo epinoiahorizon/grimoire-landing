@@ -3,17 +3,7 @@
  "generated": "2026-10-24",
  "note": "roots are recomputable from the facets + model sha256 below; 'when' is absent from every product record, so every seed is 5/6",
  "roots": {
-  "merlin-harness": {
-   "root": "0xabdd47ae77c024f648d8e2c124894de314dc657f69e2b7d6bdb08a951b84960f",
-   "missing": [
-    "when"
-   ],
-   "model": {
-    "url": "/assets/models/wizard.glb",
-    "sha256": "f9db621ff95ada82236c62a84cfadee86da1879e434915597b45a79475c3afcc",
-    "bytes": 984272
-   }
-  },
+
   "solstice-pendant": {
    "root": "0x60cd55d19a2d3133d63edc57725ceaf0367f00e8430e4b0315e6af2de2587ef5",
    "missing": [

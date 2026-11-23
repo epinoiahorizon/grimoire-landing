@@ -1,6 +1,6 @@
 """toy2d.py — Gaussian Splatting formula verification, 2D toy (CPU, ~30s).
 
-Implements the exact equations from ~/.merlin/skills/creative/gaussian-splatting:
+Implements the Gaussian Splatting equations for a small 2D verification example:
     Σ  = R diag(s²) Rᵀ                       (anisotropic covariance from factors)
     D  = exp(−½ dᵀ Σ⁻¹ d)                    (Gaussian density at pixel; d = pixel − µ)
     αᵢ = opacityᵢ · Dᵢ                        (clamped 0–0.99)

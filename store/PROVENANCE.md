@@ -44,7 +44,7 @@ Current roots (5/6 seeds, `when` empty):
 
 | product | root |
 |---|---|
-| merlin-harness | `0xabdd47ae77c024f6…` |
+
 | solstice-pendant | `0x60cd55d19a2d3133…` |
 | aetherial-lantern | `0x6220e9ca74313fd9…` |
 | gold-ingot-pendant | `0x63c79573746784de…` |

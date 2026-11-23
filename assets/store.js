@@ -258,10 +258,10 @@
         const custom = localStorage.getItem('epinoia_custom_products_v3');
         if (custom) {
           const parsed = JSON.parse(custom);
-          if (Array.isArray(parsed) && parsed.length > 0) return parsed.filter(product => product && product.id !== 'merlin-harness');
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed.filter(product => product && product.category !== 'sovereign');
         }
       } catch(e) {}
-      return DEFAULT_PRODUCTS.filter(product => product.id !== 'merlin-harness');
+      return DEFAULT_PRODUCTS.filter(product => product.category !== 'sovereign');
     },
 
     saveProducts: function(products) {
@@ -270,13 +270,15 @@
 
     getProductById: function(id) {
       const all = this.getProducts();
-      return all.find(p => p.id === id) || all[0];
+      return all.find(p => p.id === id) || null;
     },
 
     // Cart Management
     getCart: function() {
       try {
-        return JSON.parse(localStorage.getItem('epinoia_cart') || '[]').filter(item => item && item.id !== 'merlin-harness');
+        const cart = JSON.parse(localStorage.getItem('epinoia_cart') || '[]');
+      const available = new Set(this.getProducts().map(product => product.id));
+      return cart.filter(item => item && available.has(item.id));
       } catch(e) { return []; }
     },
 

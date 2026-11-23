@@ -28,9 +28,9 @@
     </a>
     <nav class="nav-links">
       <a href="/store/" class="nav-link"><i class="fas fa-arrow-left"></i> Studio Store</a>
-      <a href="https://withmerlin.online/" class="nav-link">Merlin</a>
-      <a href="https://withmerlin.online/pricing/" class="nav-link">Plans</a>
-      <a href="https://withmerlin.online/docs/" class="nav-link">Docs</a>
+      <a href="/#hero" class="nav-link">Collective</a>
+      <a href="/#capabilities" class="nav-link">Practice</a>
+      <a href="/#terminal-section" class="nav-link">Contact</a>
       <a href="/store/admin.html" id="dev-admin-nav-link" class="nav-link" style="color:var(--gold);display:none;"><i class="fas fa-screwdriver-wrench"></i> Dev Admin</a>
     </nav>
     <div class="header-actions">
@@ -95,11 +95,12 @@
   function loadProduct() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id') || 'solstice-pendant';
-    if (id === 'merlin-harness') {
-      window.location.replace('https://withmerlin.online/');
+    currentProduct = window.EpinoiaStore.getProductById(id);
+    if (!currentProduct) {
+      document.title = 'Listing Not Found | Epinoia Horizon';
+      document.getElementById('product-detail-root').innerHTML = '<div class="detail-info"><h1 class="detail-title">Listing not found</h1><p class="detail-desc">This listing is no longer available.</p></div>';
       return;
     }
-    currentProduct = window.EpinoiaStore.getProductById(id);
     document.title = `${currentProduct.title} — 3D Specs | Epinoia Horizon`;
 
     const root = document.getElementById('product-detail-root');

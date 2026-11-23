@@ -3,26 +3,13 @@
 > Epinoia Horizon is a creative research and development collective exploring emerging technology and creative practice.
 > The collective brings research, design, and engineering together to explore ideas and develop prototypes, tools, and experiences.
 
-## Project
-- [Merlin Agent](https://withmerlin.online/): an AI agent project by Epinoia Horizon; its product home has moved.
-- [Merlin documentation](https://withmerlin.online/docs/).
-- [Merlin pricing](https://withmerlin.online/pricing/).
-- [Merlin releases](https://github.com/epinoiahorizon/Merlin-Agent/releases).
-
-## Writing
-- [What is an AI agent harness?](https://epinoiahorizon.com/blog/what-is-an-ai-agent-harness.html)
-- [Make money with open-source AI agents](https://epinoiahorizon.com/blog/make-money-with-open-source-ai-agents.html)
-
-## Source
-- [GitHub repository](https://github.com/epinoiahorizon/Merlin-Agent)
-- [Landing site source](https://github.com/epinoiahorizon/grimoire-landing)
+## Practice
+- Research and discovery
+- Creative prototyping
+- Software and spatial media
+- Digital craft
 
 ## Contact
-- [Email Epinoia Horizon](mailto:epinoiahorizon@gmail.com)
-- [GitHub organization](https://github.com/epinoiahorizon)
-
-## Focus areas
-- AI and agent systems
-- Creative software
-- 3D and spatial media
-- Digital craft
+- Email: mailto:epinoiahorizon@gmail.com
+- GitHub organization: https://github.com/epinoiahorizon
+- Website source: https://github.com/epinoiahorizon/grimoire-landing
